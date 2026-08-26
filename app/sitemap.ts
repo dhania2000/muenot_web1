@@ -3,7 +3,7 @@ import { client, isSanityConfigured } from "@/lib/sanity";
 import { getAllPosts as getStaticPosts } from "@/lib/blog-data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.co.in";
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

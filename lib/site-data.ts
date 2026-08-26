@@ -54,7 +54,7 @@ export const servicePillars: ServicePillar[] = [
       },
     ],
     outcomes: [
-      "99.2% average annotation accuracy across delivery pods",
+      "98.2% average annotation accuracy across delivery pods",
       "Dedicated QA layer with inter-annotator agreement scoring",
       "ISO-aligned data handling and NDA-backed secure facilities",
     ],
@@ -167,7 +167,7 @@ export const servicePillars: ServicePillar[] = [
       {
         name: "Translation",
         href: "/services/translation",
-        detail: "120+ language pairs with domain-matched linguists.",
+        detail: "40+ language pairs with domain-matched linguists.",
       },
       {
         name: "Transcription",
@@ -319,7 +319,7 @@ export const caseStudies = [
     slug: "enterprise-learning-programme",
     client: "Global enterprise",
     industry: "Corporate learning",
-    title: "Compliance learning programme rebuilt for 40 markets",
+    title: "Compliance learning programme rebuilt for 10 markets",
     summary:
       "Curriculum redesign, accessible course production, and localisation into 22 languages, delivered on a fixed quarterly release calendar.",
     image: "/images/case-enterprise.png",
@@ -381,10 +381,10 @@ export const caseStudies = [
 ];
 
 export const stats = [
-  { value: "12+", label: "Years of delivery" },
-  { value: "1,400+", label: "Specialists across delivery centres" },
-  { value: "120+", label: "Languages supported" },
-  { value: "40+", label: "Countries served" },
+  { value: "6+", label: "Years of delivery" },
+  { value: "300+", label: "Specialists across delivery centres" },
+  { value: "40+", label: "Languages supported" },
+  { value: "10+", label: "Countries served" },
 ];
 
 export const engagementSteps = [

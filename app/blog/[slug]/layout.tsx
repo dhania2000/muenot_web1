@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.co.in";
   const postUrl = `${siteUrl}/blog/${slug}`;
   const imageUrl = post.coverImageUrl || "/og-image.png";
 

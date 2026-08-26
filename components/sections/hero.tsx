@@ -72,7 +72,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.45 }}
               className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
-              Managed delivery pods in 40+ countries, working to contractual
+              Managed delivery pods across 10+ countries, working to contractual
               SLAs.
             </motion.p>
 
@@ -117,7 +117,7 @@ export function HeroSection() {
               <span aria-hidden="true" className="h-3 w-px bg-border" />
               <span className="inline-flex items-center gap-1.5">
                 <Globe2 className="h-4 w-4 text-primary" aria-hidden="true" />
-                120+ languages
+                40+ languages
               </span>
             </motion.div>
           </div>
@@ -154,7 +154,7 @@ export function HeroSection() {
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
                   </span>
                   <p className="font-display text-sm font-bold text-foreground">
-                    Live delivery floors, 24/5 coverage
+                    Dedicated delivery teams, extended weekday coverage
                   </p>
                 </div>
               </div>
@@ -166,10 +166,10 @@ export function HeroSection() {
               >
                 <div className="rounded-2xl border border-border bg-card px-4 py-3 shadow-[0_18px_40px_-24px_rgba(11,18,32,0.35)]">
                   <p className="font-display text-2xl font-extrabold text-primary">
-                    99.2%
+                    98.2%
                   </p>
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Annotation accuracy
+                    Quality Assurance Rate
                   </p>
                 </div>
               </Float>
@@ -181,7 +181,7 @@ export function HeroSection() {
                 delay={0.6}
               >
                 <div className="rounded-2xl border border-border bg-primary px-4 py-3 text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)]">
-                  <p className="font-display text-2xl font-extrabold">1,400+</p>
+                  <p className="font-display text-2xl font-extrabold">300+</p>
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-primary-foreground/80">
                     Specialists
                   </p>

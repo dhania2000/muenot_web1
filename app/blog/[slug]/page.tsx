@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { SparklesCore } from "@/components/ui/sparkles";
 import {
   Calendar,
   Clock,
@@ -334,90 +333,71 @@ export default function BlogPostPage() {
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-32 pb-8 sm:pb-16 overflow-hidden">
-        <div className="absolute inset-0 w-full h-full">
-          <SparklesCore
-            id="postSparkles"
-            background="transparent"
-            minSize={0.4}
-            maxSize={1}
-            particleDensity={30}
-            className="w-full h-full"
-            particleColor="#8b5cf6"
-          />
-        </div>
-
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[length:50px_50px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-6 sm:mb-8"
-          >
+      {/* Article Header */}
+      <section className="relative overflow-hidden border-b border-border bg-surface">
+        <div className="pointer-events-none absolute inset-0 grid-lines opacity-70" />
+        <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
+          <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm sm:text-base"
+              className="group mb-10 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary-dark sm:mb-14"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Blog
+              <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+              Back to insights
             </Link>
           </motion.div>
 
-          {/* Meta */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 sm:mb-6"
-          >
-            <span className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
-              <Calendar className="w-4 h-4" />
-              {getFormattedDate()}
-            </span>
-            <span className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
-              <Clock className="w-4 h-4" />
-              {post.readTime || 5} min read
-            </span>
-          </motion.div>
-
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6"
-          >
-            {post.title}
-          </motion.h1>
-
-          {/* Excerpt */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base sm:text-xl text-muted-foreground mb-6 sm:mb-8"
-          >
-            {post.excerpt}
-          </motion.p>
-
-          {/* Author */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center gap-3 sm:gap-4"
-          >
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-primary to-primary flex items-center justify-center">
-              <User className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-            </div>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end lg:gap-16">
             <div>
-              <p className="text-foreground font-medium text-sm sm:text-base">{author.name}</p>
-              <p className="text-xs sm:text-sm text-muted-foreground">{author.role}</p>
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
+              >
+                <span>{post.category}</span>
+                <span className="h-1 w-1 rounded-full bg-accent" />
+                <span className="flex items-center gap-2 text-muted-foreground normal-case tracking-normal">
+                  <Calendar className="size-4" /> {getFormattedDate()}
+                </span>
+                <span className="flex items-center gap-2 text-muted-foreground normal-case tracking-normal">
+                  <Clock className="size-4" /> {post.readTime || 5} min read
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08 }}
+                className="max-w-4xl text-balance text-4xl font-semibold leading-[1.05] text-foreground sm:text-5xl lg:text-7xl"
+              >
+                {post.title}
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.16 }}
+                className="mt-6 max-w-2xl text-pretty text-base leading-7 text-muted-foreground sm:text-lg"
+              >
+                {post.excerpt}
+              </motion.p>
             </div>
-          </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.24 }}
+              className="flex items-center gap-3 border-l-2 border-accent pl-4"
+            >
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <User className="size-5" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">{author.name}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{author.role}</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -428,7 +408,7 @@ export default function BlogPostPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="relative h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden"
+            className="relative h-[240px] overflow-hidden rounded-2xl border border-border bg-primary shadow-[0_24px_60px_-28px_color-mix(in_oklab,var(--primary)_45%,transparent)] sm:h-[360px] md:h-[460px] lg:h-[540px]"
           >
             <Image
               src={coverImageUrl}

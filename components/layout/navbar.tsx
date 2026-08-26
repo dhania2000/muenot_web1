@@ -61,18 +61,18 @@ export function Navbar() {
               </p>
               <div className="flex items-center gap-6">
                 <a
-                  href="tel:+911204567890"
+                  href="tel:+916377809826"
                   className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
                 >
                   <Phone className="w-3.5 h-3.5" aria-hidden="true" />
-                  +91 120 456 7890
+                  +91 637 780 9826
                 </a>
                 <a
-                  href="mailto:info@muenot.com"
+                  href="mailto:info@muenot.co.in"
                   className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
                 >
                   <Mail className="w-3.5 h-3.5" aria-hidden="true" />
-                  info@muenot.com
+                  info@muenot.co.in
                 </a>
               </div>
             </div>
