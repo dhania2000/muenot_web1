@@ -1,16 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { CountUp } from "@/components/ui/count-up";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
-import { servicePillars } from "@/lib/site-data";
+import { servicePillars, stats } from "@/lib/site-data";
 
 export function ServicesOverview() {
   return (
-    <section
-      id="services"
-      className="border-b border-border bg-surface py-20 lg:py-24"
-    >
+    <section id="services" className="border-b border-border bg-surface pt-20 lg:pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
@@ -19,85 +17,64 @@ export function ServicesOverview() {
             description="Start with one engagement and expand under the same governance."
           />
         </Reveal>
+      </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 overflow-x-auto" aria-label="Our service lines">
+        <div className="flex min-w-[900px] lg:min-w-0">
           {servicePillars.map((pillar, index) => (
-            <Reveal key={pillar.id} delay={index * 0.07} className="flex">
-              <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_1px_2px_rgba(11,18,32,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_22px_48px_-28px_rgba(11,79,158,0.45)]">
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={pillar.image || "/placeholder.svg"}
-                    alt={pillar.imageAlt}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/75 via-primary-dark/15 to-transparent"
-                  />
-                  <h3 className="absolute inset-x-5 bottom-4 font-display text-lg font-bold leading-snug text-primary-foreground">
+            <Reveal
+              key={pillar.id}
+              delay={index * 0.07}
+              className="min-w-0 flex-1"
+            >
+              <Link
+                href={pillar.href}
+                className="group relative block h-[360px] overflow-hidden border-r border-primary-foreground/20 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring"
+                aria-label={`Explore ${pillar.eyebrow}`}
+              >
+                <Image
+                  src={pillar.image}
+                  alt={pillar.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 20vw, 240px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/25 to-primary-dark/10 transition-colors duration-300 group-hover:from-primary"
+                />
+                <span className="absolute inset-x-0 bottom-0 flex min-h-32 flex-col justify-end gap-3 p-6 text-primary-foreground lg:p-7">
+                  <span className="font-display text-xl font-bold leading-tight text-balance lg:text-2xl">
                     {pillar.eyebrow}
-                  </h3>
-                </div>
-
-                <div className="flex flex-1 flex-col gap-5 p-6">
-                  <ul className="flex flex-wrap gap-2">
-                    {pillar.capabilities.slice(0, 4).map((capability) => (
-                      <li
-                        key={capability.name}
-                        className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-foreground transition-colors group-hover:border-primary/25 group-hover:bg-primary/5"
-                      >
-                        {capability.name}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={pillar.href}
-                    className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
-                  >
-                    Explore {pillar.eyebrow}
-                    <ArrowRight
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
-              </article>
+                  </span>
+                  <span className="flex items-center gap-2 text-sm font-semibold opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    Explore services
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </span>
+              </Link>
             </Reveal>
           ))}
-
-          <Reveal delay={servicePillars.length * 0.07} className="flex">
-            <article className="relative flex w-full flex-col justify-between overflow-hidden rounded-2xl bg-primary p-7 text-primary-foreground">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary-foreground/10 blur-2xl"
-              />
-              <div className="relative flex flex-col gap-4">
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-foreground/15">
-                  <Sparkles className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <h3 className="font-display text-xl font-bold leading-snug">
-                  Not sure where to start?
-                </h3>
-                <p className="text-sm leading-relaxed text-primary-foreground/80">
-                  Send your requirement and we&apos;ll scope a pilot batch.
-                </p>
-              </div>
-              <Link
-                href="/contact"
-                className="group/cta relative mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
-              >
-                Request a scoping call
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover/cta:translate-x-1"
-                  aria-hidden="true"
-                />
-              </Link>
-            </article>
-          </Reveal>
         </div>
+      </div>
+
+      <div className="bg-primary-dark">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 px-4 py-12 sm:px-6 md:grid-cols-4 lg:px-8 lg:py-16">
+          {stats.map((stat, index) => (
+            <Reveal
+              key={stat.label}
+              delay={index * 0.08}
+              className="flex flex-col items-center gap-2 border-primary-foreground/15 px-3 py-5 text-center even:border-l md:border-l md:first:border-l-0"
+            >
+              <dt className="order-2 max-w-40 text-sm font-medium leading-relaxed text-primary-foreground/75">
+                {stat.label}
+              </dt>
+              <dd className="order-1 font-display text-3xl font-bold text-accent sm:text-4xl lg:text-5xl">
+                <CountUp value={stat.value} />
+              </dd>
+            </Reveal>
+          ))}
+        </dl>
       </div>
     </section>
   );

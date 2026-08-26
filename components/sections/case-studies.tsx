@@ -1,12 +1,24 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { CountUp } from "@/components/ui/count-up";
 import { caseStudies } from "@/lib/site-data";
 
 export function CaseStudiesSection() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const scrollCarousel = (direction: -1 | 1) => {
+    carouselRef.current?.scrollBy({
+      left: direction * Math.min(carouselRef.current.clientWidth * 0.85, 620),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="case-studies"
@@ -34,47 +46,76 @@ export function CaseStudiesSection() {
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {caseStudies.map((study, index) => (
-            <Reveal key={study.slug} delay={index * 0.09} className="flex">
-              <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_22px_48px_-28px_rgba(11,79,158,0.45)]">
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={study.image || "/placeholder.svg"}
-                    alt={study.imageAlt}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, 100vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <span className="absolute left-4 top-4 rounded-full bg-card/95 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
-                    {study.industry}
-                  </span>
-                </div>
+        <div className="relative mt-14">
+          <button
+            type="button"
+            onClick={() => scrollCarousel(-1)}
+            aria-label="Previous case studies"
+            className="absolute left-2 top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-primary shadow-lg transition-all hover:scale-105 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ArrowLeft className="size-5" aria-hidden="true" />
+          </button>
 
-                <div className="flex flex-1 flex-col gap-3 p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    {study.client}
-                  </p>
-                  <h3 className="flex-1 font-display text-base font-semibold leading-snug text-foreground">
-                    {study.title}
-                  </h3>
+          <div
+            ref={carouselRef}
+            className="overflow-x-auto scroll-smooth px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div className="flex min-w-max gap-4 px-12">
+              {caseStudies.map((study, index) => (
+              <Reveal
+                key={study.slug}
+                delay={index * 0.07}
+                className="flex w-64 shrink-0 lg:w-72"
+              >
+                <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_22px_48px_-28px_rgba(11,79,158,0.45)]">
+                  <div className="relative h-40 overflow-hidden">
+                    <Image
+                      src={study.image || "/placeholder.svg"}
+                      alt={study.imageAlt}
+                      fill
+                      sizes="288px"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <span className="absolute left-3 top-3 rounded-full bg-card/95 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
+                      {study.industry}
+                    </span>
+                  </div>
 
-                  <dl className="mt-3 grid grid-cols-3 gap-3 rounded-xl border border-border bg-surface p-4">
-                    {study.metrics.map((metric) => (
-                      <div key={metric.label} className="flex flex-col gap-1">
-                        <dd className="font-display text-lg font-bold text-primary">
-                          <CountUp value={metric.value} />
-                        </dd>
-                        <dt className="text-[11px] leading-tight text-muted-foreground">
-                          {metric.label}
-                        </dt>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+                  <div className="flex flex-1 flex-col gap-3 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                      {study.client}
+                    </p>
+                    <h3 className="flex-1 font-display text-sm font-semibold leading-snug text-foreground">
+                      {study.title}
+                    </h3>
+
+                    <dl className="mt-2 grid grid-cols-3 gap-2 rounded-xl border border-border bg-surface p-3">
+                      {study.metrics.map((metric) => (
+                        <div key={metric.label} className="flex min-w-0 flex-col gap-1">
+                          <dd className="font-display text-base font-bold text-primary">
+                            <CountUp value={metric.value} />
+                          </dd>
+                          <dt className="text-[10px] leading-tight text-muted-foreground">
+                            {metric.label}
+                          </dt>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scrollCarousel(1)}
+            aria-label="Next case studies"
+            className="absolute right-2 top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-primary shadow-lg transition-all hover:scale-105 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ArrowRight className="size-5" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>

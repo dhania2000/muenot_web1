@@ -11,14 +11,27 @@ import { AboutSection } from "@/components/sections/about-section";
 import { CTASection } from "@/components/sections/cta-section";
 import { servicePillars } from "@/lib/site-data";
 
+const homepagePillarOrder = [
+  "ai-data",
+  "elearning",
+  "publishing",
+  "technology",
+  "localization",
+];
+
+const orderedServicePillars = homepagePillarOrder.flatMap((id) => {
+  const pillar = servicePillars.find((item) => item.id === id);
+  return pillar ? [pillar] : [];
+});
+
 export default function Home() {
   return (
     <main className="relative">
       <Navbar />
       <HeroSection />
-      <OurClients />
       <ServicesOverview />
-      {servicePillars.map((pillar, index) => (
+      <OurClients />
+      {orderedServicePillars.map((pillar, index) => (
         <ServicePillarSection key={pillar.id} pillar={pillar} index={index} />
       ))}
       <IndustriesSection />

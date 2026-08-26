@@ -4,25 +4,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
+  Accessibility,
   ArrowRight,
+  BrainCircuit,
+  Captions,
+  Database,
   Globe2,
+  GraduationCap,
+  Languages,
+  Mic2,
+  PenTool,
   PlayCircle,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import { AnimatedHeadline, Float, Reveal } from "@/components/ui/reveal";
-import { CountUp } from "@/components/ui/count-up";
-import { stats } from "@/lib/site-data";
 
 const capabilityTicker = [
-  "Data annotation",
-  "RLHF & evaluation",
-  "Course production",
-  "Translation",
-  "Subtitling",
-  "Accessibility",
-  "Editorial",
-  "Voiceover",
+  { label: "Data annotation", icon: Database },
+  { label: "RLHF & evaluation", icon: BrainCircuit },
+  { label: "Course production", icon: GraduationCap },
+  { label: "Translation", icon: Languages },
+  { label: "Subtitling", icon: Captions },
+  { label: "Accessibility", icon: Accessibility },
+  { label: "Editorial", icon: PenTool },
+  { label: "Voiceover", icon: Mic2 },
 ];
 
 export function HeroSection() {
@@ -198,36 +204,25 @@ export function HeroSection() {
             className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent"
           />
           <ul className="flex w-max animate-marquee items-center gap-8 px-4">
-            {[...capabilityTicker, ...capabilityTicker].map((item, index) => (
-              <li
-                key={`${item}-${index}`}
-                aria-hidden={index >= capabilityTicker.length}
-                className="flex items-center gap-3 whitespace-nowrap text-sm font-semibold text-foreground/70"
-              >
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-accent"
-                />
-                {item}
-              </li>
-            ))}
+            {[...capabilityTicker, ...capabilityTicker].map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <li
+                  key={`${item.label}-${index}`}
+                  aria-hidden={index >= capabilityTicker.length}
+                  className="flex items-center gap-2.5 whitespace-nowrap text-sm font-semibold text-foreground/70"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/15 bg-background text-primary shadow-sm">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  {item.label}
+                </li>
+              );
+            })}
           </ul>
         </Reveal>
 
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-t-2xl border border-b-0 border-border bg-border lg:grid-cols-4">
-          {stats.map((stat, index) => (
-            <Reveal key={stat.label} delay={index * 0.08} className="bg-card">
-              <div className="px-6 py-7">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {stat.label}
-                </dt>
-                <dd className="mt-2 font-display text-3xl font-extrabold text-primary">
-                  <CountUp value={stat.value} />
-                </dd>
-              </div>
-            </Reveal>
-          ))}
-        </dl>
       </div>
     </section>
   );
