@@ -1,11 +1,18 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { Eyebrow } from "@/components/ui/section-heading";
+import { PageHero } from "@/components/ui/page-hero";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Reveal } from "@/components/ui/reveal";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import ReCAPTCHA from "react-google-recaptcha";
 import {
   Mail,
@@ -17,7 +24,6 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
-  Clock,
 } from "lucide-react";
 
 interface FormData {
@@ -226,43 +232,19 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-background">
-        <section className="relative overflow-hidden border-b border-border bg-surface">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 grid-lines opacity-60"
-          />
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-            <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-14">
-              <div className="flex flex-col gap-5">
-                <Eyebrow className="w-fit">Get in touch</Eyebrow>
-                <h1 className="font-display text-4xl font-bold leading-[1.1] text-balance text-foreground sm:text-5xl">
-                  Let&apos;s start a conversation
-                </h1>
-                <p className="max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
-                  Share your requirement and a delivery lead will respond within
-                  one business day with next steps.
-                </p>
-                <div className="flex items-center gap-2.5 rounded-full border border-border bg-card px-4 py-2 w-fit">
-                  <Clock className="h-4 w-4 text-primary" aria-hidden="true" />
-                  <span className="text-xs font-semibold text-foreground">
-                    Response within one business day
-                  </span>
-                </div>
-              </div>
-
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
-                <Image
-                  src="/images/contact-office.png"
-                  alt="Muenot office reception area with a client advisor"
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          eyebrow="Get in touch"
+          title="Let's start a conversation"
+          description="Share your requirement and a delivery lead will respond within one business day with next steps."
+          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
+          image="/images/contact-office.png"
+          imageAlt="Muenot office reception area with a client advisor"
+          highlights={[
+            "Response within one business day",
+            "NDA on request",
+            "No obligation scoping call",
+          ]}
+        />
 
         <section className="bg-background py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

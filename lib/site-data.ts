@@ -330,6 +330,54 @@ export const caseStudies = [
       { value: "91%", label: "Course completion rate" },
     ],
   },
+  {
+    slug: "streaming-subtitle-operations",
+    client: "Streaming platform",
+    industry: "Media & entertainment",
+    title: "Subtitle and metadata operations for a catalogue launch",
+    summary:
+      "A managed pod handled subtitling, QC, and metadata tagging across a back catalogue release, working to platform style guides and a weekly drop schedule.",
+    image: "/images/service-subtitling.png",
+    imageAlt:
+      "Subtitling specialist reviewing timed captions against video on a workstation",
+    metrics: [
+      { value: "9,600", label: "Hours subtitled" },
+      { value: "18", label: "Target languages" },
+      { value: "99.1%", label: "QC pass rate" },
+    ],
+  },
+  {
+    slug: "accessible-content-remediation",
+    client: "Academic publisher",
+    industry: "Publishing",
+    title: "Backlist remediation to meet accessibility standards",
+    summary:
+      "We remediated a large academic backlist to WCAG-aligned standards — structural tagging, alt text, and reading-order fixes — with publisher sign-off at each batch.",
+    image: "/images/service-accessibility.png",
+    imageAlt:
+      "Accessibility specialist checking document structure and tagging on screen",
+    metrics: [
+      { value: "12,400", label: "Titles remediated" },
+      { value: "WCAG 2.1 AA", label: "Standard met" },
+      { value: "5 mo", label: "Programme duration" },
+    ],
+  },
+  {
+    slug: "data-platform-modernisation",
+    client: "B2B software provider",
+    industry: "Technology",
+    title: "Reporting platform rebuilt on a governed data model",
+    summary:
+      "An embedded engineering pod consolidated fragmented reporting into a single governed model, cutting manual reconciliation and shortening the analytics release cycle.",
+    image: "/images/case-study-analytics.png",
+    imageAlt:
+      "Analyst reviewing dashboards and reporting metrics on a large display",
+    metrics: [
+      { value: "60%", label: "Faster report builds" },
+      { value: "140+", label: "Dashboards migrated" },
+      { value: "4", label: "Legacy tools retired" },
+    ],
+  },
 ];
 
 export const stats = [

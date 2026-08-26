@@ -8,6 +8,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { IconBadge, CheckList } from "@/components/ui/feature-card";
 import { StatBand } from "@/components/ui/stat-band";
+import { Reveal, Float } from "@/components/ui/reveal";
 import {
   ArrowRight,
   Target,
@@ -19,6 +20,9 @@ import {
   Lightbulb,
   Globe,
   CheckCircle,
+  MapPin,
+  Clock,
+  ClipboardCheck,
 } from "lucide-react";
 import { stats } from "@/lib/site-data";
 
@@ -71,6 +75,30 @@ const visionPoints = [
   "Leading our categories on measured quality, not marketing claims",
   "Expanding delivery capacity without diluting governance",
   "Creating durable partnerships that survive procurement cycles",
+];
+
+const operations = [
+  {
+    title: "Regional delivery centres",
+    description:
+      "Capacity across three regions with native-language specialists, so work follows the timezone it is needed in.",
+    tag: "3 regions",
+    icon: MapPin,
+  },
+  {
+    title: "Defined coverage windows",
+    description:
+      "24/5 coverage with agreed escalation paths and a named delivery manager accountable for SLA performance.",
+    tag: "24/5 coverage",
+    icon: Clock,
+  },
+  {
+    title: "Documented governance",
+    description:
+      "ISO-aligned handling, NDA-backed secure floors, and written acceptance criteria on every deliverable.",
+    tag: "ISO-aligned",
+    icon: ClipboardCheck,
+  },
 ];
 
 const missionPoints = [
@@ -133,18 +161,45 @@ export default function AboutPage() {
                 </Link>
               </Reveal>
 
-              <Reveal
-                delay={0.12}
-                y={26}
-                className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]"
-              >
-                <Image
-                  src="/images/about-office.png"
-                  alt="Muenot delivery centre floor with specialists at production workstations"
-                  fill
-                  sizes="(min-width: 1024px) 48vw, 100vw"
-                  className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-                />
+              <Reveal delay={0.12} y={26} className="relative">
+                <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
+                  <Image
+                    src="/images/about-office.png"
+                    alt="Muenot delivery centre floor with specialists at production workstations"
+                    fill
+                    sizes="(min-width: 1024px) 48vw, 100vw"
+                    className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                  />
+                </div>
+
+                <Float
+                  distance={12}
+                  duration={7}
+                  className="pointer-events-none absolute -bottom-6 -left-4 hidden sm:block lg:-left-10"
+                >
+                  <div className="flex items-center gap-5 rounded-2xl border border-border bg-card/95 px-6 py-4 shadow-[0_24px_50px_-28px_rgba(11,79,158,0.55)] backdrop-blur">
+                    <div className="flex flex-col">
+                      <span className="font-display text-2xl font-bold text-primary">
+                        12+
+                      </span>
+                      <span className="text-xs font-medium text-muted-foreground">
+                        years delivering
+                      </span>
+                    </div>
+                    <span
+                      className="h-10 w-px bg-border"
+                      aria-hidden="true"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-display text-2xl font-bold text-primary">
+                        40+
+                      </span>
+                      <span className="text-xs font-medium text-muted-foreground">
+                        countries served
+                      </span>
+                    </div>
+                  </div>
+                </Float>
               </Reveal>
             </div>
           </div>
@@ -152,36 +207,52 @@ export default function AboutPage() {
 
         <section className="border-b border-border bg-surface py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
               <Reveal
                 as="article"
-                className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-8"
+                className="relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-border bg-card p-8 lg:p-10"
               >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-6 right-4 font-display text-[7rem] font-bold leading-none text-primary/10 lg:text-[9rem]"
+                >
+                  01
+                </span>
                 <IconBadge icon={Eye} size="lg" />
-                <h2 className="font-display text-2xl font-bold text-foreground">
+                <h2 className="relative font-display text-2xl font-bold text-foreground lg:text-3xl">
                   Our vision
                 </h2>
-                <p className="text-base leading-relaxed text-pretty text-muted-foreground">
+                <p className="relative text-base leading-relaxed text-pretty text-muted-foreground">
                   To be the delivery partner enterprises trust with the work
                   that cannot fail — measured, audited, and repeatable.
                 </p>
-                <CheckList items={visionPoints} />
+                <CheckList items={visionPoints} className="relative mt-auto" />
               </Reveal>
 
               <Reveal
                 as="article"
                 delay={0.12}
-                className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-8"
+                className="relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-border bg-card p-8 lg:p-10"
               >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-6 right-4 font-display text-[7rem] font-bold leading-none text-primary/10 lg:text-[9rem]"
+                >
+                  02
+                </span>
                 <IconBadge icon={Target} size="lg" />
-                <h2 className="font-display text-2xl font-bold text-foreground">
+                <h2 className="relative font-display text-2xl font-bold text-foreground lg:text-3xl">
                   Our mission
                 </h2>
-                <p className="text-base leading-relaxed text-pretty text-muted-foreground">
+                <p className="relative text-base leading-relaxed text-pretty text-muted-foreground">
                   To deliver operational programmes that hold their quality bar
                   as volumes scale.
                 </p>
-                <CheckList items={missionPoints} />
+                <CheckList
+                  items={missionPoints}
+                  columns={2}
+                  className="relative mt-auto"
+                />
               </Reveal>
             </div>
           </div>
@@ -196,9 +267,11 @@ export default function AboutPage() {
             />
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {values.map((value) => (
-                <article
+              {values.map((value, index) => (
+                <Reveal
+                  as="article"
                   key={value.title}
+                  delay={index * 0.06}
                   className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-24px_rgba(11,79,158,0.45)]"
                 >
                   <IconBadge icon={value.icon} />
@@ -208,7 +281,39 @@ export default function AboutPage() {
                   <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
                     {value.description}
                   </p>
-                </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-surface py-20 lg:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="How we operate"
+              title="The delivery model behind the work"
+              description="Every engagement runs on the same operating spine — regional capacity, defined coverage windows, and documented governance."
+            />
+
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {operations.map((item, index) => (
+                <Reveal
+                  as="article"
+                  key={item.title}
+                  delay={index * 0.08}
+                  className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-8"
+                >
+                  <IconBadge icon={item.icon} size="lg" />
+                  <h3 className="font-display text-lg font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                    {item.description}
+                  </p>
+                  <span className="mt-2 inline-flex w-fit rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent-foreground">
+                    {item.tag}
+                  </span>
+                </Reveal>
               ))}
             </div>
           </div>
