@@ -169,7 +169,7 @@ export function HeroSection() {
                     98.2%
                   </p>
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Quality Accuracy Rate
+                    Quality Assurance Rate
                   </p>
                 </div>
               </Float>
