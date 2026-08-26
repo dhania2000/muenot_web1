@@ -57,7 +57,7 @@ export function Navbar() {
             <div className="flex items-center justify-between h-9 text-xs">
               <p className="opacity-90">
                 Enterprise data, learning &amp; localization services — delivered
-                across 10+ languages.
+                across 40+ languages.
               </p>
               <div className="flex items-center gap-6">
                 <a

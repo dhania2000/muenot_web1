@@ -32,7 +32,7 @@ export const serviceDetails: ServiceDetail[] = [
     imageAlt: "Annotation specialist labelling street imagery for a vision model",
     chips: ["2D & 3D", "Multi-sensor", "Gold-set calibration"],
     stats: [
-      { value: "98.2%", label: "Annotation precision" },
+      { value: "98.2%", label: "Quality Accuracy Rate" },
       { value: "4.2M", label: "Frames delivered" },
       { value: "48h", label: "Pilot turnaround" },
     ],

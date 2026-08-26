@@ -117,7 +117,7 @@ export function HeroSection() {
               <span aria-hidden="true" className="h-3 w-px bg-border" />
               <span className="inline-flex items-center gap-1.5">
                 <Globe2 className="h-4 w-4 text-primary" aria-hidden="true" />
-                10+ languages
+                40+ languages
               </span>
             </motion.div>
           </div>
@@ -169,7 +169,7 @@ export function HeroSection() {
                     98.2%
                   </p>
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Annotation precision
+                    Quality Accuracy Rate
                   </p>
                 </div>
               </Float>
