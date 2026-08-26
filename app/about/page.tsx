@@ -88,8 +88,8 @@ const operations = [
   {
     title: "Defined coverage windows",
     description:
-      "24/5 coverage with agreed escalation paths and a named delivery manager accountable for SLA performance.",
-    tag: "24/5 coverage",
+      "extended weekday coverage with agreed escalation paths and a named delivery manager accountable for SLA performance.",
+    tag: "extended weekday coverage",
     icon: Clock,
   },
   {
@@ -122,7 +122,7 @@ export default function AboutPage() {
           imageAlt="Muenot leadership and delivery team collaborating in a modern office"
           primaryCta={{ label: "Talk to our team", href: "/contact" }}
           secondaryCta={{ label: "Explore services", href: "/#services" }}
-          highlights={["12+ years", "1,400+ specialists", "40+ countries"]}
+          highlights={["6+ years", "300+ specialists", "10+ countries"]}
         />
 
         <section className="border-b border-border bg-card py-16">
@@ -144,7 +144,7 @@ export default function AboutPage() {
                 <CheckList
                   items={[
                     "Five service lines under one delivery organisation",
-                    "Delivery centres across three regions, 24/5 coverage",
+                    "Delivery centres across three regions, extended weekday coverage",
                     "ISO-aligned handling with NDA-backed secure floors",
                     "Sector-assigned delivery leads on every account",
                   ]}
@@ -180,7 +180,7 @@ export default function AboutPage() {
                   <div className="flex items-center gap-5 rounded-2xl border border-border bg-card/95 px-6 py-4 shadow-[0_24px_50px_-28px_rgba(11,79,158,0.55)] backdrop-blur">
                     <div className="flex flex-col">
                       <span className="font-display text-2xl font-bold text-primary">
-                        12+
+                        6+
                       </span>
                       <span className="text-xs font-medium text-muted-foreground">
                         years delivering
@@ -192,7 +192,7 @@ export default function AboutPage() {
                     />
                     <div className="flex flex-col">
                       <span className="font-display text-2xl font-bold text-primary">
-                        40+
+                        10+
                       </span>
                       <span className="text-xs font-medium text-muted-foreground">
                         countries served

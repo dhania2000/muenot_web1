@@ -48,7 +48,7 @@ const testimonials = [
   },
   {
     quote:
-      "They rebuilt our compliance curriculum for 40 markets. Completion rates went up and audit findings went to zero.",
+      "They rebuilt our compliance curriculum for 10 markets. Completion rates went up and audit findings went to zero.",
     name: "Director, Learning & Development",
     company: "Global enterprise",
     avatar: "/images/testimonial-2.png",

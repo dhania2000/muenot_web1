@@ -225,10 +225,10 @@ export function Footer() {
           <div className="flex items-center gap-6 text-xs opacity-60">
             <span>ISO 27001 aligned processes</span>
             <a
-              href="https://www.muenot.com"
+              href="https://www.muenot.co.in"
               className="hover:opacity-100 transition-opacity"
             >
-              www.muenot.com
+              www.muenot.co.in
             </a>
           </div>
         </div>

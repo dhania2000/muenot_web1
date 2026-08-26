@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.co.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

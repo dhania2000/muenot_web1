@@ -32,7 +32,7 @@ export const serviceDetails: ServiceDetail[] = [
     imageAlt: "Annotation specialist labelling street imagery for a vision model",
     chips: ["2D & 3D", "Multi-sensor", "Gold-set calibration"],
     stats: [
-      { value: "99.2%", label: "Average accuracy" },
+      { value: "98.2%", label: "Annotation precision" },
       { value: "4.2M", label: "Frames delivered" },
       { value: "48h", label: "Pilot turnaround" },
     ],
@@ -214,7 +214,7 @@ export const serviceDetails: ServiceDetail[] = [
     stats: [
       { value: "3 min", label: "Median review time" },
       { value: "97%", label: "SLA attainment" },
-      { value: "12", label: "Languages staffed" },
+      { value: "6", label: "Languages staffed" },
     ],
     offerings: [
       {
@@ -693,7 +693,7 @@ export const serviceDetails: ServiceDetail[] = [
     chips: ["Studio recording", "Editing", "Audio post"],
     stats: [
       { value: "9k", label: "Minutes produced" },
-      { value: "40", label: "Voice talents" },
+      { value: "10", label: "Voice talents" },
       { value: "4K", label: "Delivery masters" },
     ],
     offerings: [
@@ -807,12 +807,12 @@ export const serviceDetails: ServiceDetail[] = [
     title: "One source language in,",
     highlight: "every market out.",
     tagline:
-      "120+ language pairs handled by domain-matched native linguists with two-step review.",
+      "40+ language pairs handled by domain-matched native linguists with two-step review.",
     image: "/images/service-localization.png",
     imageAlt: "Linguist working at a translation workstation with reference material",
-    chips: ["120+ pairs", "Two-step review", "Client-owned TM"],
+    chips: ["40+ pairs", "Two-step review", "Client-owned TM"],
     stats: [
-      { value: "120+", label: "Language pairs" },
+      { value: "40+", label: "Language pairs" },
       { value: "99.6%", label: "First-pass acceptance" },
       { value: "24/5", label: "Coverage" },
     ],

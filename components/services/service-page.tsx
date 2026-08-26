@@ -266,7 +266,7 @@ export function ServicePage({
             <Reveal>
               <SectionHeading
                 eyebrow="What we deliver"
-                title={`${service.eyebrow} capabilities`}
+                title={`${service.eyebrow} service areas`}
               />
             </Reveal>
 
