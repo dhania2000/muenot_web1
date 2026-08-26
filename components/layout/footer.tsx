@@ -222,8 +222,20 @@ export function Footer() {
             &copy; 2020&ndash;{new Date().getFullYear()} Muenot Technologies. All
             rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-xs opacity-60">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs opacity-60">
             <span>ISO 27001 aligned processes</span>
+            <Link
+              href="/privacy-policy"
+              className="hover:opacity-100 transition-opacity"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-and-conditions"
+              className="hover:opacity-100 transition-opacity"
+            >
+              Terms &amp; Conditions
+            </Link>
             <a
               href="https://www.muenot.co.in"
               className="hover:opacity-100 transition-opacity"
