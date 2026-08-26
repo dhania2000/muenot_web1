@@ -100,27 +100,27 @@ h4 {
   background: var(--muted-foreground);
 }
 
-/* Utility: thin blueprint grid used behind light hero/section areas */
+/* Utility: quiet editorial grid for article surfaces */
 @utility grid-lines {
   background-image: linear-gradient(
       to right,
-      color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+      color-mix(in oklab, var(--primary) 7%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--primary) 8%, transparent) 1px,
+      color-mix(in oklab, var(--primary) 7%, transparent) 1px,
       transparent 1px
     );
-  background-size: 64px 64px;
+  background-size: 72px 72px;
 }
 
-/* Utility: subtle top-down fade for image overlays */
+/* Utility: readable image overlay for cover text */
 @utility image-scrim {
   background: linear-gradient(
     to top,
-    color-mix(in oklab, var(--primary-dark) 88%, transparent),
-    color-mix(in oklab, var(--primary-dark) 35%, transparent) 55%,
+    color-mix(in oklab, var(--primary-dark) 82%, transparent),
+    color-mix(in oklab, var(--primary-dark) 18%, transparent) 60%,
     transparent
   );
 }
