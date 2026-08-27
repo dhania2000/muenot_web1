@@ -368,7 +368,7 @@ export default function BlogPostPage() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className="max-w-4xl text-balance text-4xl font-semibold leading-[1.05] text-foreground sm:text-5xl lg:text-7xl"
+                className="max-w-4xl text-balance text-2xl font-semibold leading-[1.15] text-foreground sm:text-3xl lg:text-4xl"
               >
                 {post.title}
               </motion.h1>

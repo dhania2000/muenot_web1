@@ -17,7 +17,7 @@ export const servicePillars: ServicePillar[] = [
     title: "Training data pipelines built for production models",
     description:
       "We build and operate the annotation, curation, and evaluation pipelines that keep machine learning teams shipping. Dedicated delivery pods, documented quality gates, and audit trails on every batch.",
-    image: "/images/service-ai-data.png",
+    image: "/images/service-ai-data-overview.png",
     imageAlt:
       "Data annotation specialist labelling street imagery for a computer vision model",
     href: "/services/data-annotation",
@@ -65,7 +65,7 @@ export const servicePillars: ServicePillar[] = [
     title: "Course production from curriculum design to LMS launch",
     description:
       "Instructional designers, subject matter experts, and media teams working as one unit to turn learning objectives into courses that hold attention and pass accessibility review.",
-    image: "/images/service-elearning.png",
+    image: "/images/service-elearning-overview.png",
     imageAlt:
       "Instructional designers reviewing an e-learning course storyboard on a monitor",
     href: "/services/content-development",
@@ -113,7 +113,7 @@ export const servicePillars: ServicePillar[] = [
     title: "Engineering teams that ship and then keep it running",
     description:
       "Product engineering, platform modernisation, and automation delivered by senior squads. We integrate with your backlog, your review process, and your release cadence.",
-    image: "/images/service-technology.png",
+    image: "/images/service-technology-overview.png",
     imageAlt: "Software engineers pair programming at a standing desk",
     href: "/contact",
     capabilities: [
@@ -160,7 +160,7 @@ export const servicePillars: ServicePillar[] = [
     title: "One source language in, every market out",
     description:
       "Native linguists, reviewers, and engineers handling translation, media localisation, and linguistic QA so your product reads as though it was written locally.",
-    image: "/images/service-localization.png",
+    image: "/images/service-localization-overview.png",
     imageAlt: "Linguist working at a subtitling and translation workstation",
     href: "/services/translation",
     capabilities: [
@@ -207,7 +207,7 @@ export const servicePillars: ServicePillar[] = [
     title: "Editorial and accessibility services for digital catalogues",
     description:
       "Copy editing, composition, conversion, and accessibility remediation for publishers moving large backlists into compliant digital formats.",
-    image: "/images/service-publishing.png",
+    image: "/images/service-publishing-overview.png",
     imageAlt: "Editor reviewing printed page proofs beside a book layout screen",
     href: "/services/editorial-services",
     capabilities: [
@@ -337,7 +337,7 @@ export const caseStudies = [
     title: "Subtitle and metadata operations for a catalogue launch",
     summary:
       "A managed pod handled subtitling, QC, and metadata tagging across a back catalogue release, working to platform style guides and a weekly drop schedule.",
-    image: "/images/service-subtitling.png",
+    image: "/images/case-study-subtitle-ops.png",
     imageAlt:
       "Subtitling specialist reviewing timed captions against video on a workstation",
     metrics: [
@@ -353,7 +353,7 @@ export const caseStudies = [
     title: "Backlist remediation to meet accessibility standards",
     summary:
       "We remediated a large academic backlist to WCAG-aligned standards — structural tagging, alt text, and reading-order fixes — with publisher sign-off at each batch.",
-    image: "/images/service-accessibility.png",
+    image: "/images/case-study-accessibility.png",
     imageAlt:
       "Accessibility specialist checking document structure and tagging on screen",
     metrics: [
@@ -369,7 +369,7 @@ export const caseStudies = [
     title: "Reporting platform rebuilt on a governed data model",
     summary:
       "An embedded engineering pod consolidated fragmented reporting into a single governed model, cutting manual reconciliation and shortening the analytics release cycle.",
-    image: "/images/case-study-analytics.png",
+    image: "/images/case-study-data-platform.png",
     imageAlt:
       "Analyst reviewing dashboards and reporting metrics on a large display",
     metrics: [

@@ -102,7 +102,7 @@ export function CTASection() {
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        appointmentUrl="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0-2HacjoEaGmbT8c2DojXpF5MUpHvL9fvDuOK83py17R0RYHWnh8jfRf8a4mVDParjfSakNJ2X"
+        appointmentUrl="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2H1mDyZZCvmW3Borgz4b3tdC_wtzo8KjAQ_2SHFVMW70qdjK75tPsr8a4mc7OOyNy1KA57B_IF?gv=true"
       />
     </section>
   );

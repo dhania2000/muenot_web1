@@ -328,7 +328,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "actually opens.",
     tagline:
       "Quality, throughput and model performance reporting built on your own data stack.",
-    image: "/images/case-study-analytics.png",
+    image: "/images/service-ai-analytics.png",
     imageAlt: "Analyst reviewing quality and performance dashboards on screen",
     chips: ["Quality metrics", "Drift alerts", "Warehouse native"],
     stats: [
@@ -508,7 +508,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "the chasing.",
     tagline:
       "Onboarding, review coordination and course upkeep so faculty can focus on teaching.",
-    image: "/images/about-team.png",
+    image: "/images/service-faculty-support.png",
     imageAlt: "Faculty support specialist coaching an author through a course review",
     chips: ["Author onboarding", "Review cycles", "Course upkeep"],
     stats: [
@@ -628,7 +628,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "large catalogues.",
     tagline:
       "Versioning, metadata and localisation readiness kept under control as volume grows.",
-    image: "/images/about-office.png",
+    image: "/images/service-content-operations.png",
     imageAlt: "Content operations team reviewing a release calendar on a large screen",
     chips: ["Versioning", "Metadata", "Release calendars"],
     stats: [
@@ -748,7 +748,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "market you enter.",
     tagline:
       "Casting, directed recording and delivery-ready audio in 60+ languages.",
-    image: "/images/service-audio.png",
+    image: "/images/service-voiceover.png",
     imageAlt: "Voiceover artist recording in an acoustically treated studio booth",
     chips: ["60+ languages", "Directed sessions", "Retakes included"],
     stats: [
@@ -868,7 +868,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "clean timecodes.",
     tagline:
       "Verbatim and clean-read transcription with speaker labels, ready for search or subtitling.",
-    image: "/images/service-subtitling.png",
+    image: "/images/service-transcription.png",
     imageAlt: "Transcriptionist working with audio waveform software and headphones",
     chips: ["Verbatim", "Speaker labels", "Timecoded"],
     stats: [
@@ -988,7 +988,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "your users see it.",
     tagline:
       "Terminology, style and functional checks on the real build, not on a spreadsheet.",
-    image: "/images/service-localization.png",
+    image: "/images/service-linguistic-qa.png",
     imageAlt: "Linguistic QA reviewer checking localised software on two screens",
     chips: ["In-context", "Terminology", "Severity scored"],
     stats: [
@@ -1108,7 +1108,7 @@ export const serviceDetails: ServiceDetail[] = [
     highlight: "voice across imprints.",
     tagline:
       "Developmental, copy and proof editing run from your style sheet, at volume.",
-    image: "/images/service-publishing.png",
+    image: "/images/service-editorial.png",
     imageAlt: "Editor reviewing printed page proofs beside a layout screen",
     chips: ["Copy editing", "Proofing", "Style sheets"],
     stats: [

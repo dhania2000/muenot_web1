@@ -63,7 +63,7 @@ export function HeroSection() {
               text="AI data, learning and localization, delivered"
               highlight="at scale."
               className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-[3.6rem]"
-              highlightClassName="text-primary"
+              highlightClassName="animate-text-shimmer bg-clip-text text-transparent bg-[linear-gradient(110deg,var(--primary),45%,var(--accent),55%,var(--primary))] bg-[length:250%_100%]"
             />
 
             <motion.p

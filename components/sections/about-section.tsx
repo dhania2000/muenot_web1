@@ -74,7 +74,7 @@ export function AboutSection() {
             <Reveal>
               <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
                 <Image
-                  src="/images/about-team.png"
+                  src="/images/about-team-collaboration.png"
                   alt="Muenot delivery team collaborating around a table in a modern office"
                   fill
                   sizes="(min-width: 1024px) 48vw, 100vw"

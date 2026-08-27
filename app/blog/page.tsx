@@ -6,8 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { SparklesCore } from "@/components/ui/sparkles";
-import { Spotlight } from "@/components/ui/spotlight";
 import {
   Search,
   Calendar,
@@ -161,26 +159,15 @@ export default function BlogPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
-        <Spotlight
-          className="-top-40 left-0 md:left-60 md:-top-20"
-          fill="rgba(139, 92, 246, 0.5)"
+      <section className="relative pt-32 pb-16 overflow-hidden border-b border-border bg-surface">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 grid-lines opacity-60"
         />
-
-        <div className="absolute inset-0 w-full h-full">
-          <SparklesCore
-            id="blogSparkles"
-            background="transparent"
-            minSize={0.4}
-            maxSize={1}
-            particleDensity={50}
-            className="w-full h-full"
-            particleColor="#8b5cf6"
-          />
-        </div>
-
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[length:50px_50px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black pointer-events-none" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/8 blur-3xl"
+        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -190,16 +177,14 @@ export default function BlogPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <BookOpen className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary">Our Blog</span>
+              <span className="text-sm font-medium text-primary">Our Blog</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4 text-balance">
               Insights &
               <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary to-primary">
-                Industry Updates
-              </span>
+              <span className="text-primary">Industry Updates</span>
             </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg px-4">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg px-4 text-pretty">
               Stay informed with the latest trends, insights, and news from the world of
               AI, e-learning, technology, and localization.
             </p>
