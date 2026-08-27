@@ -5,20 +5,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Accessibility,
   ArrowRight,
-  BookOpenCheck,
-  Brush,
   Check,
   ChevronRight,
-  Clapperboard,
-  ClipboardCheck,
   Clock,
-  Compass,
-  GraduationCap,
-  Megaphone,
-  ScanText,
+  Cloud,
+  Code2,
+  Database,
+  Gauge,
+  Lightbulb,
+  ScanSearch,
+  ShieldCheck,
   Sparkles,
+  Users,
+  Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
@@ -31,27 +31,27 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import type { ServiceDetail } from "@/lib/services-data";
 
 const heroPoints = [
-  "Tailored courseware mapped to individual learning needs",
-  "Interactive, engaging concepts for active learning",
-  "Evidence-based instructional design at every stage",
-  "WCAG-compliant content that reaches all learners",
+  "Senior squads embedded into your backlog and release cadence",
+  "Cloud-native architecture built for scale and cost control",
+  "Automation that removes manual, error-prone workflows",
+  "SLA-backed support with documentation on every handover",
 ];
 
 const highlights: { icon: LucideIcon; title: string; detail: string }[] = [
   {
-    icon: GraduationCap,
-    title: "Expert Instructional Designers",
-    detail: "Certified professionals with deep educational expertise.",
+    icon: Users,
+    title: "Senior Engineering Squads",
+    detail: "Experienced developers who integrate with your team from week one.",
   },
   {
-    icon: BookOpenCheck,
-    title: "Evidence-Based Approaches",
-    detail: "Grounded in learning science and proven methodologies.",
+    icon: ShieldCheck,
+    title: "Production-Grade Delivery",
+    detail: "Reviewed, tested, and documented code shipped to your standards.",
   },
   {
-    icon: Accessibility,
-    title: "Accessible & Inclusive",
-    detail: "WCAG compliant content that reaches all learners.",
+    icon: Gauge,
+    title: "Built to Scale",
+    detail: "Architecture and pipelines designed for growth, not just launch.",
   },
 ];
 
@@ -68,172 +68,172 @@ type ServiceType = {
 
 const services: ServiceType[] = [
   {
-    icon: Compass,
-    name: "Instructional Design",
-    subtitle: "Pedagogy-led courseware",
-    tagline: "Strategic learning design that maximizes engagement and retention",
+    icon: Code2,
+    name: "Software Development",
+    subtitle: "Web & mobile product delivery",
+    tagline: "Full-stack product engineering with senior squads",
     description:
-      "Our instructional designers create comprehensive learning experiences using proven pedagogical approaches. We analyze learning objectives, design curriculum frameworks, and develop assessment strategies that ensure measurable outcomes.",
+      "We design, build, and ship web and mobile products with senior engineers who own delivery end to end. From greenfield builds to modernising legacy systems, we integrate with your backlog, review process, and release cadence.",
     capabilities: [
-      "Learning objectives mapping",
-      "Curriculum architecture",
-      "Assessment strategy design",
-      "Learner engagement optimization",
-      "Evidence-based pedagogy",
+      "React, Next.js & TypeScript",
+      "Native and cross-platform mobile",
+      "API and microservice design",
+      "Legacy modernisation",
+      "Code review and documentation",
     ],
     perfectFor: [
-      "Corporate training",
-      "Higher education",
-      "Certification programs",
-      "Onboarding journeys",
+      "SaaS platforms",
+      "Customer portals",
+      "Internal tools",
+      "MVP to scale",
     ],
-    turnaround: "2-4 weeks",
+    turnaround: "2-week onboarding",
   },
   {
-    icon: ClipboardCheck,
-    name: "Assessment Writing",
-    subtitle: "Bloom's-aligned evaluation",
-    tagline: "Rigorous assessments that accurately measure learning outcomes",
+    icon: Cloud,
+    name: "Cloud & DevOps",
+    subtitle: "Infrastructure that stays up",
+    tagline: "Migration, IaC, CI/CD, and cost optimisation",
     description:
-      "Expert assessment creation aligned with Bloom's taxonomy and learning objectives. We develop multiple question types, rubrics, and evaluation frameworks that provide meaningful insights into learner progress.",
+      "We move workloads to the cloud, codify infrastructure, and automate the path from commit to production. Observability, security, and cost control are built in — so releases are boring and the bill is predictable.",
     capabilities: [
-      "Multiple choice questions",
-      "Essay prompts and rubrics",
-      "Performance-based assessments",
-      "Formative and summative evaluation",
-      "Item analysis and validation",
+      "Cloud migration (AWS, Azure, GCP)",
+      "Infrastructure as Code",
+      "CI/CD pipeline automation",
+      "Observability and alerting",
+      "Cost optimisation reviews",
     ],
     perfectFor: [
-      "Exam banks",
-      "Skills validation",
-      "Compliance testing",
-      "Adaptive learning",
-    ],
-    turnaround: "1-3 weeks",
-  },
-  {
-    icon: Clapperboard,
-    name: "Animation Design",
-    subtitle: "Motion-driven storytelling",
-    tagline: "Visual storytelling that brings concepts to life",
-    description:
-      "Custom animations that explain complex concepts through engaging visual narratives. Our animators combine educational expertise with creative design to produce animations that enhance understanding and retention.",
-    capabilities: [
-      "2D and 3D animations",
-      "Process visualizations",
-      "Character-driven narratives",
-      "Interactive animations",
-      "Motion graphics",
-    ],
-    perfectFor: [
-      "Concept explainers",
-      "Product demos",
-      "Microlearning",
-      "Marketing videos",
+      "Cloud migrations",
+      "Platform teams",
+      "Scaling startups",
+      "Compliance workloads",
     ],
     turnaround: "3-6 weeks",
   },
   {
-    icon: ScanText,
-    name: "Alt Text Creation",
-    subtitle: "WCAG-compliant descriptions",
-    tagline: "Accessible descriptions that ensure inclusive learning",
+    icon: Wrench,
+    name: "Automation",
+    subtitle: "Workflow and internal tooling",
+    tagline: "Automate the manual work slowing your team down",
     description:
-      "Professional alt text writing that makes visual content accessible to all learners. We create descriptive, context-appropriate text that maintains educational value while meeting WCAG accessibility standards.",
+      "We identify repetitive, error-prone processes and replace them with reliable automation and internal tools. From data syncs to approval workflows, we free your team to focus on work that needs a human.",
     capabilities: [
-      "WCAG 2.1 compliance",
-      "Image descriptions",
-      "Diagram explanations",
-      "Chart and graph descriptions",
-      "Context-aware content",
+      "Workflow automation",
+      "Internal tools and dashboards",
+      "Data integration and syncs",
+      "Scheduled jobs and pipelines",
+      "Third-party API orchestration",
     ],
     perfectFor: [
-      "Accessibility audits",
-      "Content remediation",
-      "Public sector",
-      "Inclusive courseware",
-    ],
-    turnaround: "3-5 business days",
-  },
-  {
-    icon: Brush,
-    name: "Creative Art",
-    subtitle: "Original learning visuals",
-    tagline: "Original artwork that enhances learning materials",
-    description:
-      "Custom illustrations, graphics, and visual elements designed specifically for educational contexts. Our artists create engaging visuals that support learning objectives and maintain consistent brand identity.",
-    capabilities: [
-      "Custom illustrations",
-      "Infographic design",
-      "Icon creation",
-      "Visual metaphors",
-      "Style guide development",
-    ],
-    perfectFor: [
-      "Course branding",
-      "Infographics",
-      "Storyboards",
-      "Interactive media",
+      "Operations teams",
+      "Back-office processes",
+      "Reporting automation",
+      "System integrations",
     ],
     turnaround: "2-4 weeks",
   },
   {
-    icon: Megaphone,
-    name: "Digital Marketing Content",
-    subtitle: "Conversion-focused copy",
-    tagline: "Compelling content that promotes your educational offerings",
+    icon: Database,
+    name: "Data Platforms",
+    subtitle: "Warehouses & reporting layers",
+    tagline: "A governed data model your whole team can trust",
     description:
-      "Strategic marketing content that communicates the value of your educational programs. From course descriptions to promotional campaigns, we create content that attracts and converts your target audience.",
+      "We build the warehouses, pipelines, and reporting layers that turn scattered data into a single source of truth. Governed models, tested transformations, and dashboards built for the people who actually use them.",
     capabilities: [
-      "Course descriptions",
-      "Landing page copy",
-      "Email campaigns",
-      "Social media content",
-      "SEO-optimized content",
+      "Warehouse design and modelling",
+      "ETL / ELT pipelines",
+      "Reporting and BI dashboards",
+      "Data quality and testing",
+      "Governance and documentation",
     ],
     perfectFor: [
-      "Course launches",
-      "Lead generation",
-      "Email nurture",
-      "Organic growth",
+      "Analytics teams",
+      "Reporting consolidation",
+      "Data governance",
+      "Self-serve BI",
     ],
-    turnaround: "1-2 weeks",
+    turnaround: "4-8 weeks",
+  },
+  {
+    icon: ScanSearch,
+    name: "QA Engineering",
+    subtitle: "Test automation & release validation",
+    tagline: "Ship faster with confidence, not crossed fingers",
+    description:
+      "We build test automation and release validation that catches regressions before your users do. Coverage where it counts, fast feedback in CI, and clear reporting so every release decision is an informed one.",
+    capabilities: [
+      "Automated test suites",
+      "End-to-end and integration testing",
+      "Performance and load testing",
+      "CI-integrated validation",
+      "Release readiness reporting",
+    ],
+    perfectFor: [
+      "Frequent releases",
+      "Regression-prone products",
+      "Quality-critical systems",
+      "Scaling teams",
+    ],
+    turnaround: "3-5 weeks",
+  },
+  {
+    icon: Lightbulb,
+    name: "IT Consulting",
+    subtitle: "Architecture & technology roadmaps",
+    tagline: "Independent advice on where to invest next",
+    description:
+      "We review your architecture, delivery practices, and technology choices, then produce a defensible roadmap. Practical recommendations prioritised by impact and effort — with the tradeoffs made explicit.",
+    capabilities: [
+      "Architecture reviews",
+      "Technology roadmaps",
+      "Delivery process audits",
+      "Vendor and stack selection",
+      "Security and risk assessment",
+    ],
+    perfectFor: [
+      "Technical due diligence",
+      "Modernisation planning",
+      "Scaling decisions",
+      "Leadership advisory",
+    ],
+    turnaround: "1-3 weeks",
   },
 ];
 
 const process = [
   {
-    title: "Discovery & Analysis",
+    title: "Discovery & Scoping",
     detail:
-      "We begin by understanding your learning objectives, target audience, and content requirements through detailed consultation.",
+      "We map your backlog, stack, and delivery cadence, then agree on measurable goals and acceptance criteria.",
   },
   {
-    title: "Content Strategy",
+    title: "Team Integration",
     detail:
-      "Develop a comprehensive content strategy aligned with pedagogical best practices and your specific educational goals.",
+      "A senior squad is embedded into your workflow, tooling, and review process within a two-week onboarding.",
   },
   {
-    title: "Creation & Development",
+    title: "Build & Ship",
     detail:
-      "Our expert team creates high-quality content using proven instructional design methodologies and creative excellence.",
+      "We deliver against your release schedule with reviewed, tested code and transparent progress reporting.",
   },
   {
-    title: "Review & Refinement",
+    title: "Operate & Support",
     detail:
-      "Iterative review process with stakeholders to ensure content meets quality standards and learning objectives.",
+      "SLA-backed support with defined escalation paths keeps what we build running in production.",
   },
   {
-    title: "Delivery & Support",
+    title: "Handover & Docs",
     detail:
-      "Final delivery with comprehensive documentation and ongoing support for implementation and updates.",
+      "Documentation and knowledge transfer are treated as delivery requirements, not afterthoughts.",
   },
 ];
 
 const stats = [
-  { value: "310", label: "Learning modules produced" },
-  { value: "91%", label: "Average course completion rate" },
-  { value: "22", label: "Languages shipped" },
-  { value: "100%", label: "WCAG 2.2 AA accessible" },
+  { value: "300+", label: "Specialists across delivery centres" },
+  { value: "2 wks", label: "Onboarding to first pull request" },
+  { value: "99.9%", label: "Uptime on managed platforms" },
+  { value: "24/5", label: "Support coverage across regions" },
 ];
 
 function ServiceExplorer() {
@@ -247,7 +247,7 @@ function ServiceExplorer() {
       {/* Left rail */}
       <div
         role="tablist"
-        aria-label="Content development services"
+        aria-label="Technology services"
         className="flex flex-col border-b border-border bg-surface/60 lg:border-b-0 lg:border-r"
       >
         {services.map((item, index) => {
@@ -261,9 +261,7 @@ function ServiceExplorer() {
               aria-selected={isActive}
               onClick={() => setActive(index)}
               className={`group relative flex items-center gap-4 border-b border-border px-6 py-5 text-left transition-colors last:border-b-0 ${
-                isActive
-                  ? "bg-background"
-                  : "hover:bg-background/60"
+                isActive ? "bg-background" : "hover:bg-background/60"
               }`}
             >
               <span
@@ -395,7 +393,7 @@ function ServiceExplorer() {
   );
 }
 
-export function ContentDevelopmentPage({
+export function TechnologyPage({
   service,
   related,
 }: {
@@ -430,7 +428,7 @@ export function ContentDevelopmentPage({
                   </Link>
                 </li>
                 <ChevronRight className="h-3.5 w-3.5 opacity-50" aria-hidden="true" />
-                <li className="text-foreground">Content Development</li>
+                <li className="text-foreground">Technology</li>
               </ol>
             </nav>
 
@@ -447,8 +445,8 @@ export function ContentDevelopmentPage({
                 </motion.span>
 
                 <AnimatedHeadline
-                  text="Content development"
-                  highlight="that inspires learning."
+                  text="Technology built"
+                  highlight="to ship and scale."
                   className="mt-6 font-display text-4xl font-extrabold leading-[1.03] text-foreground sm:text-5xl lg:text-[3.5rem]"
                   highlightClassName="text-primary"
                 />
@@ -459,10 +457,9 @@ export function ContentDevelopmentPage({
                   transition={{ duration: 0.6, delay: 0.35 }}
                   className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
                 >
-                  Transform educational concepts into engaging, effective
-                  learning experiences. We combine pedagogical expertise with
-                  creative excellence to create materials that resonate with
-                  learners and achieve measurable results.
+                  Product engineering, cloud, and automation delivered by senior
+                  squads that integrate with your backlog, your review process,
+                  and your release cadence — then keep it running in production.
                 </motion.p>
 
                 <motion.ul
@@ -523,7 +520,7 @@ export function ContentDevelopmentPage({
               >
                 <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-45px_rgba(11,79,158,0.5)]">
                   <Image
-                    src={service.image || "/images/service-elearning.png"}
+                    src={service.image || "/images/service-technology-overview.png"}
                     alt={service.imageAlt}
                     fill
                     priority
@@ -533,10 +530,10 @@ export function ContentDevelopmentPage({
                 </div>
                 <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-border bg-card p-5 shadow-lg sm:block">
                   <p className="font-display text-3xl font-extrabold text-primary">
-                    <CountUp value="91%" />
+                    <CountUp value="99.9%" />
                   </p>
                   <p className="mt-1 text-xs font-medium text-muted-foreground">
-                    Average completion rate
+                    Uptime on managed platforms
                   </p>
                 </div>
               </motion.div>
@@ -579,8 +576,8 @@ export function ContentDevelopmentPage({
             <Reveal>
               <div className="relative aspect-[5/4] overflow-hidden rounded-3xl border border-border">
                 <Image
-                  src="/images/service-elearning-overview.png"
-                  alt="Instructional design team planning an e-learning course"
+                  src="/images/service-technology-overview.png"
+                  alt="Software engineers collaborating on a product build"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
@@ -591,9 +588,9 @@ export function ContentDevelopmentPage({
               <Reveal>
                 <SectionHeading
                   align="left"
-                  eyebrow="Engaging learning content"
-                  title="Educational content built around measurable outcomes"
-                  description="We specialise in creating tailored educational content for e-learning platforms across diverse industries and institutions — combining learning science, creative craft and accessibility from the very first draft."
+                  eyebrow="Digital engineering"
+                  title="An engineering partner that acts like part of your team"
+                  description="We embed senior squads into your delivery organisation — matching your tooling, cadence, and standards — so the software we build is maintainable long after handover, not just shipped once."
                 />
               </Reveal>
               <ul className="mt-10 flex flex-col">
@@ -627,8 +624,8 @@ export function ContentDevelopmentPage({
             <Reveal>
               <SectionHeading
                 eyebrow="What we deliver"
-                title="Our content development services"
-                description="Comprehensive content creation solutions for every aspect of your e-learning program."
+                title="Our technology services"
+                description="End-to-end engineering capability, from product delivery to the platforms and processes that keep it running."
               />
             </Reveal>
 
@@ -668,8 +665,8 @@ export function ContentDevelopmentPage({
             <Reveal>
               <SectionHeading
                 eyebrow="How we work"
-                title="Our content development process"
-                description="A systematic approach to creating exceptional educational content."
+                title="Our delivery process"
+                description="A predictable path from first conversation to production support."
               />
             </Reveal>
 
@@ -704,7 +701,7 @@ export function ContentDevelopmentPage({
                 <SectionHeading
                   align="left"
                   eyebrow="Related"
-                  title={`More ${service.pillar.label.toLowerCase()}`}
+                  title="More of what we do"
                 />
               </Reveal>
 

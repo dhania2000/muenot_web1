@@ -16,7 +16,7 @@ const navItems = [
     children: [
       { name: "AI Data Services", href: "/#ai-data" },
       { name: "E-Learning Services", href: "/#elearning" },
-      { name: "Technology", href: "/#technology" },
+      { name: "Technology", href: "/services/technology" },
       { name: "Localization", href: "/#localization" },
       { name: "Publishing", href: "/#publishing" },
     ],

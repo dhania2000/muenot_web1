@@ -16,6 +16,7 @@ export type ServiceDetail = {
 
 const aiData = { label: "AI Data Services", href: "/#ai-data" };
 const eLearning = { label: "E-Learning Services", href: "/#elearning" };
+const technology = { label: "Technology", href: "/#technology" };
 const localization = { label: "Localization", href: "/#localization" };
 const publishing = { label: "Publishing", href: "/#publishing" };
 
@@ -378,6 +379,66 @@ export const serviceDetails: ServiceDetail[] = [
       "Metrics defined once and reused across teams",
       "Alerting that surfaces drift before customers notice",
       "Reporting you own, running inside your own stack",
+    ],
+  },
+  {
+    slug: "technology",
+    eyebrow: "Technology",
+    pillar: technology,
+    title: "Engineering teams that ship",
+    highlight: "and keep it running.",
+    tagline:
+      "Product engineering, cloud, and automation delivered by senior squads embedded in your workflow.",
+    image: "/images/service-technology-overview.png",
+    imageAlt: "Software engineers pair programming at a standing desk",
+    chips: ["Senior squads", "Cloud-native", "SLA-backed"],
+    stats: [
+      { value: "2 wks", label: "Onboarding to first PR" },
+      { value: "99.9%", label: "Uptime on managed platforms" },
+      { value: "24/5", label: "Support coverage" },
+    ],
+    offerings: [
+      {
+        icon: "Code2",
+        name: "Software Development",
+        detail: "Web and mobile product delivery with senior squads.",
+      },
+      {
+        icon: "Cloud",
+        name: "Cloud & DevOps",
+        detail: "Migration, IaC, CI/CD, and cost optimisation.",
+      },
+      {
+        icon: "Wrench",
+        name: "Automation",
+        detail: "Workflow automation and internal tooling.",
+      },
+      {
+        icon: "Database",
+        name: "Data Platforms",
+        detail: "Warehouses, pipelines, and reporting layers.",
+      },
+      {
+        icon: "FileCheck2",
+        name: "QA Engineering",
+        detail: "Test automation and release validation.",
+      },
+      {
+        icon: "Lightbulb",
+        name: "IT Consulting",
+        detail: "Architecture reviews and technology roadmaps.",
+      },
+    ],
+    process: [
+      { title: "Discover", detail: "Backlog, stack, and cadence mapped." },
+      { title: "Integrate", detail: "Squad embedded into your workflow." },
+      { title: "Deliver", detail: "Shipping to your release schedule." },
+      { title: "Operate", detail: "SLA-backed support and handover docs." },
+    ],
+    outcomes: [
+      "Two-week onboarding into existing engineering workflows",
+      "SLA-backed support with defined escalation paths",
+      "Documentation and handover as a delivery requirement",
     ],
   },
   {

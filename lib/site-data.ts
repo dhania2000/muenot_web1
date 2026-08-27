@@ -115,38 +115,36 @@ export const servicePillars: ServicePillar[] = [
       "Product engineering, platform modernisation, and automation delivered by senior squads. We integrate with your backlog, your review process, and your release cadence.",
     image: "/images/service-technology-overview.png",
     imageAlt: "Software engineers pair programming at a standing desk",
-    // Technology has no standalone detail page, so the card opens the
-    // technology tab in the service-lines section rather than /contact.
-    href: "/#technology",
+    href: "/services/technology",
     capabilities: [
       {
         name: "Software Development",
-        href: "/contact",
+        href: "/services/technology",
         detail: "Web and mobile product delivery with senior squads.",
       },
       {
         name: "Cloud & DevOps",
-        href: "/contact",
+        href: "/services/technology",
         detail: "Migration, IaC, CI/CD, and cost optimisation.",
       },
       {
         name: "Automation",
-        href: "/contact",
+        href: "/services/technology",
         detail: "Workflow automation and internal tooling.",
       },
       {
         name: "Data Platforms",
-        href: "/services/ai-analytics",
+        href: "/services/technology",
         detail: "Warehouses, pipelines, and reporting layers.",
       },
       {
         name: "QA Engineering",
-        href: "/contact",
+        href: "/services/technology",
         detail: "Test automation and release validation.",
       },
       {
         name: "IT Consulting",
-        href: "/contact",
+        href: "/services/technology",
         detail: "Architecture reviews and technology roadmaps.",
       },
     ],

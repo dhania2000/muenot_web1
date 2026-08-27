@@ -89,7 +89,7 @@ const aboutLinks = [
 const servicesLinks = [
   { name: "AI Data Services", href: "/#ai-data" },
   { name: "E-Learning Services", href: "/#elearning" },
-  { name: "Technology Solutions", href: "/#technology" },
+  { name: "Technology Solutions", href: "/services/technology" },
   { name: "Localization", href: "/#localization" },
   { name: "Publishing", href: "/#publishing" },
 ];
