@@ -1,24 +1,82 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Accessibility,
   ArrowRight,
   BrainCircuit,
   Captions,
+  ChevronLeft,
+  ChevronRight,
   Database,
-  Globe2,
   GraduationCap,
   Languages,
   Mic2,
   PenTool,
   PlayCircle,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
-import { AnimatedHeadline, Float, Reveal } from "@/components/ui/reveal";
+import { Float, Reveal } from "@/components/ui/reveal";
+
+type Banner = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  highlight: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+  stat: { value: string; label: string };
+};
+
+const banners: Banner[] = [
+  {
+    id: "ai-data",
+    eyebrow: "AI Data Services",
+    title: "Training data pipelines built",
+    highlight: "for production models",
+    description:
+      "Managed annotation, curation, and evaluation pods with documented quality gates and audit trails on every batch.",
+    image: "/images/service-ai-data-overview.png",
+    imageAlt:
+      "Data annotation specialist labelling street imagery for a computer vision model",
+    primary: { label: "Explore AI data", href: "/services/data-annotation" },
+    secondary: { label: "See client results", href: "/case-studies" },
+    stat: { value: "98.2%", label: "Quality assurance rate" },
+  },
+  {
+    id: "elearning",
+    eyebrow: "E-Learning & Localization",
+    title: "Course production and localization,",
+    highlight: "delivered at scale",
+    description:
+      "Instructional designers, media teams, and native linguists turning objectives into accessible courses in 40+ languages.",
+    image: "/images/service-elearning-overview.png",
+    imageAlt:
+      "Instructional designers reviewing an e-learning course storyboard on a monitor",
+    primary: { label: "Explore e-learning", href: "/services/content-development" },
+    secondary: { label: "Talk to our team", href: "/contact" },
+    stat: { value: "40+", label: "Languages supported" },
+  },
+  {
+    id: "publishing",
+    eyebrow: "Publishing & Accessibility",
+    title: "Editorial and accessibility services",
+    highlight: "for digital catalogues",
+    description:
+      "Copy editing, conversion, and WCAG remediation for publishers moving large backlists into compliant digital formats.",
+    image: "/images/service-publishing-overview.png",
+    imageAlt: "Editor reviewing printed page proofs beside a book layout screen",
+    primary: { label: "Explore publishing", href: "/services/editorial-services" },
+    secondary: { label: "See client results", href: "/case-studies" },
+    stat: { value: "300+", label: "Specialists on delivery" },
+  },
+];
 
 const capabilityTicker = [
   { label: "Data annotation", icon: Database },
@@ -31,7 +89,47 @@ const capabilityTicker = [
   { label: "Voiceover", icon: Mic2 },
 ];
 
+const AUTOPLAY_MS = 6000;
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const contentVariants = {
+  enter: { opacity: 0, y: 24 },
+  center: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -24 },
+};
+
+const imageVariants = {
+  enter: { opacity: 0, scale: 1.06 },
+  center: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 1.02 },
+};
+
 export function HeroSection() {
+  const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const goTo = useCallback((next: number) => {
+    setIndex((next + banners.length) % banners.length);
+  }, []);
+
+  const next = useCallback(() => goTo(index + 1), [goTo, index]);
+  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    timer.current = setTimeout(() => {
+      setIndex((current) => (current + 1) % banners.length);
+    }, AUTOPLAY_MS);
+
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [index, isPaused]);
+
+  const active = banners[index];
+
   return (
     <section className="relative overflow-hidden border-b border-border bg-background pt-24 lg:pt-28">
       <div
@@ -47,147 +145,176 @@ export function HeroSection() {
       />
 
       <div className="relative mx-auto flex max-w-7xl flex-col gap-14 px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-6">
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary"
-            >
-              <Sparkles className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-              Enterprise delivery partner
-            </motion.span>
-
-            <AnimatedHeadline
-              text="AI data, learning and localization, delivered"
-              highlight="at scale."
-              className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-[3.6rem]"
-              highlightClassName="animate-text-shimmer bg-clip-text text-transparent bg-[linear-gradient(110deg,var(--primary),45%,var(--accent),55%,var(--primary))] bg-[length:250%_100%]"
-            />
-
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              Managed delivery pods across 10+ countries, working to contractual
-              SLAs.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-9 flex flex-wrap items-center gap-3"
-            >
-              <Link
-                href="/contact"
-                className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
-              >
-                Talk to our team
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </Link>
-              <Link
-                href="/case-studies"
-                className="group inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
-              >
-                <PlayCircle
-                  className="h-4 w-4 text-primary transition-transform group-hover:scale-110"
-                  aria-hidden="true"
-                />
-                See client results
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 flex items-center gap-3 text-xs font-medium text-muted-foreground"
-            >
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
-                ISO-aligned & NDA-backed
-              </span>
-              <span aria-hidden="true" className="h-3 w-px bg-border" />
-              <span className="inline-flex items-center gap-1.5">
-                <Globe2 className="h-4 w-4 text-primary" aria-hidden="true" />
-                40+ languages
-              </span>
-            </motion.div>
-          </div>
-
-          <div className="lg:col-span-6">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 24 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative"
-            >
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-border shadow-[0_40px_90px_-45px_rgba(11,79,158,0.55)]">
-                <Image
-                  src="/images/hero-team.png"
-                  alt="Delivery team collaborating on AI data and localization work in a modern office"
-                  width={1200}
-                  height={900}
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="h-full w-full object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-1/3 image-scrim opacity-70"
-                />
-                <div className="absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-2xl bg-card/95 px-4 py-3 backdrop-blur">
-                  <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
-                    <motion.span
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Featured services"
+        >
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+            {/* Text column */}
+            <div className="lg:col-span-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.id}
+                  variants={contentVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.55, ease }}
+                >
+                  <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                    <Sparkles
+                      className="h-3.5 w-3.5 text-accent"
                       aria-hidden="true"
-                      animate={{ scale: [1, 2.2, 1], opacity: [0.7, 0, 0.7] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute inset-0 rounded-full bg-accent"
                     />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
+                    {active.eyebrow}
                   </span>
-                  <p className="font-display text-sm font-bold text-foreground">
-                    Dedicated delivery teams, extended weekday coverage
+
+                  <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground text-balance sm:text-5xl lg:text-[3.4rem]">
+                    {active.title}{" "}
+                    <span className="animate-text-shimmer bg-clip-text text-transparent bg-[linear-gradient(110deg,var(--primary),45%,var(--accent),55%,var(--primary))] bg-[length:250%_100%]">
+                      {active.highlight}
+                    </span>
+                  </h1>
+
+                  <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
+                    {active.description}
                   </p>
+
+                  <div className="mt-9 flex flex-wrap items-center gap-3">
+                    <Link
+                      href={active.primary.href}
+                      className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
+                    >
+                      {active.primary.label}
+                      <ArrowRight
+                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                    <Link
+                      href={active.secondary.href}
+                      className="group inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                    >
+                      <PlayCircle
+                        className="h-4 w-4 text-primary transition-transform group-hover:scale-110"
+                        aria-hidden="true"
+                      />
+                      {active.secondary.label}
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Controls */}
+              <div className="mt-10 flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={prev}
+                    aria-label="Previous slide"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={next}
+                    aria-label="Next slide"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  {banners.map((banner, i) => (
+                    <button
+                      key={banner.id}
+                      type="button"
+                      onClick={() => goTo(i)}
+                      aria-label={`Go to slide ${i + 1}`}
+                      aria-current={i === index}
+                      className="group relative h-2.5 overflow-hidden rounded-full bg-border transition-all"
+                      style={{ width: i === index ? "2.5rem" : "0.625rem" }}
+                    >
+                      {i === index && (
+                        <motion.span
+                          aria-hidden="true"
+                          className="absolute inset-0 rounded-full bg-primary"
+                          initial={{ x: "-100%" }}
+                          animate={{ x: isPaused ? "-100%" : "0%" }}
+                          transition={{
+                            duration: isPaused ? 0 : AUTOPLAY_MS / 1000,
+                            ease: "linear",
+                          }}
+                        />
+                      )}
+                    </button>
+                  ))}
                 </div>
               </div>
+            </div>
 
-              <Float
-                className="absolute left-4 top-8 hidden lg:block"
-                distance={12}
-                duration={7}
-              >
-                <div className="rounded-2xl border border-border bg-card px-4 py-3 shadow-[0_18px_40px_-24px_rgba(11,18,32,0.35)]">
-                  <p className="font-display text-2xl font-extrabold text-primary">
-                    98.2%
-                  </p>
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Quality Assurance Rate
-                  </p>
+            {/* Image column */}
+            <div className="lg:col-span-6">
+              <div className="relative">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-border shadow-[0_40px_90px_-45px_rgba(11,79,158,0.55)]">
+                  <AnimatePresence mode="popLayout">
+                    <motion.div
+                      key={active.id}
+                      variants={imageVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.7, ease }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={active.image || "/placeholder.svg"}
+                        alt={active.imageAlt}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-1/3 image-scrim opacity-70"
+                  />
                 </div>
-              </Float>
 
-              <Float
-                className="absolute right-4 top-1/2 hidden lg:block"
-                distance={14}
-                duration={8}
-                delay={0.6}
-              >
-                <div className="rounded-2xl border border-border bg-primary px-4 py-3 text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)]">
-                  <p className="font-display text-2xl font-extrabold">300+</p>
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-primary-foreground/80">
-                    Specialists
-                  </p>
-                </div>
-              </Float>
-            </motion.div>
+                <AnimatePresence mode="wait">
+                  <Float
+                    key={`${active.id}-stat`}
+                    className="absolute right-4 top-1/2 hidden lg:block"
+                    distance={14}
+                    duration={8}
+                  >
+                    <motion.div
+                      variants={contentVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.5, ease }}
+                      className="rounded-2xl border border-border bg-primary px-4 py-3 text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)]"
+                    >
+                      <p className="font-display text-2xl font-extrabold">
+                        {active.stat.value}
+                      </p>
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary-foreground/80">
+                        {active.stat.label}
+                      </p>
+                    </motion.div>
+                  </Float>
+                </AnimatePresence>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -204,13 +331,13 @@ export function HeroSection() {
             className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent"
           />
           <ul className="flex w-max animate-marquee items-center gap-8 px-4">
-            {[...capabilityTicker, ...capabilityTicker].map((item, index) => {
+            {[...capabilityTicker, ...capabilityTicker].map((item, i) => {
               const Icon = item.icon;
 
               return (
                 <li
-                  key={`${item.label}-${index}`}
-                  aria-hidden={index >= capabilityTicker.length}
+                  key={`${item.label}-${i}`}
+                  aria-hidden={i >= capabilityTicker.length}
                   className="flex items-center gap-2.5 whitespace-nowrap text-sm font-semibold text-foreground/70"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/15 bg-background text-primary shadow-sm">
@@ -222,7 +349,6 @@ export function HeroSection() {
             })}
           </ul>
         </Reveal>
-
       </div>
     </section>
   );
