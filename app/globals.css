@@ -167,6 +167,26 @@ p.lead,
   animation-play-state: paused;
 }
 
+.animate-marquee-slow {
+  animation: marquee-x 18s linear infinite;
+  will-change: transform;
+}
+
+/* Only pause for real pointers — sticky :hover/:active on touch would
+   freeze the strip as soon as the user taps or drags over it. */
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee-slow:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none;
+  }
+}
+
 @keyframes text-shimmer {
   0% {
     background-position: 200% center;

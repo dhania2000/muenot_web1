@@ -34,6 +34,37 @@ const navItems = [
   { name: "Contact", href: "/#cta-section" },
 ];
 
+/**
+ * Same-page hash targets must be native anchors: next/link resolves them with
+ * history.pushState, which never fires a `hashchange` event, so sections that
+ * react to the hash (the service-line tabs) would never update.
+ */
+function NavLink({
+  href,
+  className,
+  onClick,
+  children,
+}: {
+  href: string;
+  className?: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) {
+  if (href.includes("#")) {
+    return (
+      <a href={href} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -114,7 +145,7 @@ export function Navbar() {
                     }
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    <Link
+                    <NavLink
                       href={item.href}
                       className={cn(
                         "px-4 py-2 text-sm font-medium tracking-tight transition-colors",
@@ -132,7 +163,7 @@ export function Navbar() {
                           aria-hidden="true"
                         />
                       )}
-                    </Link>
+                    </NavLink>
 
                     {/* Dropdown */}
                     <AnimatePresence>
@@ -146,13 +177,14 @@ export function Navbar() {
                         >
                           <div className="bg-card border border-border rounded-lg p-2 shadow-lg min-w-[220px]">
                             {item.children.map((child) => (
-                              <Link
+                              <NavLink
                                 key={child.name}
                                 href={child.href}
                                 className="block px-3 py-2 text-sm text-foreground/70 hover:text-primary hover:bg-secondary rounded-md transition-colors"
+                                onClick={() => setActiveDropdown(null)}
                               >
                                 {child.name}
-                              </Link>
+                              </NavLink>
                             ))}
                           </div>
                         </motion.div>
@@ -195,24 +227,24 @@ export function Navbar() {
                   <div className="py-4 space-y-1 px-4 max-w-7xl mx-auto">
                     {navItems.map((item) => (
                       <div key={item.name}>
-                        <Link
+                        <NavLink
                           href={item.href}
                           className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-secondary rounded-md"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {item.name}
-                        </Link>
+                        </NavLink>
                         {item.children && (
                           <div className="pl-3 mt-1 space-y-1 border-l border-border ml-3">
                             {item.children.map((child) => (
-                              <Link
+                              <NavLink
                                 key={child.name}
                                 href={child.href}
                                 className="block px-3 py-2 text-sm text-muted-foreground hover:text-primary rounded-md"
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
                                 {child.name}
-                              </Link>
+                              </NavLink>
                             ))}
                           </div>
                         )}

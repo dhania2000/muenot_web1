@@ -153,9 +153,9 @@ export function HeroSection() {
           aria-roledescription="carousel"
           aria-label="Featured services"
         >
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-            {/* Text column */}
-            <div className="lg:col-span-6">
+          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-10 lg:gap-y-9">
+            {/* Copy: headline + description */}
+            <div className="order-1 lg:col-span-6 lg:col-start-1 lg:row-start-1">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active.id}
@@ -183,8 +183,22 @@ export function HeroSection() {
                   <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
                     {active.description}
                   </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                  <div className="mt-9 flex flex-wrap items-center gap-3">
+            {/* Actions */}
+            <div className="order-3 lg:col-span-6 lg:col-start-1 lg:row-start-2">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${active.id}-actions`}
+                  variants={contentVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.55, ease }}
+                >
+                  <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href={active.primary.href}
                       className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
@@ -208,9 +222,11 @@ export function HeroSection() {
                   </div>
                 </motion.div>
               </AnimatePresence>
+            </div>
 
-              {/* Controls */}
-              <div className="mt-10 flex items-center gap-4">
+            {/* Controls */}
+            <div className="order-4 lg:col-span-6 lg:col-start-1 lg:row-start-3">
+              <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -259,8 +275,8 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Image column */}
-            <div className="lg:col-span-6">
+            {/* Image column — sits directly under the copy on mobile/tablet */}
+            <div className="order-2 lg:col-span-6 lg:col-start-7 lg:row-span-3 lg:row-start-1">
               <div className="relative">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-border shadow-[0_40px_90px_-45px_rgba(11,79,158,0.55)]">
                   <AnimatePresence mode="popLayout">

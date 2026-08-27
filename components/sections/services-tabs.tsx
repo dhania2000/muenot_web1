@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -70,11 +70,38 @@ export function ServicesTabs() {
   const [active, setActive] = useState(0);
   const pillar = servicePillars[active];
 
+  // The navbar links to /#ai-data, /#elearning, /#technology, /#localization and
+  // /#publishing. Those hashes match the pillar ids, so select the matching tab
+  // and bring this section into view whenever the hash points at one of them.
+  const syncWithHash = useCallback(() => {
+    const id = window.location.hash.replace("#", "");
+    if (!id) return;
+
+    const index = servicePillars.findIndex((item) => item.id === id);
+    if (index === -1) return;
+
+    setActive(index);
+    document
+      .getElementById("service-lines")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  useEffect(() => {
+    syncWithHash();
+    window.addEventListener("hashchange", syncWithHash);
+    return () => window.removeEventListener("hashchange", syncWithHash);
+  }, [syncWithHash]);
+
   return (
     <section
       id="service-lines"
       className="scroll-mt-20 border-b border-border bg-background py-20 lg:py-24"
     >
+      {/* Anchor targets for the navbar's service dropdown links */}
+      {servicePillars.map((item) => (
+        <span key={item.id} id={item.id} aria-hidden="true" className="block" />
+      ))}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading

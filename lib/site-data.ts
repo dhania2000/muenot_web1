@@ -115,7 +115,9 @@ export const servicePillars: ServicePillar[] = [
       "Product engineering, platform modernisation, and automation delivered by senior squads. We integrate with your backlog, your review process, and your release cadence.",
     image: "/images/service-technology-overview.png",
     imageAlt: "Software engineers pair programming at a standing desk",
-    href: "/contact",
+    // Technology has no standalone detail page, so the card opens the
+    // technology tab in the service-lines section rather than /contact.
+    href: "/#technology",
     capabilities: [
       {
         name: "Software Development",
