@@ -18,7 +18,7 @@ export function StatBand({
       className={cn(
         "grid gap-px overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4",
         tone === "dark"
-          ? "border-primary-foreground/15 bg-primary-foreground/15"
+          ? "border-primary-foreground/12 bg-primary-foreground/12"
           : "border-border bg-border",
         className,
       )}
@@ -30,7 +30,7 @@ export function StatBand({
           y={16}
           className={cn(
             "flex flex-col gap-1.5 p-6",
-            tone === "dark" ? "bg-primary-dark" : "bg-card",
+            tone === "dark" ? "bg-navy-deep" : "bg-card",
           )}
         >
           <dt

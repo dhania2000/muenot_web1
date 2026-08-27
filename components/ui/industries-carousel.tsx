@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 type IndustryItem = {
   name: string;
@@ -66,7 +64,9 @@ export function IndustriesCarousel({ items }: { items: IndustryItem[] }) {
               aria-hidden={slideIndex !== active}
             >
               {slide.map((item, pairIndex) => {
-                const imageFirst = pairIndex % 2 === 0;
+                const tiltLeft = pairIndex % 2 === 0;
+                // First row of each slide: image on the left. Second row: image on the right.
+                const imageFirst = pairIndex < 2;
                 return (
                   <article
                     key={item.name}
@@ -74,9 +74,11 @@ export function IndustriesCarousel({ items }: { items: IndustryItem[] }) {
                   >
                     <div
                       className={`relative aspect-[4/3] w-full max-w-[15rem] shrink-0 overflow-hidden rounded-2xl shadow-[0_24px_48px_-24px_rgba(11,79,158,0.5)] ring-1 ring-border transition-transform duration-500 ${
-                        imageFirst
-                          ? "-rotate-2 group-hover:rotate-0 sm:order-1"
-                          : "rotate-2 group-hover:rotate-0 sm:order-2"
+                        imageFirst ? "sm:order-1" : "sm:order-2"
+                      } ${
+                        tiltLeft
+                          ? "-rotate-2 group-hover:rotate-0"
+                          : "rotate-2 group-hover:rotate-0"
                       }`}
                     >
                       <Image
@@ -98,16 +100,6 @@ export function IndustriesCarousel({ items }: { items: IndustryItem[] }) {
                       <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
                         {item.description}
                       </p>
-                      <Link
-                        href="/industries"
-                        className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-dark"
-                      >
-                        Learn more
-                        <ArrowRight
-                          className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                          aria-hidden="true"
-                        />
-                      </Link>
                     </div>
                   </article>
                 );

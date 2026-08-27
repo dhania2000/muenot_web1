@@ -169,9 +169,9 @@ export default function CaseStudiesPage() {
           </div>
         </section>
 
-        <section className="bg-primary-dark py-20 lg:py-24">
-          <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center gap-6">
+        <section className="bg-background px-4 pb-24 pt-8 sm:px-6 lg:px-8 lg:pb-28">
+          <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-navy-deep px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
               <SectionHeading
                 tone="light"
                 eyebrow="Start with a pilot"
@@ -181,7 +181,7 @@ export default function CaseStudiesPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
                 >
                   Talk to our team
                   <ArrowRight

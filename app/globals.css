@@ -13,6 +13,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-dark: var(--primary-dark);
+  --color-navy-deep: var(--navy-deep);
   --color-secondary: var(--surface);
   --color-secondary-foreground: var(--foreground);
   --color-muted: var(--muted);
@@ -44,6 +45,7 @@
   --card-foreground: #1e1b2e;
   --primary: #0b4f9e;
   --primary-dark: #073365;
+  --navy-deep: #04203f;
   --primary-foreground: #ffffff;
   --muted: #f4f7fa;
   --muted-foreground: #635f78;
