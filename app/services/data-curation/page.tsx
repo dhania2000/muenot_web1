@@ -1,4 +1,4 @@
-import { ServicePage } from "@/components/services/service-page";
+import { DataCurationPage as DataCurationPageComponent } from "@/components/services/data-curation-page";
 import { getRelatedServices, getService } from "@/lib/services-data";
 
 import type { Metadata } from "next";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function DataCurationPage() {
   return (
-    <ServicePage
+    <DataCurationPageComponent
       service={getService("data-curation")}
       related={getRelatedServices("data-curation")}
     />

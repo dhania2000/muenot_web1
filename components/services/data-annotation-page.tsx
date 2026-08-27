@@ -4,40 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Accessibility,
   ArrowRight,
   AudioLines,
-  BookOpenCheck,
-  Bot,
   Boxes,
-  Captions,
   Check,
   ChevronRight,
   Clock,
-  Cog,
-  Database,
-  FileCheck2,
-  FileStack,
-  FileText,
+  Crosshair,
   Film,
-  Filter,
-  GraduationCap,
-  Languages,
-  LineChart,
-  Mic,
-  Monitor,
-  Palette,
-  PenTool,
-  Scale,
-  SearchCheck,
-  ShieldCheck,
-  Smartphone,
+  Layers,
+  MapPin,
+  Network,
+  ScanLine,
+  Shapes,
   Sparkles,
-  SpellCheck2,
+  Spline,
   Tag,
-  TrendingUp,
-  Users,
-  Workflow,
+  Waypoints,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
@@ -50,41 +33,193 @@ import { IconBadge } from "@/components/ui/feature-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import type { ServiceDetail } from "@/lib/services-data";
 
-const iconMap: Record<string, LucideIcon> = {
-  Accessibility,
-  AudioLines,
-  BookOpenCheck,
-  Bot,
-  Boxes,
-  Captions,
-  Clock,
-  Cog,
-  Database,
-  FileCheck2,
-  FileStack,
-  FileText,
-  Film,
-  Filter,
-  GraduationCap,
-  Languages,
-  LineChart,
-  Mic,
-  Monitor,
-  Palette,
-  PenTool,
-  Scale,
-  SearchCheck,
-  ShieldCheck,
-  Smartphone,
-  Sparkles,
-  SpellCheck2,
-  Tag,
-  TrendingUp,
-  Users,
-  Workflow,
+const stats = [
+  { value: "99.5%", label: "Accuracy rate, quality guaranteed" },
+  { value: "10M+", label: "Data points processed monthly" },
+  { value: "24-48h", label: "Pilot turnaround, rush available" },
+  { value: "Unlimited", label: "Revisions until you're satisfied" },
+];
+
+type ServiceType = {
+  icon: LucideIcon;
+  name: string;
+  description: string;
+  included: string[];
+  perfectFor: string[];
+  format: string;
+  turnaround: string;
 };
 
-export function ServicePage({
+const serviceTypes: ServiceType[] = [
+  {
+    icon: Tag,
+    name: "Image labelling",
+    description:
+      "Professional image annotation for computer vision and machine learning models.",
+    included: [
+      "Bounding box annotation",
+      "Polygon segmentation",
+      "Semantic labelling",
+      "Multi-format export",
+    ],
+    perfectFor: [
+      "Object detection",
+      "Image classification",
+      "Autonomous vehicles",
+      "Medical imaging",
+    ],
+    format: "All image formats",
+    turnaround: "3-5 business days",
+  },
+  {
+    icon: Crosshair,
+    name: "Object detection",
+    description:
+      "Precise object identification and localisation for advanced AI applications.",
+    included: [
+      "Multi-object tracking",
+      "Instance segmentation",
+      "3D bounding boxes",
+      "Keypoint annotation",
+    ],
+    perfectFor: [
+      "Retail analytics",
+      "Security systems",
+      "Robotics",
+      "Sports analysis",
+    ],
+    format: "Real-time processing",
+    turnaround: "5-7 business days",
+  },
+  {
+    icon: Layers,
+    name: "Text tagging",
+    description:
+      "Natural language annotation for text understanding and language models.",
+    included: [
+      "Named entity tagging",
+      "Sentiment annotation",
+      "Intent classification",
+      "Custom taxonomies",
+    ],
+    perfectFor: [
+      "Chatbots",
+      "Search engines",
+      "Content moderation",
+      "Document analysis",
+    ],
+    format: "50+ languages",
+    turnaround: "3-5 business days",
+  },
+  {
+    icon: Network,
+    name: "Entity recognition",
+    description:
+      "Custom entity identification and knowledge graph construction services.",
+    included: [
+      "Entity extraction",
+      "Coreference resolution",
+      "Entity linking",
+      "Knowledge graphs",
+    ],
+    perfectFor: [
+      "Legal tech",
+      "Healthcare NLP",
+      "Financial analysis",
+      "Research tools",
+    ],
+    format: "Domain expertise",
+    turnaround: "5-7 business days",
+  },
+  {
+    icon: AudioLines,
+    name: "Audio annotation",
+    description:
+      "Speech and audio labelling for voice AI and sound recognition systems.",
+    included: [
+      "Speech transcription",
+      "Speaker diarisation",
+      "Emotion labelling",
+      "Multi-speaker support",
+    ],
+    perfectFor: [
+      "Voice assistants",
+      "Call centres",
+      "Podcast analysis",
+      "Music AI",
+    ],
+    format: "50+ languages",
+    turnaround: "5-7 business days",
+  },
+  {
+    icon: Film,
+    name: "Video tagging",
+    description:
+      "Frame-by-frame video annotation for action recognition and tracking.",
+    included: [
+      "Object tracking",
+      "Action recognition",
+      "Scene segmentation",
+      "Event detection",
+    ],
+    perfectFor: [
+      "Surveillance",
+      "Sports analytics",
+      "Autonomous driving",
+      "Content creation",
+    ],
+    format: "All video formats",
+    turnaround: "5-7 business days",
+  },
+];
+
+const annotationTypes: { icon: LucideIcon; name: string; detail: string }[] = [
+  {
+    icon: Boxes,
+    name: "Bounding box",
+    detail: "Rectangular regions for object detection",
+  },
+  {
+    icon: Shapes,
+    name: "Polygon",
+    detail: "Precise shape outlining for complex objects",
+  },
+  {
+    icon: ScanLine,
+    name: "Semantic",
+    detail: "Pixel-level classification labelling",
+  },
+  {
+    icon: MapPin,
+    name: "Keypoint",
+    detail: "Precise landmark annotation",
+  },
+  {
+    icon: Waypoints,
+    name: "Temporal",
+    detail: "Time-based event marking",
+  },
+  {
+    icon: Spline,
+    name: "Hierarchical",
+    detail: "Multi-level category structures",
+  },
+];
+
+const process = [
+  { title: "Guidelines", detail: "Edge cases agreed and documented." },
+  { title: "Calibration", detail: "Pod scored against your gold set." },
+  { title: "Production", detail: "Batched delivery with QA sampling." },
+  { title: "Reporting", detail: "Weekly accuracy and throughput view." },
+];
+
+const outcomes = [
+  "Named delivery manager accountable for SLA performance",
+  "Secure floors with NDA-backed, access-controlled workstations",
+  "Audit trail on every batch, annotator and review decision",
+];
+
+export function DataAnnotationPage({
   service,
   related,
 }: {
@@ -147,8 +282,8 @@ export function ServicePage({
                 </motion.span>
 
                 <AnimatedHeadline
-                  text={service.title}
-                  highlight={service.highlight}
+                  text="Expert annotation that powers"
+                  highlight="the next generation of AI."
                   className="mt-6 font-display text-4xl font-extrabold leading-[1.06] text-foreground sm:text-5xl"
                   highlightClassName="text-primary"
                 />
@@ -159,7 +294,9 @@ export function ServicePage({
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="mt-5 max-w-lg text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
                 >
-                  {service.tagline}
+                  From images to audio, our dedicated pods deliver precise,
+                  high-quality training data for every machine learning model
+                  — with a QA layer on every batch.
                 </motion.p>
 
                 <motion.ul
@@ -188,7 +325,7 @@ export function ServicePage({
                     href="/contact"
                     className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
                   >
-                    Request a scoping call
+                    Request demo &amp; quote
                     <ArrowRight
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       aria-hidden="true"
@@ -198,7 +335,7 @@ export function ServicePage({
                     href="#capabilities"
                     className="inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
                   >
-                    What we deliver
+                    View services
                   </Link>
                 </motion.div>
               </div>
@@ -227,10 +364,10 @@ export function ServicePage({
                 >
                   <div className="rounded-2xl border border-border bg-card px-4 py-3 shadow-[0_18px_40px_-24px_rgba(11,18,32,0.35)]">
                     <p className="font-display text-2xl font-extrabold text-primary">
-                      {service.stats[0].value}
+                      {stats[0].value}
                     </p>
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      {service.stats[0].label}
+                      Accuracy rate
                     </p>
                   </div>
                 </Float>
@@ -242,8 +379,8 @@ export function ServicePage({
         {/* Stat band */}
         <section className="border-b border-border bg-background py-8 lg:py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-primary-foreground/12 sm:grid-cols-3">
-              {service.stats.map((stat, index) => (
+            <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-primary-foreground/12 sm:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat, index) => (
                 <Reveal key={stat.label} delay={index * 0.08} className="bg-navy-deep">
                   <div className="px-6 py-8 sm:px-8">
                     <dd className="font-display text-3xl font-extrabold text-accent">
@@ -259,7 +396,7 @@ export function ServicePage({
           </div>
         </section>
 
-        {/* Capabilities */}
+        {/* Service types */}
         <section
           id="capabilities"
           className="scroll-mt-24 border-b border-border bg-background py-20 lg:py-24"
@@ -268,33 +405,110 @@ export function ServicePage({
             <Reveal>
               <SectionHeading
                 eyebrow="What we deliver"
-                title={`${service.eyebrow} service areas`}
+                title="Expert annotation for every data type and AI application"
               />
             </Reveal>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {service.offerings.map((offering, index) => {
-                const Icon = iconMap[offering.icon] ?? Sparkles;
-                return (
-                  <Reveal key={offering.name} delay={index * 0.06}>
-                    <article className="group flex h-full flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_44px_-26px_rgba(11,79,158,0.45)]">
-                      <IconBadge icon={Icon} />
-                      <h3 className="font-display text-base font-bold text-foreground">
-                        {offering.name}
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {serviceTypes.map((type, index) => (
+                <Reveal key={type.name} delay={index * 0.06}>
+                  <article className="group flex h-full flex-col gap-5 rounded-3xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_50px_-28px_rgba(11,79,158,0.45)]">
+                    <div className="flex items-start justify-between gap-4">
+                      <IconBadge icon={type.icon} size="lg" />
+                    </div>
+
+                    <div>
+                      <h3 className="font-display text-lg font-bold text-foreground">
+                        {type.name}
                       </h3>
-                      <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                        {offering.detail}
+                      <p className="mt-2 text-sm leading-relaxed text-pretty text-muted-foreground">
+                        {type.description}
                       </p>
-                    </article>
-                  </Reveal>
-                );
-              })}
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+                        What&apos;s included
+                      </p>
+                      <ul className="mt-3 flex flex-col gap-2">
+                        {type.included.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2.5 text-sm text-foreground"
+                          >
+                            <Check
+                              className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                              aria-hidden="true"
+                            />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+                        Perfect for
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {type.perfectFor.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-4 text-xs font-semibold text-muted-foreground">
+                      <span>{type.format}</span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                        {type.turnaround}
+                      </span>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Annotation types */}
+        <section className="border-b border-border bg-surface py-20 lg:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Annotation types"
+                title="Choose the perfect method for your model"
+                description="Every project is matched to the annotation technique that fits your model requirements."
+              />
+            </Reveal>
+
+            <div className="mt-14 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+              {annotationTypes.map((type, index) => (
+                <Reveal key={type.name} delay={index * 0.06}>
+                  <div className="group flex h-full flex-col items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-26px_rgba(11,79,158,0.45)]">
+                    <IconBadge icon={type.icon} size="sm" />
+                    <div>
+                      <h3 className="font-display text-sm font-bold text-foreground">
+                        {type.name}
+                      </h3>
+                      <p className="mt-1.5 text-xs leading-relaxed text-pretty text-muted-foreground">
+                        {type.detail}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Process */}
-        <section className="border-b border-border bg-surface py-20 lg:py-24">
+        <section className="border-b border-border bg-background py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal>
               <SectionHeading
@@ -308,7 +522,7 @@ export function ServicePage({
                 aria-hidden="true"
                 className="pointer-events-none absolute left-0 right-0 top-9 hidden h-px bg-border lg:block"
               />
-              {service.process.map((step, index) => (
+              {process.map((step, index) => (
                 <Reveal
                   key={step.title}
                   as="li"
@@ -331,7 +545,7 @@ export function ServicePage({
         </section>
 
         {/* Outcomes */}
-        <section className="border-b border-border bg-background py-20 lg:py-24">
+        <section className="border-b border-border bg-surface py-20 lg:py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <Reveal>
               <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] border border-border shadow-[0_36px_80px_-50px_rgba(11,79,158,0.55)]">
@@ -347,7 +561,7 @@ export function ServicePage({
                   className="absolute inset-x-0 bottom-0 h-1/2 image-scrim opacity-80"
                 />
                 <p className="absolute inset-x-6 bottom-6 font-display text-lg font-bold leading-snug text-primary-foreground">
-                  {service.eyebrow} delivered by a named team
+                  Data annotation delivered by a named team
                 </p>
               </div>
             </Reveal>
@@ -361,7 +575,7 @@ export function ServicePage({
                 />
               </Reveal>
               <ul className="mt-8 flex flex-col gap-4">
-                {service.outcomes.map((outcome, index) => (
+                {outcomes.map((outcome, index) => (
                   <Reveal
                     key={outcome}
                     as="li"
@@ -386,7 +600,7 @@ export function ServicePage({
 
         {/* Related services */}
         {related.length ? (
-          <section className="border-b border-border bg-surface py-20">
+          <section className="border-b border-border bg-background py-20">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <Reveal>
                 <SectionHeading

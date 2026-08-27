@@ -50,7 +50,7 @@ export function ServicesOverview() {
         <Reveal>
           <SectionHeading
             eyebrow="What we do"
-            title="Five service lines, one accountable delivery organisation"
+            title="Specialized services. Unified execution."
             description="Start with one engagement and expand under the same governance."
           />
         </Reveal>

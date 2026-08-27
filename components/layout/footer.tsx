@@ -17,6 +17,36 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
+/**
+ * Same-page hash targets must be native anchors: next/link resolves them with
+ * history.pushState, which never fires a `hashchange` event, so sections that
+ * react to the hash (the service-line tabs) would never update or scroll into
+ * view when the link is clicked from the home page itself.
+ */
+function FooterLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (href.includes("#")) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -128,7 +158,7 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               {aboutLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
+                  <FooterLink
                     href={link.href}
                     className="group inline-flex items-center gap-1.5 text-sm opacity-75 hover:opacity-100 transition-opacity"
                   >
@@ -137,7 +167,7 @@ export function Footer() {
                       aria-hidden="true"
                     />
                     <span>{link.name}</span>
-                  </Link>
+                  </FooterLink>
                 </li>
               ))}
             </ul>
@@ -151,7 +181,7 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               {servicesLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
+                  <FooterLink
                     href={link.href}
                     className="group inline-flex items-center gap-1.5 text-sm opacity-75 hover:opacity-100 transition-opacity"
                   >
@@ -160,7 +190,7 @@ export function Footer() {
                       aria-hidden="true"
                     />
                     <span>{link.name}</span>
-                  </Link>
+                  </FooterLink>
                 </li>
               ))}
             </ul>

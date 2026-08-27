@@ -161,10 +161,7 @@ p.lead,
 
 .animate-marquee {
   animation: marquee-x 40s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 .animate-marquee-slow {
@@ -172,17 +169,69 @@ p.lead,
   will-change: transform;
 }
 
-/* Only pause for real pointers — sticky :hover/:active on touch would
-   freeze the strip as soon as the user taps or drags over it. */
-@media (hover: hover) and (pointer: fine) {
-  .animate-marquee-slow:hover {
-    animation-play-state: paused;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-marquee-slow {
+    animation: none;
+  }
+}
+
+/* Ambient animated background (site-wide, behind all content) */
+@keyframes aurora-drift-1 {
+  0% {
+    transform: translate3d(-8%, -6%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 8%, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-8%, -6%, 0) scale(1);
+  }
+}
+
+@keyframes aurora-drift-2 {
+  0% {
+    transform: translate3d(6%, 4%, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(-6%, -8%, 0) scale(0.95);
+  }
+  100% {
+    transform: translate3d(6%, 4%, 0) scale(1.1);
+  }
+}
+
+@keyframes aurora-drift-3 {
+  0% {
+    transform: translate3d(0, 6%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-4%, -6%, 0) scale(1.2);
+  }
+  100% {
+    transform: translate3d(0, 6%, 0) scale(1);
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-drift-1 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-2 {
+  animation: aurora-drift-2 32s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-3 {
+  animation: aurora-drift-3 38s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora-1,
+  .animate-aurora-2,
+  .animate-aurora-3 {
     animation: none;
   }
 }

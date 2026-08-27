@@ -45,9 +45,9 @@ export default function CaseStudiesPage() {
           ]}
         />
 
-        <section className="border-b border-border bg-card py-16">
+        <section className="border-b border-border bg-navy-deep py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <StatBand stats={outcomeStats} />
+            <StatBand stats={outcomeStats} tone="dark" />
           </div>
         </section>
 

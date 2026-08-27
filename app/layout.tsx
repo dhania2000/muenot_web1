@@ -3,6 +3,7 @@ import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/ui/motion-provider";
+import { AnimatedBackground } from "@/components/ui/animated-background";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -116,7 +117,8 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href={siteUrl} />
       </head>
-      <body className="font-sans min-h-screen bg-background text-foreground">
+      <body className="font-sans min-h-screen bg-transparent text-foreground">
+        <AnimatedBackground />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
