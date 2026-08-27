@@ -281,6 +281,16 @@ export const industries = [
     description:
       "Subtitling, dubbing, metadata tagging, and content moderation at volume.",
   },
+  {
+    name: "Technology & SaaS",
+    description:
+      "Model evaluation, search relevance tuning, and product data operations for scaling platforms.",
+  },
+  {
+    name: "Government & Public Sector",
+    description:
+      "Secure document digitisation, records processing, and policy-compliant data handling.",
+  },
 ];
 
 export const caseStudies = [

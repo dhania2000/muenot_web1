@@ -190,11 +190,11 @@ export function ServicePillarSection({
                   >
                     <Link
                       href={capability.href}
-                      className="group flex h-full min-h-28 flex-col gap-2 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary sm:p-5"
+                      className="group flex h-full min-h-20 flex-col gap-1.5 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary sm:p-3.5"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary-foreground/10 text-primary-foreground">
-                          <CapabilityIcon className="h-4 w-4" aria-hidden="true" />
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary-foreground/10 text-primary-foreground">
+                          <CapabilityIcon className="h-3.5 w-3.5" aria-hidden="true" />
                         </span>
                         <ArrowRight
                           className="h-4 w-4 shrink-0 text-accent transition-transform duration-300 group-hover:translate-x-1"

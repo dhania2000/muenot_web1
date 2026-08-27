@@ -37,16 +37,16 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0b1220;
+  --foreground: #1e1b2e;
   --surface: #f4f7fa;
   --surface-2: #eaf1fa;
   --card: #ffffff;
-  --card-foreground: #0b1220;
+  --card-foreground: #1e1b2e;
   --primary: #0b4f9e;
   --primary-dark: #073365;
   --primary-foreground: #ffffff;
   --muted: #f4f7fa;
-  --muted-foreground: #56677d;
+  --muted-foreground: #635f78;
   --accent: #d98613;
   --accent-foreground: #ffffff;
   --destructive: #b42318;
@@ -66,7 +66,12 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1, "cv11" 1;
+  font-variation-settings: normal;
+  letter-spacing: -0.011em;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -74,7 +79,25 @@ h2,
 h3,
 h4 {
   font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
+  letter-spacing: -0.032em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+h1 {
+  letter-spacing: -0.04em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Premium reading measure + rhythm for long-form paragraphs */
+p.lead,
+.prose p {
+  line-height: 1.7;
+  letter-spacing: -0.006em;
 }
 
 ::selection {

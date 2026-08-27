@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/ui/motion-provider";
 
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
   display: "swap",
 });
 
-const manrope = Manrope({
+const sora = Sora({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
   variable: "--font-heading",
@@ -110,7 +111,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(inter.variable, manrope.variable, "bg-background")}
+      className={cn(inter.variable, sora.variable, "bg-background")}
     >
       <head>
         <link rel="canonical" href={siteUrl} />

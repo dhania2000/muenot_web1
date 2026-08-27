@@ -1,46 +1,59 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Car,
-  HeartPulse,
-  GraduationCap,
-  Landmark,
-  ShoppingCart,
-  Clapperboard,
   Search,
   FlaskConical,
   Rocket,
   BarChart3,
 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { IconBadge } from "@/components/ui/feature-card";
 import { Reveal } from "@/components/ui/reveal";
+import { IndustriesCarousel } from "@/components/ui/industries-carousel";
 import { industries, engagementSteps } from "@/lib/site-data";
-
-const industryIcons: Record<string, typeof Car> = {
-  "Automotive & Mobility": Car,
-  "Healthcare & Life Sciences": HeartPulse,
-  "Education & EdTech": GraduationCap,
-  "Banking & Financial Services": Landmark,
-  "Retail & E-commerce": ShoppingCart,
-  "Media & Entertainment": Clapperboard,
-};
 
 const stepIcons = [Search, FlaskConical, Rocket, BarChart3];
 
-const spotlights = [
-  {
-    image: "/images/industry-education.png",
-    alt: "University students learning with laptops in a modern campus study space",
-    label: "Education & EdTech",
+const industryImages: Record<string, { image: string; alt: string }> = {
+  "Automotive & Mobility": {
+    image: "/images/case-autonomous.png",
+    alt: "Autonomous vehicle perception data being labelled for ADAS programmes",
   },
-  {
+  "Healthcare & Life Sciences": {
     image: "/images/industry-healthcare.png",
     alt: "Clinicians reviewing patient data on a tablet in a modern hospital",
-    label: "Healthcare & Life Sciences",
   },
-];
+  "Education & EdTech": {
+    image: "/images/industry-education.png",
+    alt: "University students learning with laptops in a modern campus study space",
+  },
+  "Banking & Financial Services": {
+    image: "/images/case-enterprise.png",
+    alt: "Enterprise team reviewing compliance documents in a corporate office",
+  },
+  "Retail & E-commerce": {
+    image: "/images/service-localization-overview.png",
+    alt: "Multilingual product catalogue and storefront localisation workspace",
+  },
+  "Media & Entertainment": {
+    image: "/images/service-subtitling.png",
+    alt: "Subtitling and content moderation workflow for media production",
+  },
+  "Technology & SaaS": {
+    image: "/images/industry-technology.png",
+    alt: "Software engineering team collaborating on dashboards in a modern tech office",
+  },
+  "Government & Public Sector": {
+    image: "/images/industry-government.png",
+    alt: "Public sector professionals reviewing data on secure workstations",
+  },
+};
+
+const industryItems = industries.map((industry) => ({
+  name: industry.name,
+  description: industry.description,
+  image: industryImages[industry.name]?.image ?? "/placeholder.svg",
+  alt: industryImages[industry.name]?.alt ?? industry.name,
+}));
 
 export function IndustriesSection() {
   return (
@@ -58,47 +71,9 @@ export function IndustriesSection() {
             />
           </Reveal>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {industries.map((industry, index) => {
-              const Icon = industryIcons[industry.name] ?? Car;
-              return (
-                <Reveal key={industry.name} delay={index * 0.06} y={18}>
-                  <article className="group flex h-full flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-24px_rgba(11,79,158,0.45)]">
-                    <IconBadge icon={Icon} />
-                    <h3 className="font-display text-base font-semibold text-foreground">
-                      {industry.name}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                      {industry.description}
-                    </p>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {spotlights.map((item, index) => (
-              <Reveal key={item.label} delay={index * 0.1}>
-                <div className="group relative h-56 overflow-hidden rounded-2xl border border-border">
-                  <Image
-                    src={item.image || "/placeholder.svg"}
-                    alt={item.alt}
-                    fill
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-primary-dark/20 to-transparent"
-                  />
-                  <span className="absolute bottom-5 left-5 font-display text-base font-bold text-primary-foreground">
-                    {item.label}
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <IndustriesCarousel items={industryItems} />
+          </Reveal>
         </div>
       </section>
 
