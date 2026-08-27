@@ -1,9 +1,9 @@
-import { ServicePage } from "@/components/services/service-page";
+import { ContentDevelopmentPage } from "@/components/services/content-development-page";
 import { getRelatedServices, getService } from "@/lib/services-data";
 
-export default function ContentDevelopmentPage() {
+export default function ContentDevelopmentRoute() {
   return (
-    <ServicePage
+    <ContentDevelopmentPage
       service={getService("content-development")}
       related={getRelatedServices("content-development")}
     />

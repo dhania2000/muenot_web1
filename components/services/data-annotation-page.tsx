@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   AudioLines,
@@ -17,7 +19,6 @@ import {
   Network,
   ScanLine,
   Shapes,
-  Sparkles,
   Spline,
   Tag,
   Waypoints,
@@ -27,9 +28,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { CTASection } from "@/components/sections/cta-section";
-import { AnimatedHeadline, Float, Reveal } from "@/components/ui/reveal";
+import { AnimatedHeadline, Reveal } from "@/components/ui/reveal";
 import { CountUp } from "@/components/ui/count-up";
-import { IconBadge } from "@/components/ui/feature-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import type { ServiceDetail } from "@/lib/services-data";
 
@@ -219,6 +219,175 @@ const outcomes = [
   "Audit trail on every batch, annotator and review decision",
 ];
 
+function ServiceExplorer() {
+  const [active, setActive] = useState(0);
+  const service = serviceTypes[active];
+  const ActiveIcon = service.icon;
+
+  return (
+    <div className="grid overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+      {/* Selectable service list */}
+      <div
+        role="tablist"
+        aria-label="Annotation services"
+        className="flex flex-col border-b border-border lg:border-b-0 lg:border-r"
+      >
+        {serviceTypes.map((type, index) => {
+          const isActive = index === active;
+          const Icon = type.icon;
+          return (
+            <button
+              key={type.name}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => setActive(index)}
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              className={cn(
+                "group relative flex items-center gap-4 border-b border-border px-6 py-5 text-left transition-colors last:border-b-0 focus:outline-none focus-visible:bg-surface",
+                isActive ? "bg-surface" : "hover:bg-surface/60",
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "absolute inset-y-0 left-0 w-0.5 origin-top bg-accent transition-transform duration-300",
+                  isActive ? "scale-y-100" : "scale-y-0",
+                )}
+              />
+              <span
+                className={cn(
+                  "font-display text-xs font-bold tabular-nums transition-colors",
+                  isActive ? "text-accent" : "text-muted-foreground/60",
+                )}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <Icon
+                className={cn(
+                  "h-5 w-5 shrink-0 transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground",
+                )}
+                strokeWidth={1.75}
+                aria-hidden="true"
+              />
+              <span
+                className={cn(
+                  "flex-1 font-display text-base font-bold transition-colors",
+                  isActive ? "text-foreground" : "text-muted-foreground",
+                )}
+              >
+                {type.name}
+              </span>
+              <ChevronRight
+                className={cn(
+                  "h-4 w-4 shrink-0 transition-all duration-300",
+                  isActive
+                    ? "translate-x-0 text-primary opacity-100"
+                    : "-translate-x-1 text-muted-foreground opacity-0 group-hover:opacity-60",
+                )}
+                aria-hidden="true"
+              />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Detail panel */}
+      <div className="relative min-h-[26rem] overflow-hidden bg-surface p-8 sm:p-10 lg:p-12">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-4 -top-8 select-none font-display text-[10rem] font-extrabold leading-none text-border/50"
+        >
+          {String(active + 1).padStart(2, "0")}
+        </span>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={service.name}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative flex h-full flex-col"
+          >
+            <div className="flex items-center gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <ActiveIcon
+                  className="h-6 w-6 text-primary"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+              </span>
+              <div>
+                <h3 className="font-display text-2xl font-extrabold text-foreground">
+                  {service.name}
+                </h3>
+                <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+                  {service.format}
+                </p>
+              </div>
+            </div>
+
+            <p className="mt-6 max-w-md text-base leading-relaxed text-pretty text-muted-foreground">
+              {service.description}
+            </p>
+
+            <div className="mt-8 grid gap-8 sm:grid-cols-2">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/80">
+                  What&apos;s included
+                </p>
+                <ul className="mt-4 flex flex-col gap-2.5">
+                  {service.included.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-sm text-foreground"
+                    >
+                      <Check
+                        className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                        aria-hidden="true"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/80">
+                  Perfect for
+                </p>
+                <ul className="mt-4 flex flex-col gap-2.5">
+                  {service.perfectFor.map((tag) => (
+                    <li
+                      key={tag}
+                      className="flex items-start gap-2.5 text-sm text-foreground"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary"
+                      />
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-auto flex items-center gap-2 border-t border-border pt-6 text-sm font-semibold text-foreground">
+              <Clock className="h-4 w-4 text-primary" aria-hidden="true" />
+              <span className="text-muted-foreground">Typical turnaround</span>
+              <span className="ml-auto">{service.turnaround}</span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 export function DataAnnotationPage({
   service,
   related,
@@ -231,28 +400,16 @@ export function DataAnnotationPage({
       <Navbar />
       <main className="bg-background">
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-border bg-surface pt-24 lg:pt-28">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 grid-lines opacity-60"
-          />
-          <motion.div
-            aria-hidden="true"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2 }}
-            className="pointer-events-none absolute -right-24 -top-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
-          />
-
-          <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-20">
-            <nav aria-label="Breadcrumb" className="mb-7">
+        <section className="border-b border-border bg-background pt-28 lg:pt-32">
+          <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
+            <nav aria-label="Breadcrumb" className="mb-10">
               <ol className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-muted-foreground">
                 <li>
                   <Link href="/" className="transition-colors hover:text-primary">
                     Home
                   </Link>
                 </li>
-                <ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
+                <ChevronRight className="h-3.5 w-3.5 opacity-50" aria-hidden="true" />
                 <li>
                   <Link
                     href={service.pillar.href}
@@ -261,30 +418,27 @@ export function DataAnnotationPage({
                     {service.pillar.label}
                   </Link>
                 </li>
-                <ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
+                <ChevronRight className="h-3.5 w-3.5 opacity-50" aria-hidden="true" />
                 <li className="text-foreground">{service.eyebrow}</li>
               </ol>
             </nav>
 
-            <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+            <div className="grid items-end gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
               <div>
                 <motion.span
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary"
+                  className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full bg-accent"
-                  />
+                  <span aria-hidden="true" className="h-px w-8 bg-accent" />
                   {service.pillar.label}
                 </motion.span>
 
                 <AnimatedHeadline
                   text="Expert annotation that powers"
                   highlight="the next generation of AI."
-                  className="mt-6 font-display text-4xl font-extrabold leading-[1.06] text-foreground sm:text-5xl"
+                  className="mt-8 font-display text-4xl font-extrabold leading-[1.03] text-foreground sm:text-5xl lg:text-6xl"
                   highlightClassName="text-primary"
                 />
 
@@ -292,7 +446,7 @@ export function DataAnnotationPage({
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="mt-5 max-w-lg text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
+                  className="mt-7 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg"
                 >
                   From images to audio, our dedicated pods deliver precise,
                   high-quality training data for every machine learning model
@@ -303,13 +457,17 @@ export function DataAnnotationPage({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.55 }}
-                  className="mt-7 flex flex-wrap gap-2"
+                  className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
                 >
                   {service.chips.map((chip) => (
                     <li
                       key={chip}
-                      className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-foreground"
+                      className="flex items-center gap-2 text-sm font-medium text-foreground"
                     >
+                      <span
+                        aria-hidden="true"
+                        className="h-1 w-1 rounded-full bg-accent"
+                      />
                       {chip}
                     </li>
                   ))}
@@ -319,11 +477,11 @@ export function DataAnnotationPage({
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.65 }}
-                  className="mt-9 flex flex-wrap gap-3"
+                  className="mt-10 flex flex-wrap items-center gap-6"
                 >
                   <Link
                     href="/contact"
-                    className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
+                    className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
                   >
                     Request demo &amp; quote
                     <ArrowRight
@@ -333,173 +491,111 @@ export function DataAnnotationPage({
                   </Link>
                   <Link
                     href="#capabilities"
-                    className="inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                    className="group inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
                   >
                     View services
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      aria-hidden="true"
+                    />
                   </Link>
                 </motion.div>
               </div>
 
               <motion.div
-                initial={{ opacity: 0, scale: 0.96, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="relative"
+                className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border"
               >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-border shadow-[0_40px_90px_-45px_rgba(11,79,158,0.55)]">
-                  <Image
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.imageAlt}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 560px, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <Float
-                  className="absolute -left-4 bottom-8 hidden sm:block"
-                  distance={12}
-                  duration={7}
-                >
-                  <div className="rounded-2xl border border-border bg-card px-4 py-3 shadow-[0_18px_40px_-24px_rgba(11,18,32,0.35)]">
-                    <p className="font-display text-2xl font-extrabold text-primary">
-                      {stats[0].value}
-                    </p>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      Accuracy rate
-                    </p>
-                  </div>
-                </Float>
+                <Image
+                  src={service.image || "/placeholder.svg"}
+                  alt={service.imageAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 480px, 100vw"
+                  className="object-cover"
+                />
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* Stat band */}
-        <section className="border-b border-border bg-background py-8 lg:py-10">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-primary-foreground/12 sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat, index) => (
-                <Reveal key={stat.label} delay={index * 0.08} className="bg-navy-deep">
-                  <div className="px-6 py-8 sm:px-8">
-                    <dd className="font-display text-3xl font-extrabold text-accent">
-                      <CountUp value={stat.value} />
-                    </dd>
-                    <dt className="mt-2 text-xs font-semibold uppercase tracking-wider text-primary-foreground/65">
-                      {stat.label}
-                    </dt>
-                  </div>
-                </Reveal>
-              ))}
-            </dl>
-          </div>
+        <section className="border-b border-border bg-surface">
+          <dl className="mx-auto grid max-w-7xl grid-cols-2 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+            {stats.map((stat, index) => (
+              <Reveal
+                key={stat.label}
+                delay={index * 0.08}
+                className="border-b border-border px-2 py-10 sm:px-6 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:py-14"
+              >
+                <dd className="font-display text-4xl font-extrabold tracking-tight text-foreground lg:text-5xl">
+                  <CountUp value={stat.value} />
+                </dd>
+                <dt className="mt-3 flex items-start gap-2 text-xs font-medium leading-relaxed text-muted-foreground">
+                  <span
+                    aria-hidden="true"
+                    className="mt-1 h-1 w-1 shrink-0 rounded-full bg-accent"
+                  />
+                  {stat.label}
+                </dt>
+              </Reveal>
+            ))}
+          </dl>
         </section>
 
         {/* Service types */}
         <section
           id="capabilities"
-          className="scroll-mt-24 border-b border-border bg-background py-20 lg:py-24"
+          className="scroll-mt-24 border-b border-border bg-background py-24 lg:py-32"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal>
               <SectionHeading
+                align="left"
                 eyebrow="What we deliver"
                 title="Expert annotation for every data type and AI application"
               />
             </Reveal>
 
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {serviceTypes.map((type, index) => (
-                <Reveal key={type.name} delay={index * 0.06}>
-                  <article className="group flex h-full flex-col gap-5 rounded-3xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_50px_-28px_rgba(11,79,158,0.45)]">
-                    <div className="flex items-start justify-between gap-4">
-                      <IconBadge icon={type.icon} size="lg" />
-                    </div>
-
-                    <div>
-                      <h3 className="font-display text-lg font-bold text-foreground">
-                        {type.name}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-pretty text-muted-foreground">
-                        {type.description}
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-                        What&apos;s included
-                      </p>
-                      <ul className="mt-3 flex flex-col gap-2">
-                        {type.included.map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-2.5 text-sm text-foreground"
-                          >
-                            <Check
-                              className="mt-0.5 h-4 w-4 shrink-0 text-accent"
-                              aria-hidden="true"
-                            />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-                        Perfect for
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {type.perfectFor.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-muted-foreground"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-4 text-xs font-semibold text-muted-foreground">
-                      <span>{type.format}</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                        {type.turnaround}
-                      </span>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal className="mt-16">
+              <ServiceExplorer />
+            </Reveal>
           </div>
         </section>
 
         {/* Annotation types */}
-        <section className="border-b border-border bg-surface py-20 lg:py-24">
+        <section className="border-b border-border bg-surface py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal>
               <SectionHeading
+                align="left"
                 eyebrow="Annotation types"
                 title="Choose the perfect method for your model"
                 description="Every project is matched to the annotation technique that fits your model requirements."
               />
             </Reveal>
 
-            <div className="mt-14 grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="mt-16 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {annotationTypes.map((type, index) => (
-                <Reveal key={type.name} delay={index * 0.06}>
-                  <div className="group flex h-full flex-col items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-26px_rgba(11,79,158,0.45)]">
-                    <IconBadge icon={type.icon} size="sm" />
-                    <div>
-                      <h3 className="font-display text-sm font-bold text-foreground">
-                        {type.name}
-                      </h3>
-                      <p className="mt-1.5 text-xs leading-relaxed text-pretty text-muted-foreground">
-                        {type.detail}
-                      </p>
-                    </div>
+                <Reveal
+                  key={type.name}
+                  delay={index * 0.05}
+                  className="group flex items-start gap-4 border-t border-border pt-6"
+                >
+                  <type.icon
+                    className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3 className="font-display text-base font-bold text-foreground">
+                      {type.name}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-pretty text-muted-foreground">
+                      {type.detail}
+                    </p>
                   </div>
                 </Reveal>
               ))}
@@ -508,31 +604,28 @@ export function DataAnnotationPage({
         </section>
 
         {/* Process */}
-        <section className="border-b border-border bg-background py-20 lg:py-24">
+        <section className="border-b border-border bg-background py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal>
               <SectionHeading
+                align="left"
                 eyebrow="How we work"
                 title="Four steps from brief to steady state"
               />
             </Reveal>
 
-            <ol className="relative mt-14 grid gap-6 lg:grid-cols-4">
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute left-0 right-0 top-9 hidden h-px bg-border lg:block"
-              />
+            <ol className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
               {process.map((step, index) => (
                 <Reveal
                   key={step.title}
                   as="li"
                   delay={index * 0.1}
-                  className="relative flex flex-col gap-3 rounded-2xl border border-border bg-card p-6"
+                  className="flex flex-col gap-4 border-t border-border pt-6"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
-                    {index + 1}
+                  <span className="font-display text-sm font-bold tabular-nums text-accent">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display text-base font-bold text-foreground">
+                  <h3 className="font-display text-lg font-bold text-foreground">
                     {step.title}
                   </h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">
@@ -545,10 +638,10 @@ export function DataAnnotationPage({
         </section>
 
         {/* Outcomes */}
-        <section className="border-b border-border bg-surface py-20 lg:py-24">
-          <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        <section className="border-b border-border bg-surface py-24 lg:py-32">
+          <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
             <Reveal>
-              <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] border border-border shadow-[0_36px_80px_-50px_rgba(11,79,158,0.55)]">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-border">
                 <Image
                   src={service.image || "/placeholder.svg"}
                   alt={service.imageAlt}
@@ -574,20 +667,18 @@ export function DataAnnotationPage({
                   title="Commitments we put in writing"
                 />
               </Reveal>
-              <ul className="mt-8 flex flex-col gap-4">
+              <ul className="mt-10 flex flex-col">
                 {outcomes.map((outcome, index) => (
                   <Reveal
                     key={outcome}
                     as="li"
                     delay={index * 0.08}
-                    className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4"
+                    className="flex items-start gap-4 border-b border-border py-5 first:border-t"
                   >
-                    <span
+                    <Check
+                      className="mt-0.5 h-5 w-5 shrink-0 text-accent"
                       aria-hidden="true"
-                      className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15"
-                    >
-                      <Check className="h-3.5 w-3.5 text-accent" />
-                    </span>
+                    />
                     <span className="text-sm leading-relaxed text-foreground">
                       {outcome}
                     </span>
@@ -600,23 +691,24 @@ export function DataAnnotationPage({
 
         {/* Related services */}
         {related.length ? (
-          <section className="border-b border-border bg-background py-20">
+          <section className="border-b border-border bg-background py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <Reveal>
                 <SectionHeading
+                  align="left"
                   eyebrow="Related"
                   title={`More ${service.pillar.label.toLowerCase()}`}
                 />
               </Reveal>
 
-              <div className="mt-12 grid gap-5 sm:grid-cols-3">
+              <div className="mt-14 grid gap-8 sm:grid-cols-3">
                 {related.map((item, index) => (
                   <Reveal key={item.slug} delay={index * 0.08}>
                     <Link
                       href={`/services/${item.slug}`}
-                      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_44px_-26px_rgba(11,79,158,0.45)]"
+                      className="group flex h-full flex-col"
                     >
-                      <div className="relative h-36 overflow-hidden">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border">
                         <Image
                           src={item.image || "/placeholder.svg"}
                           alt={item.imageAlt}
@@ -625,8 +717,8 @@ export function DataAnnotationPage({
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       </div>
-                      <div className="flex flex-1 flex-col gap-2 p-5">
-                        <h3 className="font-display text-base font-bold text-foreground">
+                      <div className="flex flex-1 flex-col gap-2 pt-5">
+                        <h3 className="font-display text-base font-bold text-foreground transition-colors group-hover:text-primary">
                           {item.eyebrow}
                         </h3>
                         <p className="text-sm leading-relaxed text-muted-foreground">
