@@ -209,7 +209,7 @@ export const servicePillars: ServicePillar[] = [
       "Copy editing, composition, conversion, and accessibility remediation for publishers moving large backlists into compliant digital formats.",
     image: "/images/service-publishing-overview.png",
     imageAlt: "Editor reviewing printed page proofs beside a book layout screen",
-    href: "/services/editorial-services",
+    href: "/services/publishing",
     capabilities: [
       {
         name: "Editorial Services",

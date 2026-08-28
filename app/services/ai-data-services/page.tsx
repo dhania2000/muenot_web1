@@ -200,44 +200,24 @@ export default function AiDataServicesPage() {
                 </motion.div>
               </div>
 
-              {/* Terminal-style schematic panel — kept dark as a signature accent */}
+              {/* AI illustration — transparent hero visual */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative rounded-2xl border border-navy-deep/20 bg-navy-deep p-5 shadow-[0_40px_90px_-45px_rgba(0,0,0,0.5)]"
+                className="relative flex items-center justify-center"
               >
-                <div className="flex items-center gap-2 border-b border-primary-foreground/10 pb-4">
-                  <span className="h-3 w-3 rounded-full bg-destructive/80" />
-                  <span className="h-3 w-3 rounded-full bg-accent/80" />
-                  <span className="h-3 w-3 rounded-full bg-primary-foreground/30" />
-                  <span className="ml-3 font-mono text-xs text-primary-foreground/50">
-                    pipeline.log
-                  </span>
-                </div>
-                <div className="mt-4 space-y-2.5 font-mono text-[13px] leading-relaxed">
-                  <p className="text-primary-foreground/50">
-                    <span className="text-accent">$</span> batch --ingest 12,480 items
-                  </p>
-                  <p className="text-primary-foreground/80">
-                    &gt; schema validated · gold set locked
-                  </p>
-                  <p className="text-primary-foreground/50">
-                    <span className="text-accent">$</span> annotate --modality multi
-                  </p>
-                  <p className="text-primary-foreground/80">
-                    &gt; 6 pods active · 98.2% agreement
-                  </p>
-                  <p className="text-primary-foreground/50">
-                    <span className="text-accent">$</span> qa --review two-stage
-                  </p>
-                  <p className="text-primary-foreground/80">
-                    &gt; 99.4% accepted on first pass
-                  </p>
-                  <p className="text-accent">
-                    &gt; delivered ✓ audit trail attached
-                  </p>
-                </div>
+                <motion.img
+                  src="/images/ai-data-hero.png"
+                  alt="AI neural network processing annotated training data"
+                  className="w-full max-w-md drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)]"
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
               </motion.div>
             </div>
           </div>
@@ -289,33 +269,34 @@ export default function AiDataServicesPage() {
               </h2>
             </Reveal>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 overflow-hidden rounded-2xl border border-border bg-card">
               {capabilities.map((cap, index) => {
                 const Icon = cap.icon;
                 return (
-                  <Reveal
-                    key={cap.name}
-                    delay={index * 0.06}
-                    className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
-                  >
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100"
-                    />
-                    <div className="relative flex items-center justify-between">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
+                  <Reveal key={cap.name} delay={index * 0.05}>
+                    <div className="group relative flex items-center gap-5 border-b border-border px-5 py-6 transition-colors last:border-b-0 hover:bg-primary/[0.04] sm:gap-7 sm:px-8">
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-y-0 left-0 w-1 origin-top scale-y-0 bg-primary transition-transform duration-300 group-hover:scale-y-100"
+                      />
+                      <span className="hidden w-10 shrink-0 font-mono text-sm font-semibold tabular-nums text-muted-foreground/60 transition-colors group-hover:text-primary sm:block">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                        <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
+                          {cap.name}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          {cap.detail}
+                        </p>
+                      </div>
+                      <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/60 transition-colors group-hover:text-primary sm:block">
                         {cap.tag}
                       </span>
                     </div>
-                    <h3 className="relative mt-6 font-display text-lg font-bold">
-                      {cap.name}
-                    </h3>
-                    <p className="relative mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {cap.detail}
-                    </p>
                   </Reveal>
                 );
               })}

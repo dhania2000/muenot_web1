@@ -18,7 +18,7 @@ const navItems = [
       { name: "E-Learning Services", href: "/services/e-learning-services" },
       { name: "Technology", href: "/services/technology" },
       { name: "Localization", href: "/services/localization-services" },
-      { name: "Publishing", href: "/#publishing" },
+      { name: "Publishing", href: "/services/publishing" },
     ],
   },
   { name: "Industries", href: "/#industries" },
