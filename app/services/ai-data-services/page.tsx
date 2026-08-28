@@ -51,42 +51,49 @@ const capabilities: {
   name: string;
   detail: string;
   tag: string;
+  href: string;
 }[] = [
   {
     icon: Database,
     name: "Data Annotation",
     detail: "Image, video, text, audio, and 3D point cloud labelling at volume.",
     tag: "multimodal",
+    href: "/services/data-annotation",
   },
   {
     icon: FileStack,
     name: "Data Curation",
     detail: "Sourcing, deduplication, and dataset balancing for clean corpora.",
     tag: "datasets",
+    href: "/services/data-curation",
   },
   {
     icon: BrainCircuit,
     name: "Model Training",
     detail: "Fine-tuning support, benchmarking, and structured error analysis.",
     tag: "fine-tune",
+    href: "/services/model-training",
   },
   {
     icon: Workflow,
     name: "Human in the Loop",
     detail: "Live review queues and escalation workflows for production systems.",
     tag: "hitl",
+    href: "/services/human-in-the-loop",
   },
   {
     icon: Users,
     name: "LLM Services",
     detail: "RLHF, preference ranking, red teaming, and rubric-based evaluation.",
     tag: "rlhf",
+    href: "/services/llm-services",
   },
   {
     icon: ChartBar,
     name: "AI Analytics",
     detail: "Quality dashboards and model performance reporting per batch.",
     tag: "reporting",
+    href: "/services/ai-analytics",
   },
 ];
 
@@ -274,7 +281,10 @@ export default function AiDataServicesPage() {
                 const Icon = cap.icon;
                 return (
                   <Reveal key={cap.name} delay={index * 0.05}>
-                    <div className="group relative flex items-center gap-5 border-b border-border px-5 py-6 transition-colors last:border-b-0 hover:bg-primary/[0.04] sm:gap-7 sm:px-8">
+                    <Link
+                      href={cap.href}
+                      className="group relative flex items-center gap-5 border-b border-border px-5 py-6 transition-colors last:border-b-0 hover:bg-primary/[0.04] sm:gap-7 sm:px-8"
+                    >
                       <span
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-y-0 left-0 w-1 origin-top scale-y-0 bg-primary transition-transform duration-300 group-hover:scale-y-100"
@@ -296,7 +306,11 @@ export default function AiDataServicesPage() {
                       <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/60 transition-colors group-hover:text-primary sm:block">
                         {cap.tag}
                       </span>
-                    </div>
+                      <ArrowRight
+                        className="h-4 w-4 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </Reveal>
                 );
               })}

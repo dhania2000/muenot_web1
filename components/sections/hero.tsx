@@ -109,6 +109,36 @@ export function HeroSection() {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tickerRef = useRef<HTMLUListElement | null>(null);
+  const tickerPaused = useRef(false);
+
+  useEffect(() => {
+    const track = tickerRef.current;
+    if (!track) return;
+
+    let raf = 0;
+    let offset = 0;
+    let last = performance.now();
+    const speed = 40; // pixels per second
+
+    const step = (now: number) => {
+      const delta = (now - last) / 1000;
+      last = now;
+
+      if (!tickerPaused.current) {
+        offset += speed * delta;
+        // The list renders two identical copies; reset after the first copy.
+        const half = track.scrollWidth / 2;
+        if (half > 0 && offset >= half) offset -= half;
+        track.style.transform = `translateX(${-offset}px)`;
+      }
+
+      raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const goTo = useCallback((next: number) => {
     setIndex((next + banners.length) % banners.length);
@@ -131,7 +161,7 @@ export function HeroSection() {
   const active = banners[index];
 
   return (
-    <section className="relative overflow-hidden border-b border-border bg-background pt-24 lg:pt-28">
+    <section className="relative overflow-hidden border-b border-border bg-background/70 pt-24 lg:pt-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] grid-lines opacity-70"
@@ -346,7 +376,16 @@ export function HeroSection() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent"
           />
-          <ul className="flex w-max animate-marquee items-center gap-8 px-4">
+          <ul
+            ref={tickerRef}
+            className="flex w-max items-center gap-8 px-4 will-change-transform"
+            onMouseEnter={() => {
+              tickerPaused.current = true;
+            }}
+            onMouseLeave={() => {
+              tickerPaused.current = false;
+            }}
+          >
             {[...capabilityTicker, ...capabilityTicker].map((item, i) => {
               const Icon = item.icon;
 

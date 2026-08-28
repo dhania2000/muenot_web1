@@ -45,7 +45,7 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
 
 export function ServicesOverview() {
   return (
-    <section id="services" className="border-b border-border bg-surface pt-20 lg:pt-24">
+    <section id="services" className="border-b border-border bg-surface/60 pt-20 lg:pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading

@@ -237,8 +237,8 @@ export default function ContactPage() {
           title="Let's start a conversation"
           description="Share your requirement and a delivery lead will respond within one business day with next steps."
           breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
-          image="/images/contact-office.png"
-          imageAlt="Muenot office reception area with a client advisor"
+          image="/images/contact-conversation.png"
+          imageAlt="Illustration of people connecting through chat, email, and support conversations"
           highlights={[
             "Response within one business day",
             "NDA on request",

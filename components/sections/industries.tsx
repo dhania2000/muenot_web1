@@ -60,7 +60,7 @@ export function IndustriesSection() {
     <>
       <section
         id="industries"
-        className="scroll-mt-20 border-b border-border bg-background py-20 lg:py-24"
+        className="scroll-mt-20 border-b border-border bg-background/65 py-20 lg:py-24"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>

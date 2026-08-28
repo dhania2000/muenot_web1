@@ -1,8 +1,42 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { Building2 } from "lucide-react";
 import { clientLogos } from "@/lib/site-data";
 
 export function OurClients() {
   const track = [...clientLogos, ...clientLogos];
+  const trackRef = useRef<HTMLUListElement>(null);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    let raf = 0;
+    let last = performance.now();
+    let offset = 0;
+    const speed = 40; // px per second
+
+    const step = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+
+      if (!pausedRef.current) {
+        offset += speed * dt;
+        const half = el.scrollWidth / 2;
+        if (half > 0 && offset >= half) {
+          offset -= half;
+        }
+        el.style.transform = `translateX(-${offset}px)`;
+      }
+
+      raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <section className="border-b border-border bg-card py-14">
@@ -22,7 +56,16 @@ export function OurClients() {
             aria-hidden="true"
           />
 
-          <ul className="flex w-max animate-marquee items-center gap-4">
+          <ul
+            ref={trackRef}
+            className="flex w-max items-center gap-4 will-change-transform"
+            onMouseEnter={() => {
+              pausedRef.current = true;
+            }}
+            onMouseLeave={() => {
+              pausedRef.current = false;
+            }}
+          >
             {track.map((name, index) => (
               <li
                 key={`${name}-${index}`}

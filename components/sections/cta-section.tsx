@@ -19,7 +19,7 @@ export function CTASection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section id="cta-section" className="bg-background py-20 lg:py-24">
+    <section id="cta-section" className="bg-background/65 py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="overflow-hidden rounded-3xl border border-border bg-card shadow-[0_30px_70px_-45px_rgba(11,79,158,0.5)]">
           <div className="grid lg:grid-cols-2">

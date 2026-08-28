@@ -55,36 +55,43 @@ const formats: {
   icon: LucideIcon;
   name: string;
   detail: string;
+  href: string;
 }[] = [
   {
     icon: Compass,
     name: "Instructional Design",
     detail: "Curriculum mapping, learning journeys, and assessment design.",
+    href: "/services/content-development",
   },
   {
     icon: Layers,
     name: "Content Production",
     detail: "SCORM and xAPI builds, interactive modules, and QA.",
+    href: "/services/content-production",
   },
   {
     icon: GraduationCap,
     name: "Faculty Support",
     detail: "Author onboarding, review cycles, and course upkeep.",
+    href: "/services/faculty-support",
   },
   {
     icon: Brush,
     name: "Art Production",
     detail: "Illustration, diagrams, and animation made for learning.",
+    href: "/services/art-production",
   },
   {
     icon: Clapperboard,
     name: "Video & Audio",
     detail: "Studio recording, editing, and narration production.",
+    href: "/services/video-audio",
   },
   {
     icon: PenLine,
     name: "Content Operations",
     detail: "Versioning, localisation readiness, and release management.",
+    href: "/services/content-operations",
   },
 ];
 
@@ -274,20 +281,25 @@ export default function ELearningServicesPage() {
               {formats.map((format, index) => {
                 const Icon = format.icon;
                 return (
-                  <Reveal
-                    key={format.name}
-                    delay={index * 0.06}
-                    className="group rounded-[1.5rem] border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-[0_30px_60px_-40px_rgba(11,79,158,0.45)]"
-                  >
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-accent/15 group-hover:text-accent">
-                      <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
-                    </span>
-                    <h3 className="mt-6 font-display text-lg font-bold text-foreground">
-                      {format.name}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {format.detail}
-                    </p>
+                  <Reveal key={format.name} delay={index * 0.06}>
+                    <Link
+                      href={format.href}
+                      className="group relative block rounded-[1.5rem] border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-[0_30px_60px_-40px_rgba(11,79,158,0.45)]"
+                    >
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-accent/15 group-hover:text-accent">
+                        <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
+                      </span>
+                      <h3 className="mt-6 font-display text-lg font-bold text-foreground">
+                        {format.name}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        {format.detail}
+                      </p>
+                      <ArrowRight
+                        className="absolute right-7 top-7 h-4 w-4 text-muted-foreground/50 transition-all group-hover:translate-x-1 group-hover:text-accent"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </Reveal>
                 );
               })}

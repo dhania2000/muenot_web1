@@ -14,6 +14,7 @@ export function PageHero({
   breadcrumbs,
   image,
   imageAlt,
+  imageContain,
   primaryCta,
   secondaryCta,
   highlights,
@@ -25,6 +26,7 @@ export function PageHero({
   breadcrumbs?: Crumb[];
   image?: string;
   imageAlt?: string;
+  imageContain?: boolean;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   highlights?: string[];
@@ -145,19 +147,31 @@ export function PageHero({
 
           {image ? (
             <Reveal delay={0.12} y={28} className="relative">
-              <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-card shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
+              <div
+                className={cn(
+                  "group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]",
+                  imageContain
+                    ? "bg-gradient-to-br from-primary/10 via-card to-surface"
+                    : "bg-card",
+                )}
+              >
                 <Image
                   src={image || "/placeholder.svg"}
                   alt={imageAlt || ""}
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"
-                  className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                  className={cn(
+                    "transition-transform duration-[1200ms] ease-out group-hover:scale-105",
+                    imageContain ? "object-contain p-6" : "object-cover",
+                  )}
                   priority
                 />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-primary-dark/45 via-transparent to-transparent"
-                />
+                {!imageContain ? (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/45 via-transparent to-transparent"
+                  />
+                ) : null}
               </div>
               <Float
                 distance={10}

@@ -95,7 +95,7 @@ export function ServicesTabs() {
   return (
     <section
       id="service-lines"
-      className="scroll-mt-20 border-b border-border bg-background py-20 lg:py-24"
+      className="scroll-mt-20 border-b border-border bg-background/65 py-20 lg:py-24"
     >
       {/* Anchor targets for the navbar's service dropdown links */}
       {servicePillars.map((item) => (
