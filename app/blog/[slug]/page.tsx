@@ -15,13 +15,8 @@ import {
   User,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import {
-  getPostBySlug,
-  getRelatedPosts,
-  formatDate,
-  blockContentToHtml,
-} from "@/lib/sanity-queries";
-import { urlFor, isSanityConfigured, SanityPost } from "@/lib/sanity";
+import { formatDate, blockContentToHtml } from "@/lib/sanity-queries";
+import { urlFor, SanityPost } from "@/lib/sanity";
 import {
   getPostBySlug as getStaticPostBySlug,
   getRelatedPosts as getStaticRelatedPosts,
@@ -42,23 +37,29 @@ export default function BlogPostPage() {
     async function fetchPost() {
       setLoading(true);
 
-      if (isSanityConfigured()) {
-        setUsingSanity(true);
-        const sanityPost = await getPostBySlug(slug);
-        
-        if (sanityPost) {
-          setPost(sanityPost);
-          const related = await getRelatedPosts(
-            sanityPost._id,
-            sanityPost.tags || [],
-            3
-          );
-          setRelatedPosts(related);
+      try {
+        // Fetch from our server-side API (avoids browser->Sanity CORS).
+        const res = await fetch(`/api/blog/${slug}`);
+        const data = await res.json();
+
+        if (data.usingSanity && data.post) {
+          setUsingSanity(true);
+          setPost(data.post);
+          setRelatedPosts(data.related || []);
+        } else {
+          setUsingSanity(false);
+          const staticPost = getStaticPostBySlug(slug);
+
+          if (staticPost) {
+            setPost(staticPost);
+            setRelatedPosts(getStaticRelatedPosts(staticPost, 3));
+          }
         }
-      } else {
+      } catch (error) {
+        console.error("[v0] Error loading blog post:", error);
         setUsingSanity(false);
         const staticPost = getStaticPostBySlug(slug);
-        
+
         if (staticPost) {
           setPost(staticPost);
           setRelatedPosts(getStaticRelatedPosts(staticPost, 3));

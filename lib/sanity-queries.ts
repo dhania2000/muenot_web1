@@ -1,18 +1,34 @@
 import { client, SanityPost, isSanityConfigured } from "./sanity";
 
+// Since the schema has no dedicated excerpt field, the query derives the
+// excerpt from the full body text. Truncate it to a short, clean summary for
+// use in card previews, the detail-page subtitle, and meta descriptions.
+export function truncateExcerpt(text?: string, maxLength = 180): string {
+  if (!text) return "";
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= maxLength) return clean;
+  const truncated = clean.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return `${truncated.slice(0, lastSpace > 0 ? lastSpace : maxLength).trim()}…`;
+}
+
 // GROQ Queries
+// The Studio schema uses `mainImage`, `body`, and `categories`, so we alias
+// them to the field names the frontend expects (`coverImage`, `content`,
+// `tags`). `excerpt`, `readTime`, and `featured` don't exist in the schema, so
+// they are derived from the body text or defaulted.
 const postFields = `
   _id,
   title,
   slug,
-  excerpt,
-  content,
-  coverImage,
-  tags,
-  "author": author->{name, role, image},
+  "excerpt": pt::text(body),
+  "content": body,
+  "coverImage": mainImage,
+  "tags": coalesce(categories[]->title, []),
+  "author": author->{name, "role": coalesce(role, ""), image},
   publishedAt,
-  readTime,
-  featured
+  "readTime": round(length(pt::text(body)) / 900) + 1,
+  "featured": coalesce(featured, false)
 `;
 
 // Get all published posts (sorted by date)
@@ -80,8 +96,8 @@ export async function searchPosts(searchQuery: string): Promise<SanityPost[]> {
     return await client.fetch(
       `*[_type == "post" && defined(slug.current) && (
         title match $searchTerm ||
-        excerpt match $searchTerm ||
-        $searchTerm in tags
+        pt::text(body) match $searchTerm ||
+        count(categories[]->title[@ match $searchTerm]) > 0
       )] | order(publishedAt desc) {
         ${postFields}
       }`,
@@ -115,7 +131,7 @@ export async function getRelatedPosts(
     }
 
     return await client.fetch(
-      `*[_type == "post" && _id != $currentPostId && defined(slug.current) && count((tags)[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {
+      `*[_type == "post" && _id != $currentPostId && defined(slug.current) && count((categories[]->title)[@ in $tags]) > 0] | order(publishedAt desc) [0...$limit] {
         ${postFields}
       }`,
       { currentPostId, tags, limit }

@@ -5,8 +5,11 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SanityImageSource = any;
 
+// Project ID and dataset are public, non-secret values, so they are safe to
+// keep as fallbacks. This guarantees the blog reads from Sanity even if the
+// NEXT_PUBLIC_SANITY_* env vars are not set in the deployment environment.
 const sanityConfig = {
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "5juh7797",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2024-01-01",
   useCdn: false, // Set to false for instant updates (no caching delay)
@@ -72,8 +75,8 @@ export interface SanityBlock {
   level?: number;
 }
 
-// Check if Sanity is configured
+// Check if Sanity is configured (uses resolved config, which includes the
+// public fallback project ID above).
 export function isSanityConfigured(): boolean {
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  return !!(projectId && projectId !== "");
+  return !!(sanityConfig.projectId && sanityConfig.projectId !== "");
 }

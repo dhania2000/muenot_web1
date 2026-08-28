@@ -1,8 +1,6 @@
 import {
   convertToModelMessages,
-  createUIMessageStreamResponse,
   streamText,
-  toUIMessageStream,
   type UIMessage,
 } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
@@ -33,7 +31,5 @@ export async function POST(req: Request) {
     messages: await convertToModelMessages(messages),
   });
 
-  return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
-  });
+  return result.toUIMessageStreamResponse();
 }

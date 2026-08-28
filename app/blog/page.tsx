@@ -15,12 +15,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import {
-  getAllPosts,
-  getFeaturedPosts,
-  formatDate,
-} from "@/lib/sanity-queries";
-import { urlFor, isSanityConfigured, SanityPost } from "@/lib/sanity";
+import { formatDate } from "@/lib/sanity-queries";
+import { urlFor, SanityPost } from "@/lib/sanity";
 
 // Fallback data when Sanity is not configured
 import {
@@ -44,18 +40,23 @@ export default function BlogPage() {
     async function fetchData() {
       setLoading(true);
 
-      if (isSanityConfigured()) {
-        // Fetch from Sanity
-        setUsingSanity(true);
-        const [allPosts, featured] = await Promise.all([
-          getAllPosts(),
-          getFeaturedPosts(),
-        ]);
+      try {
+        // Fetch from our server-side API (avoids browser->Sanity CORS).
+        const res = await fetch("/api/blog");
+        const data = await res.json();
 
-        setPosts(allPosts);
-        setFeaturedPosts(featured);
-      } else {
-        // Use static data as fallback
+        if (data.usingSanity && data.posts.length > 0) {
+          setUsingSanity(true);
+          setPosts(data.posts);
+          setFeaturedPosts(data.featured);
+        } else {
+          // Use static data as fallback
+          setUsingSanity(false);
+          setPosts(getStaticPosts());
+          setFeaturedPosts(getStaticFeaturedPosts());
+        }
+      } catch (error) {
+        console.error("[v0] Error loading blog posts:", error);
         setUsingSanity(false);
         setPosts(getStaticPosts());
         setFeaturedPosts(getStaticFeaturedPosts());
