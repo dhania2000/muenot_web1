@@ -14,10 +14,10 @@ const navItems = [
     name: "Services",
     href: "/#services",
     children: [
-      { name: "AI Data Services", href: "/#ai-data" },
-      { name: "E-Learning Services", href: "/#elearning" },
+      { name: "AI Data Services", href: "/services/ai-data-services" },
+      { name: "E-Learning Services", href: "/services/e-learning-services" },
       { name: "Technology", href: "/services/technology" },
-      { name: "Localization", href: "/#localization" },
+      { name: "Localization", href: "/services/localization-services" },
       { name: "Publishing", href: "/#publishing" },
     ],
   },

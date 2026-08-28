@@ -20,7 +20,7 @@ export const servicePillars: ServicePillar[] = [
     image: "/images/service-ai-data-overview.png",
     imageAlt:
       "Data annotation specialist labelling street imagery for a computer vision model",
-    href: "/services/data-annotation",
+    href: "/services/ai-data-services",
     capabilities: [
       {
         name: "Data Annotation",
@@ -68,7 +68,7 @@ export const servicePillars: ServicePillar[] = [
     image: "/images/service-elearning-overview.png",
     imageAlt:
       "Instructional designers reviewing an e-learning course storyboard on a monitor",
-    href: "/services/content-development",
+    href: "/services/e-learning-services",
     capabilities: [
       {
         name: "Content Development",
@@ -162,7 +162,7 @@ export const servicePillars: ServicePillar[] = [
       "Native linguists, reviewers, and engineers handling translation, media localisation, and linguistic QA so your product reads as though it was written locally.",
     image: "/images/service-localization-overview.png",
     imageAlt: "Linguist working at a subtitling and translation workstation",
-    href: "/services/translation",
+    href: "/services/localization-services",
     capabilities: [
       {
         name: "Translation",
