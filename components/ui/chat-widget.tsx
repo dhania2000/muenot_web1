@@ -79,7 +79,7 @@ export function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
+    <div className="fixed bottom-24 right-6 z-[60] flex flex-col items-end gap-3">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -87,7 +87,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
-            className="flex h-[30rem] w-[calc(100vw-3rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            className="flex h-[26rem] max-h-[calc(100dvh-9rem)] w-[calc(100vw-3rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
             role="dialog"
             aria-label="Chat with Muenot assistant"
           >
@@ -98,7 +98,7 @@ export function ChatWidget() {
                   <Sparkles className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div className="leading-tight">
-                  <p className="font-display text-sm font-semibold">Mia · Muenot Assistant</p>
+                  <p className="font-display text-sm font-semibold">Abha · Muenot Assistant</p>
                   <p className="text-xs text-primary-foreground/70">Typically replies in seconds</p>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export function ChatWidget() {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-card px-3.5 py-2.5 text-sm text-card-foreground shadow-sm">
-                    Hi! I&apos;m Mia. Ask me anything about Muenot&apos;s AI data, e-learning, or
+                    Hi! I&apos;m Abha. Ask me anything about Muenot&apos;s AI data, e-learning, or
                     localization services.
                   </div>
                   <div className="flex flex-wrap gap-2">

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -117,6 +118,19 @@ export default function RootLayout({
     >
       <head>
         <link rel="canonical" href={siteUrl} />
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-9YJPEGLYMB"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9YJPEGLYMB');
+          `}
+        </Script>
       </head>
       <body className="font-sans min-h-screen bg-transparent text-foreground">
         <AnimatedBackground />

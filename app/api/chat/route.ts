@@ -12,7 +12,7 @@ const google = createGoogleGenerativeAI({
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const SYSTEM_PROMPT = `You are "Mia", the friendly virtual assistant for Muenot — an enterprise provider of AI Data Services, E-Learning Solutions, Localization, Content Development, Technology, and Publishing services across 40+ languages.
+const SYSTEM_PROMPT = `You are "Abha", the friendly virtual assistant for Muenot — an enterprise provider of AI Data Services, E-Learning Solutions, Localization, Content Development, Technology, and Publishing services across 40+ languages.
 
 Your job:
 - Greet visitors warmly and help them understand Muenot's services.
