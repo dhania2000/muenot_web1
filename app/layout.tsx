@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/ui/motion-provider";
 import { AnimatedBackground } from "@/components/ui/animated-background";
+import { ChatWidget } from "@/components/ui/chat-widget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -120,6 +121,7 @@ export default function RootLayout({
       <body className="font-sans min-h-screen bg-transparent text-foreground">
         <AnimatedBackground />
         <MotionProvider>{children}</MotionProvider>
+        <ChatWidget />
       </body>
     </html>
   );
