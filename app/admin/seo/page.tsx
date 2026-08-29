@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { isAuthenticated } from "./actions";
 import { getAllSeoSettings } from "@/lib/seo";
+import { isDbConfigured } from "@/lib/db";
 import { LoginForm } from "./login-form";
 import { SeoDashboard } from "./seo-dashboard";
 
@@ -24,7 +25,7 @@ export default async function SeoAdminPage() {
   }
 
   const settings = await getAllSeoSettings();
-  const writeEnabled = !!process.env.SANITY_API_WRITE_TOKEN;
+  const writeEnabled = isDbConfigured();
 
   return (
     <main className="relative min-h-screen px-4 py-10 sm:px-6 lg:px-10">

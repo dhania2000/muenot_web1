@@ -52,7 +52,7 @@ export function SeoDashboard({ initialSettings, writeEnabled }: Props) {
       {!writeEnabled ? (
         <div className="mb-6 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground">
           <strong className="font-semibold">Read-only mode.</strong> Add{" "}
-          <code className="rounded bg-muted px-1 py-0.5 text-xs">SANITY_API_WRITE_TOKEN</code>{" "}
+          <code className="rounded bg-muted px-1 py-0.5 text-xs">DATABASE_URL</code>{" "}
           in your project environment variables to enable saving.
         </div>
       ) : null}

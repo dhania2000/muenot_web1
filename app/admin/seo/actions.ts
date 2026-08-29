@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { getWriteClient } from "@/lib/seo";
+import { isDbConfigured } from "@/lib/db";
+import { upsertSeo, deleteSeo } from "@/lib/seo-db";
 
 const SESSION_COOKIE = "seo_admin_session";
 const SESSION_VALUE = "authenticated";
@@ -53,11 +54,10 @@ export async function saveSeoSetting(
     return { ok: false, message: "You are not signed in." };
   }
 
-  const writeClient = getWriteClient();
-  if (!writeClient) {
+  if (!isDbConfigured()) {
     return {
       ok: false,
-      message: "SANITY_API_WRITE_TOKEN is not configured, so edits cannot be saved.",
+      message: "DATABASE_URL is not configured, so edits cannot be saved.",
     };
   }
 
@@ -80,23 +80,16 @@ export async function saveSeoSetting(
     ? keywordsRaw.split(",").map((k) => k.trim()).filter(Boolean)
     : [];
 
-  const doc = {
-    _type: "seoSetting",
-    pageTitle,
-    path,
-    metaTitle: metaTitle || undefined,
-    metaDescription: metaDescription || undefined,
-    keywords,
-    noIndex,
-    updatedAt: new Date().toISOString(),
-  };
-
   try {
-    if (id) {
-      await writeClient.patch(id).set(doc).commit();
-    } else {
-      await writeClient.create(doc);
-    }
+    await upsertSeo({
+      id: id ? Number(id) : undefined,
+      path,
+      page_title: pageTitle,
+      meta_title: metaTitle || null,
+      meta_description: metaDescription || null,
+      keywords: keywords.length ? keywords.join(", ") : null,
+      no_index: noIndex,
+    });
     revalidatePath("/admin/seo");
     revalidatePath(path);
     return { ok: true, message: "Saved successfully." };
@@ -114,16 +107,15 @@ export async function deleteSeoSetting(
     return { ok: false, message: "You are not signed in." };
   }
 
-  const writeClient = getWriteClient();
-  if (!writeClient) {
-    return { ok: false, message: "SANITY_API_WRITE_TOKEN is not configured." };
+  if (!isDbConfigured()) {
+    return { ok: false, message: "DATABASE_URL is not configured." };
   }
 
   const id = String(formData.get("id") || "").trim();
   if (!id) return { ok: false, message: "Missing record id." };
 
   try {
-    await writeClient.delete(id);
+    await deleteSeo(Number(id));
     revalidatePath("/admin/seo");
     return { ok: true, message: "Deleted." };
   } catch (error) {

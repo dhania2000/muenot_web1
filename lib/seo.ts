@@ -1,5 +1,42 @@
 import type { Metadata } from "next";
-import { getSeoByPath } from "./seo-db";
+import { getSeoByPath, getAllSeo, type SeoRow } from "./seo-db";
+
+// UI-facing shape consumed by the admin dashboard/editor. It normalises the
+// snake_case database row (`SeoRow`) into the camelCase record the components
+// expect, and turns the comma-separated `keywords` column into a string array.
+export interface SeoSetting {
+  _id: string;
+  pageTitle: string;
+  path: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  ogImage?: string;
+  noIndex: boolean;
+  updatedAt?: string;
+}
+
+function rowToSetting(row: SeoRow): SeoSetting {
+  return {
+    _id: String(row.id),
+    pageTitle: row.page_title,
+    path: row.path,
+    metaTitle: row.meta_title || undefined,
+    metaDescription: row.meta_description || undefined,
+    keywords: row.keywords
+      ? row.keywords.split(",").map((k) => k.trim()).filter(Boolean)
+      : undefined,
+    ogImage: row.og_image || undefined,
+    noIndex: row.no_index === 1 || row.no_index === true,
+    updatedAt: row.updated_at,
+  };
+}
+
+// Fetch every SEO record for the admin dashboard.
+export async function getAllSeoSettings(): Promise<SeoSetting[]> {
+  const rows = await getAllSeo();
+  return rows.map(rowToSetting);
+}
 
 // Convert a stored SEO record into Next.js Metadata. Falls back to the passed
 // defaults so pages stay well-described even before an editor customises them.
