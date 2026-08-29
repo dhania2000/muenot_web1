@@ -28,7 +28,7 @@ const TABLES = [
     company VARCHAR(191) NULL,
     phone VARCHAR(64) NULL,
     message TEXT NULL,
-    payload JSON NULL,
+    payload LONGTEXT NULL,
     status ENUM('new','in_progress','won','lost') NOT NULL DEFAULT 'new',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX (type),
@@ -38,7 +38,7 @@ const TABLES = [
 
   `CREATE TABLE IF NOT EXISTS site_content (
     section VARCHAR(64) PRIMARY KEY,
-    data JSON NOT NULL,
+    data LONGTEXT NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
 

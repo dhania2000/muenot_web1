@@ -35,7 +35,7 @@ export async function saveSection<K extends SectionKey>(
   data: (typeof SECTION_SEEDS)[K],
 ): Promise<void> {
   await query(
-    `INSERT INTO site_content (section, data) VALUES (?, CAST(? AS JSON))
+    `INSERT INTO site_content (section, data) VALUES (?, ?)
      ON DUPLICATE KEY UPDATE data = VALUES(data)`,
     [section, JSON.stringify(data)],
   )
@@ -45,7 +45,7 @@ export async function saveSection<K extends SectionKey>(
 export async function seedContent(): Promise<void> {
   for (const key of Object.keys(SECTION_SEEDS) as SectionKey[]) {
     await query(
-      `INSERT IGNORE INTO site_content (section, data) VALUES (?, CAST(? AS JSON))`,
+      `INSERT IGNORE INTO site_content (section, data) VALUES (?, ?)`,
       [key, JSON.stringify(SECTION_SEEDS[key])],
     )
   }
