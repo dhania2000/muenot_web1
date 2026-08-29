@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { useFooterContent } from "@/components/layout/site-chrome-provider";
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -66,48 +67,22 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-const offices = [
-  {
-    location: "Jaipur, India",
-    address: "56, Mukhya Sodala, Shyam Nagar, Jaipur, Rajasthan",
-  },
-  {
-    location: "Jhunjhunu, India",
-    address: "Tal, Jhunjhunu, Rajasthan, 333026",
-  },
-];
+/** Resolve the string icon names stored in the editable content store. */
+function SocialIcon({ name, className }: { name: string; className?: string }) {
+  if (name.toLowerCase() === "linkedin")
+    return <LinkedinIcon className={className} />;
+  return <InstagramIcon className={className} />;
+}
 
-const aboutLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Contact Us", href: "/contact" },
-  { name: "Our Services", href: "/#services" },
-  { name: "Our Clients", href: "/#our-clients" },
-  { name: "Case Studies", href: "/#case-studies" },
-  { name: "Blogs", href: "/blog" },
-];
-
-const servicesLinks = [
-  { name: "AI Data Services", href: "/#ai-data" },
-  { name: "E-Learning Services", href: "/#elearning" },
-  { name: "Technology Solutions", href: "/services/technology" },
-  { name: "Localization", href: "/#localization" },
-  { name: "Publishing", href: "/#publishing" },
-];
-
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    icon: LinkedinIcon,
-    href: "https://www.linkedin.com/company/muenot/?viewAsMember=true",
-  },
-  {
-    name: "Instagram",
-    icon: InstagramIcon,
-    href: "https://www.linkedin.com/company/muenot/?viewAsMember=true",
-  },
-];
+function ContactIcon({ name, className }: { name: string; className?: string }) {
+  if (name.toLowerCase() === "phone")
+    return <Phone className={className} aria-hidden="true" />;
+  return <Mail className={className} aria-hidden="true" />;
+}
 
 export function Footer() {
+  const content = useFooterContent();
+
   return (
     <footer id="footer" className="bg-primary-dark text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,7 +95,7 @@ export function Footer() {
               className="inline-flex items-center rounded-lg bg-white px-3 py-2 shadow-sm"
             >
               <Image
-                src="/logo.png"
+                src={content.logo || "/logo.png"}
                 alt="Muenot"
                 width={244}
                 height={55}
@@ -128,14 +103,11 @@ export function Footer() {
               />
             </Link>
             <p className="mt-5 text-sm leading-relaxed opacity-75 max-w-sm">
-              Muenot Technologies is an enterprise services partner for AI
-              training data, workforce learning, localization and digital
-              engineering — delivered by managed teams with documented quality
-              controls.
+              {content.brandBlurb}
             </p>
 
             <div className="mt-6 flex items-center gap-3">
-              {socialLinks.map((social) => (
+              {content.socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
@@ -144,7 +116,7 @@ export function Footer() {
                   aria-label={social.name}
                   className="w-9 h-9 rounded-md border border-primary-foreground/20 flex items-center justify-center opacity-75 hover:opacity-100 hover:bg-primary-foreground/10 transition-all"
                 >
-                  <social.icon className="w-4 h-4" />
+                  <SocialIcon name={social.icon} className="w-4 h-4" />
                 </a>
               ))}
             </div>
@@ -156,7 +128,7 @@ export function Footer() {
               Company
             </h4>
             <ul className="mt-5 space-y-3">
-              {aboutLinks.map((link) => (
+              {content.companyLinks.map((link) => (
                 <li key={link.name}>
                   <FooterLink
                     href={link.href}
@@ -179,7 +151,7 @@ export function Footer() {
               Services
             </h4>
             <ul className="mt-5 space-y-3">
-              {servicesLinks.map((link) => (
+              {content.servicesLinks.map((link) => (
                 <li key={link.name}>
                   <FooterLink
                     href={link.href}
@@ -202,7 +174,7 @@ export function Footer() {
               Contact
             </h4>
             <div className="mt-5 space-y-5">
-              {offices.map((office) => (
+              {content.offices.map((office) => (
                 <div key={office.address} className="flex gap-3">
                   <MapPin
                     className="w-4 h-4 mt-0.5 shrink-0 opacity-60"
@@ -218,29 +190,19 @@ export function Footer() {
               ))}
 
               <div className="pt-1 space-y-2">
-                <a
-                  href="tel:+916377809826"
-                  className="flex items-center gap-3 text-sm opacity-75 hover:opacity-100 transition-opacity"
-                >
-                  <Phone className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  +91 63778 09826
-                  <span className="opacity-60">(Sales)</span>
-                </a>
-                <a
-                  href="mailto:info@muenot.co.in"
-                  className="flex items-center gap-3 text-sm opacity-75 hover:opacity-100 transition-opacity"
-                >
-                  <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  info@muenot.co.in
-                </a>
-                <a
-                  href="mailto:career@muenot.co.in"
-                  className="flex items-center gap-3 text-sm opacity-75 hover:opacity-100 transition-opacity"
-                >
-                  <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  career@muenot.co.in
-                  <span className="opacity-60">(Careers)</span>
-                </a>
+                {content.contacts.map((contact) => (
+                  <a
+                    key={contact.value}
+                    href={contact.href}
+                    className="flex items-center gap-3 text-sm opacity-75 hover:opacity-100 transition-opacity"
+                  >
+                    <ContactIcon name={contact.icon} className="w-4 h-4 shrink-0" />
+                    {contact.value}
+                    {contact.note ? (
+                      <span className="opacity-60">{contact.note}</span>
+                    ) : null}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -249,28 +211,24 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="py-6 border-t border-primary-foreground/15 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs opacity-60 text-center sm:text-left">
-            &copy; 2020&ndash;{new Date().getFullYear()} Muenot Technologies. All
-            rights reserved.
+            &copy; 2020&ndash;{new Date().getFullYear()} {content.copyright}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs opacity-60">
-            <span>ISO 27001 aligned processes</span>
-            <Link
-              href="/privacy-policy"
-              className="hover:opacity-100 transition-opacity"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-and-conditions"
-              className="hover:opacity-100 transition-opacity"
-            >
-              Terms &amp; Conditions
-            </Link>
+            <span>{content.certText}</span>
+            {content.legalLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="hover:opacity-100 transition-opacity"
+              >
+                {link.name}
+              </Link>
+            ))}
             <a
-              href="https://www.muenot.co.in"
+              href={content.websiteHref}
               className="hover:opacity-100 transition-opacity"
             >
-              www.muenot.co.in
+              {content.website}
             </a>
           </div>
         </div>

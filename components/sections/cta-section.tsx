@@ -8,14 +8,9 @@ import { Button } from "@/components/ui/button";
 import { AppointmentModal } from "@/components/ui/appointment-modal";
 import { Eyebrow } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
+import { homeCtaContent, type HomeCtaContent } from "@/lib/site-content-data";
 
-const assurances = [
-  "Response within one business day",
-  "Scoping call with a delivery lead, not a sales rep",
-  "Written pilot proposal with pricing and acceptance criteria",
-];
-
-export function CTASection() {
+export function CTASection({ content = homeCtaContent }: { content?: HomeCtaContent }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -25,8 +20,8 @@ export function CTASection() {
           <div className="grid lg:grid-cols-2">
             <div className="group relative min-h-72 overflow-hidden lg:min-h-full">
               <Image
-                src="/images/cta-consultation.png"
-                alt="Client consultation meeting with a Muenot delivery lead"
+                src={content.image || "/images/cta-consultation.png"}
+                alt={content.imageAlt}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
@@ -41,20 +36,19 @@ export function CTASection() {
 
               <div className="relative flex flex-col gap-5">
                 <Eyebrow tone="light" className="w-fit">
-                  Start a conversation
+                  {content.eyebrow}
                 </Eyebrow>
 
                 <h2 className="font-display text-2xl font-bold leading-tight text-balance sm:text-3xl lg:text-4xl">
-                  Tell us the requirement. We will scope a pilot.
+                  {content.title}
                 </h2>
 
                 <p className="text-sm leading-relaxed text-pretty text-primary-foreground/80">
-                  Share your volumes and timelines to get a documented pilot
-                  plan before committing to scale.
+                  {content.description}
                 </p>
 
                 <ul className="flex flex-col gap-3 border-t border-primary-foreground/20 pt-6">
-                  {assurances.map((item) => (
+                  {content.assurances.map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <span
                         aria-hidden="true"
@@ -75,8 +69,8 @@ export function CTASection() {
                     size="lg"
                     className="group h-12 rounded-full bg-primary-foreground px-6 text-primary hover:bg-primary-foreground/90"
                   >
-                    <Link href="/contact">
-                      Contact our team
+                    <Link href={content.primaryHref}>
+                      {content.primaryLabel}
                       <ArrowRight
                         className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                         aria-hidden="true"
@@ -90,7 +84,7 @@ export function CTASection() {
                     className="h-12 rounded-full border-primary-foreground/40 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                   >
                     <Calendar className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Schedule a call
+                    {content.secondaryLabel}
                   </Button>
                 </div>
               </div>
@@ -102,7 +96,7 @@ export function CTASection() {
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        appointmentUrl="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2H1mDyZZCvmW3Borgz4b3tdC_wtzo8KjAQ_2SHFVMW70qdjK75tPsr8a4mc7OOyNy1KA57B_IF?gv=true"
+        appointmentUrl={content.appointmentUrl}
       />
     </section>
   );

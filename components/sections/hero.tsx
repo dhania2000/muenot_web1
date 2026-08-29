@@ -5,89 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Accessibility,
   ArrowRight,
-  BrainCircuit,
-  Captions,
   ChevronLeft,
   ChevronRight,
-  Database,
-  GraduationCap,
-  Languages,
-  Mic2,
-  PenTool,
   PlayCircle,
   Sparkles,
 } from "lucide-react";
 import { Float, Reveal } from "@/components/ui/reveal";
-
-type Banner = {
-  id: string;
-  eyebrow: string;
-  title: string;
-  highlight: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  primary: { label: string; href: string };
-  secondary: { label: string; href: string };
-  stat: { value: string; label: string };
-};
-
-const banners: Banner[] = [
-  {
-    id: "ai-data",
-    eyebrow: "AI Data Services",
-    title: "Training data pipelines built",
-    highlight: "for production models",
-    description:
-      "Managed annotation, curation, and evaluation pods with documented quality gates and audit trails on every batch.",
-    image: "/images/service-ai-data-overview.png",
-    imageAlt:
-      "Data annotation specialist labelling street imagery for a computer vision model",
-    primary: { label: "Explore AI data", href: "/services/data-annotation" },
-    secondary: { label: "See client results", href: "/case-studies" },
-    stat: { value: "98.2%", label: "Quality assurance rate" },
-  },
-  {
-    id: "elearning",
-    eyebrow: "E-Learning & Localization",
-    title: "Course production and localization,",
-    highlight: "delivered at scale",
-    description:
-      "Instructional designers, media teams, and native linguists turning objectives into accessible courses in 40+ languages.",
-    image: "/images/service-elearning-overview.png",
-    imageAlt:
-      "Instructional designers reviewing an e-learning course storyboard on a monitor",
-    primary: { label: "Explore e-learning", href: "/services/content-development" },
-    secondary: { label: "Talk to our team", href: "/contact" },
-    stat: { value: "40+", label: "Languages supported" },
-  },
-  {
-    id: "publishing",
-    eyebrow: "Publishing & Accessibility",
-    title: "Editorial and accessibility services",
-    highlight: "for digital catalogues",
-    description:
-      "Copy editing, conversion, and WCAG remediation for publishers moving large backlists into compliant digital formats.",
-    image: "/images/service-publishing-overview.png",
-    imageAlt: "Editor reviewing printed page proofs beside a book layout screen",
-    primary: { label: "Explore publishing", href: "/services/editorial-services" },
-    secondary: { label: "See client results", href: "/case-studies" },
-    stat: { value: "300+", label: "Specialists on delivery" },
-  },
-];
-
-const capabilityTicker = [
-  { label: "Data annotation", icon: Database },
-  { label: "RLHF & evaluation", icon: BrainCircuit },
-  { label: "Course production", icon: GraduationCap },
-  { label: "Translation", icon: Languages },
-  { label: "Subtitling", icon: Captions },
-  { label: "Accessibility", icon: Accessibility },
-  { label: "Editorial", icon: PenTool },
-  { label: "Voiceover", icon: Mic2 },
-];
+import { DynamicIcon } from "@/components/ui/dynamic-icon";
+import type { HeroContent } from "@/lib/site-content-data";
 
 const AUTOPLAY_MS = 6000;
 
@@ -105,7 +31,9 @@ const imageVariants = {
   exit: { opacity: 0, scale: 1.02 },
 };
 
-export function HeroSection() {
+export function HeroSection({ content }: { content: HeroContent }) {
+  const banners = content.banners;
+  const capabilityTicker = content.capabilities;
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -230,24 +158,24 @@ export function HeroSection() {
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
-                      href={active.primary.href}
+                      href={active.primaryHref}
                       className="group inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)] transition-colors hover:bg-primary-dark"
                     >
-                      {active.primary.label}
+                      {active.primaryLabel}
                       <ArrowRight
                         className="h-4 w-4 transition-transform group-hover:translate-x-1"
                         aria-hidden="true"
                       />
                     </Link>
                     <Link
-                      href={active.secondary.href}
+                      href={active.secondaryHref}
                       className="group inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
                     >
                       <PlayCircle
                         className="h-4 w-4 text-primary transition-transform group-hover:scale-110"
                         aria-hidden="true"
                       />
-                      {active.secondary.label}
+                      {active.secondaryLabel}
                     </Link>
                   </div>
                 </motion.div>
@@ -351,10 +279,10 @@ export function HeroSection() {
                       className="rounded-2xl border border-border bg-primary px-4 py-3 text-primary-foreground shadow-[0_18px_40px_-20px_rgba(11,79,158,0.8)]"
                     >
                       <p className="font-display text-2xl font-extrabold">
-                        {active.stat.value}
+                        {active.statValue}
                       </p>
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-primary-foreground/80">
-                        {active.stat.label}
+                        {active.statLabel}
                       </p>
                     </motion.div>
                   </Float>
@@ -386,22 +314,18 @@ export function HeroSection() {
               tickerPaused.current = false;
             }}
           >
-            {[...capabilityTicker, ...capabilityTicker].map((item, i) => {
-              const Icon = item.icon;
-
-              return (
-                <li
-                  key={`${item.label}-${i}`}
-                  aria-hidden={i >= capabilityTicker.length}
-                  className="flex items-center gap-2.5 whitespace-nowrap text-sm font-semibold text-foreground/70"
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/15 bg-background text-primary shadow-sm">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  {item.label}
-                </li>
-              );
-            })}
+            {[...capabilityTicker, ...capabilityTicker].map((item, i) => (
+              <li
+                key={`${item.label}-${i}`}
+                aria-hidden={i >= capabilityTicker.length}
+                className="flex items-center gap-2.5 whitespace-nowrap text-sm font-semibold text-foreground/70"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/15 bg-background text-primary shadow-sm">
+                  <DynamicIcon name={item.icon} className="h-4 w-4" />
+                </span>
+                {item.label}
+              </li>
+            ))}
           </ul>
         </Reveal>
       </div>

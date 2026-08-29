@@ -23,8 +23,10 @@ import {
   MapPin,
   Clock,
   ClipboardCheck,
+  Sparkles,
 } from "lucide-react";
-import { stats } from "@/lib/site-data";
+import type { LucideIcon } from "lucide-react";
+import { getSection } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Muenot | Enterprise Delivery Partner",
@@ -32,97 +34,52 @@ export const metadata: Metadata = {
     "Muenot is a global delivery partner for AI data, e-learning, localization, technology and publishing services — managed teams, measured quality, ISO-aligned security.",
 };
 
-const values = [
-  {
-    title: "Quality and excellence",
-    description:
-      "Rigorous QA processes and written acceptance criteria on every deliverable.",
-    icon: Award,
-  },
-  {
-    title: "Customer first",
-    description:
-      "We start from your definition of done, not a generic service catalogue.",
-    icon: Heart,
-  },
-  {
-    title: "Integrity",
-    description:
-      "Transparent reporting, honest timelines, and no surprises at invoice time.",
-    icon: Shield,
-  },
-  {
-    title: "Ownership",
-    description:
-      "A named delivery manager accountable for SLA performance end to end.",
-    icon: CheckCircle,
-  },
-  {
-    title: "Learning and innovation",
-    description:
-      "Tooling and process improvements fed back into every active engagement.",
-    icon: Lightbulb,
-  },
-  {
-    title: "Global, local",
-    description:
-      "Delivery centres across three regions with native-language capability.",
-    icon: Globe,
-  },
-];
+/** Resolve the string icon names stored in the editable About content. */
+const iconMap: Record<string, LucideIcon> = {
+  Award,
+  Heart,
+  Shield,
+  CheckCircle,
+  Lightbulb,
+  Globe,
+  MapPin,
+  Clock,
+  ClipboardCheck,
+  Users,
+  Target,
+  Eye,
+};
 
-const visionPoints = [
-  "Leading our categories on measured quality, not marketing claims",
-  "Expanding delivery capacity without diluting governance",
-  "Creating durable partnerships that survive procurement cycles",
-];
+function resolveIcon(name: string): LucideIcon {
+  return iconMap[name] ?? Sparkles;
+}
 
-const operations = [
-  {
-    title: "Regional delivery centres",
-    description:
-      "Capacity across three regions with native-language specialists, so work follows the timezone it is needed in.",
-    tag: "3 regions",
-    icon: MapPin,
-  },
-  {
-    title: "Defined coverage windows",
-    description:
-      "extended weekday coverage with agreed escalation paths and a named delivery manager accountable for SLA performance.",
-    tag: "extended weekday coverage",
-    icon: Clock,
-  },
-  {
-    title: "Documented governance",
-    description:
-      "ISO-aligned handling, NDA-backed secure floors, and written acceptance criteria on every deliverable.",
-    tag: "ISO-aligned",
-    icon: ClipboardCheck,
-  },
-];
+export default async function AboutPage() {
+  const [content, stats] = await Promise.all([
+    getSection("about_page"),
+    getSection("stats"),
+  ]);
 
-const missionPoints = [
-  "Provide scalable, reliable delivery under contractual SLAs",
-  "Build long-term partnerships based on audited performance",
-  "Foster continuous learning across every delivery pod",
-  "Empower teams to own outcomes, not just tasks",
-];
-
-export default function AboutPage() {
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-background">
         <PageHero
-          eyebrow="About Muenot"
-          title="A delivery partner built for enterprise accountability"
-          description="Muenot runs the operational work enterprise teams can't staff internally — AI data, courseware, localization, technology and publishing — with managed pods and measurable quality."
+          eyebrow={content.hero.eyebrow}
+          title={content.hero.title}
+          description={content.hero.description}
           breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
-          image="/images/about-team.png"
-          imageAlt="Muenot leadership and delivery team collaborating in a modern office"
-          primaryCta={{ label: "Talk to our team", href: "/contact" }}
-          secondaryCta={{ label: "Explore services", href: "/#services" }}
-          highlights={["6+ years", "300+ specialists", "10+ countries"]}
+          image={content.hero.image}
+          imageAlt={content.hero.imageAlt}
+          primaryCta={{
+            label: content.hero.primaryLabel,
+            href: content.hero.primaryHref,
+          }}
+          secondaryCta={{
+            label: content.hero.secondaryLabel,
+            href: content.hero.secondaryHref,
+          }}
+          highlights={content.hero.highlights}
         />
 
         <section className="border-b border-border bg-card py-16">
@@ -137,23 +94,16 @@ export default function AboutPage() {
               <Reveal className="flex flex-col gap-6">
                 <SectionHeading
                   align="left"
-                  eyebrow="Who we are"
-                  title="Infinite learning, endless possibilities"
-                  description="Domain specialists, production tooling, and documented governance — so complex programmes land on schedule."
+                  eyebrow={content.whoWeAre.eyebrow}
+                  title={content.whoWeAre.title}
+                  description={content.whoWeAre.description}
                 />
-                <CheckList
-                  items={[
-                    "Five service lines under one delivery organisation",
-                    "Delivery centres across three regions, extended weekday coverage",
-                    "ISO-aligned handling with NDA-backed secure floors",
-                    "Sector-assigned delivery leads on every account",
-                  ]}
-                />
+                <CheckList items={content.whoWeAre.items} />
                 <Link
-                  href="/case-studies"
+                  href={content.whoWeAre.linkHref}
                   className="group inline-flex w-fit items-center gap-2 text-sm font-semibold text-primary"
                 >
-                  See how we work with clients
+                  {content.whoWeAre.linkLabel}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
@@ -164,8 +114,8 @@ export default function AboutPage() {
               <Reveal delay={0.12} y={26} className="relative">
                 <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
                   <Image
-                    src="/images/about-office.png"
-                    alt="Muenot delivery centre floor with specialists at production workstations"
+                    src={content.whoWeAre.image}
+                    alt={content.whoWeAre.imageAlt}
                     fill
                     sizes="(min-width: 1024px) 48vw, 100vw"
                     className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
@@ -220,13 +170,12 @@ export default function AboutPage() {
                 </span>
                 <IconBadge icon={Eye} size="lg" />
                 <h2 className="relative font-display text-2xl font-bold text-foreground lg:text-3xl">
-                  Our vision
+                  {content.vision.title}
                 </h2>
                 <p className="relative text-base leading-relaxed text-pretty text-muted-foreground">
-                  To be the delivery partner enterprises trust with the work
-                  that cannot fail — measured, audited, and repeatable.
+                  {content.vision.description}
                 </p>
-                <CheckList items={visionPoints} className="relative mt-auto" />
+                <CheckList items={content.vision.points} className="relative mt-auto" />
               </Reveal>
 
               <Reveal
@@ -242,14 +191,13 @@ export default function AboutPage() {
                 </span>
                 <IconBadge icon={Target} size="lg" />
                 <h2 className="relative font-display text-2xl font-bold text-foreground lg:text-3xl">
-                  Our mission
+                  {content.mission.title}
                 </h2>
                 <p className="relative text-base leading-relaxed text-pretty text-muted-foreground">
-                  To deliver operational programmes that hold their quality bar
-                  as volumes scale.
+                  {content.mission.description}
                 </p>
                 <CheckList
-                  items={missionPoints}
+                  items={content.mission.points}
                   columns={2}
                   className="relative mt-auto"
                 />
@@ -261,20 +209,20 @@ export default function AboutPage() {
         <section className="border-b border-border bg-background py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="Core values"
-              title="The principles behind every engagement"
-              description="These shape how pods are staffed, how quality is measured, and how we report."
+              eyebrow={content.valuesEyebrow}
+              title={content.valuesTitle}
+              description={content.valuesDescription}
             />
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {values.map((value, index) => (
+              {content.values.map((value, index) => (
                 <Reveal
                   as="article"
                   key={value.title}
                   delay={index * 0.06}
                   className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-24px_rgba(11,79,158,0.45)]"
                 >
-                  <IconBadge icon={value.icon} />
+                  <IconBadge icon={resolveIcon(value.icon)} />
                   <h3 className="font-display text-base font-semibold text-foreground">
                     {value.title}
                   </h3>
@@ -290,20 +238,20 @@ export default function AboutPage() {
         <section className="border-b border-border bg-surface py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="How we operate"
-              title="The delivery model behind the work"
-              description="Every engagement runs on the same operating spine — regional capacity, defined coverage windows, and documented governance."
+              eyebrow={content.operationsEyebrow}
+              title={content.operationsTitle}
+              description={content.operationsDescription}
             />
 
             <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {operations.map((item, index) => (
+              {content.operations.map((item, index) => (
                 <Reveal
                   as="article"
                   key={item.title}
                   delay={index * 0.08}
                   className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-8"
                 >
-                  <IconBadge icon={item.icon} size="lg" />
+                  <IconBadge icon={resolveIcon(item.icon)} size="lg" />
                   <h3 className="font-display text-lg font-semibold text-foreground">
                     {item.title}
                   </h3>
@@ -326,28 +274,27 @@ export default function AboutPage() {
                 <Users className="h-6 w-6" aria-hidden="true" />
               </span>
               <h2 className="font-display text-3xl font-bold text-balance text-primary-foreground sm:text-4xl">
-                Join us on our journey
+                {content.closing.title}
               </h2>
               <p className="max-w-2xl text-base leading-relaxed text-pretty text-primary-foreground/75">
-                Partner with Muenot and get a documented pilot before you
-                commit to scale.
+                {content.closing.description}
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/contact"
+                  href={content.closing.primaryHref}
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
                 >
-                  Get in touch
+                  {content.closing.primaryLabel}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
                   />
                 </Link>
                 <Link
-                  href="/#services"
+                  href={content.closing.secondaryHref}
                   className="inline-flex items-center justify-center rounded-full border border-primary-foreground/30 px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
                 >
-                  Explore services
+                  {content.closing.secondaryLabel}
                 </Link>
               </div>
             </div>

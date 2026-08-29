@@ -20,27 +20,37 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   // Pull marketing content from the DB-backed content store. Each helper falls
   // back to the hardcoded seed data if the database is unreachable.
-  const [pillars, stats, industries, engagementSteps, caseStudies, clientLogos] =
-    await Promise.all([
-      getSection("service_pillars"),
-      getSection("stats"),
-      getSection("industries"),
-      getSection("engagement_steps"),
-      getSection("case_studies"),
-      getSection("client_logos"),
-    ]);
+  const [
+    hero,
+    pillars,
+    stats,
+    industries,
+    engagementSteps,
+    caseStudies,
+    clientLogos,
+    homeCta,
+  ] = await Promise.all([
+    getSection("hero"),
+    getSection("service_pillars"),
+    getSection("stats"),
+    getSection("industries"),
+    getSection("engagement_steps"),
+    getSection("case_studies"),
+    getSection("client_logos"),
+    getSection("home_cta"),
+  ]);
 
   return (
     <main className="relative">
       <Navbar />
-      <HeroSection />
+      <HeroSection content={hero} />
       <ServicesOverview pillars={pillars} stats={stats} />
       <OurClients logos={clientLogos} />
       <ServicesTabs pillars={pillars} />
       <IndustriesSection industries={industries} engagementSteps={engagementSteps} />
       <CaseStudiesSection caseStudies={caseStudies} />
       <AboutSection stats={stats} />
-      <CTASection />
+      <CTASection content={homeCta} />
       <Footer />
       <ScrollToTop />
     </main>
