@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import { DataCurationPage as DataCurationPageComponent } from "@/components/services/data-curation-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
 import type { Metadata } from "next";
 
@@ -8,11 +9,9 @@ export const metadata: Metadata = {
   description: "Managed data curation delivery pods with documented quality gates, SLAs and a named delivery manager.",
 };
 
-export default function DataCurationPage() {
-  return (
-    <DataCurationPageComponent
-      service={getService("data-curation")}
-      related={getRelatedServices("data-curation")}
-    />
-  );
+export default async function DataCurationPage() {
+  const service = await getServiceDetail("data-curation");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("data-curation");
+  return <DataCurationPageComponent service={service} related={related} />;
 }

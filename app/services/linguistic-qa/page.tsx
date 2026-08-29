@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import { ServicePage } from "@/components/services/service-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
-export default function LinguisticQaPage() {
-  return (
-    <ServicePage
-      service={getService("linguistic-qa")}
-      related={getRelatedServices("linguistic-qa")}
-    />
-  );
+export default async function LinguisticQaPage() {
+  const service = await getServiceDetail("linguistic-qa");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("linguistic-qa");
+  return <ServicePage service={service} related={related} />;
 }

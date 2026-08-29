@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import { TechnologyPage } from "@/components/services/technology-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
-export default function TechnologyRoute() {
-  return (
-    <TechnologyPage
-      service={getService("technology")}
-      related={getRelatedServices("technology")}
-    />
-  );
+export default async function TechnologyRoute() {
+  const service = await getServiceDetail("technology");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("technology");
+  return <TechnologyPage service={service} related={related} />;
 }

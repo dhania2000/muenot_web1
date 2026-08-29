@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import { ServicePage } from "@/components/services/service-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
-export default function EditorialServicesPage() {
-  return (
-    <ServicePage
-      service={getService("editorial-services")}
-      related={getRelatedServices("editorial-services")}
-    />
-  );
+export default async function EditorialServicesPage() {
+  const service = await getServiceDetail("editorial-services");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("editorial-services");
+  return <ServicePage service={service} related={related} />;
 }

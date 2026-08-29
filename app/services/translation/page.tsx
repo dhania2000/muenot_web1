@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import { ServicePage } from "@/components/services/service-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
-export default function TranslationPage() {
-  return (
-    <ServicePage
-      service={getService("translation")}
-      related={getRelatedServices("translation")}
-    />
-  );
+export default async function TranslationPage() {
+  const service = await getServiceDetail("translation");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("translation");
+  return <ServicePage service={service} related={related} />;
 }

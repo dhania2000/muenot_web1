@@ -7,6 +7,7 @@ import {
   clientLogos,
 } from "./site-data"
 import { serviceDetails } from "./services-data"
+import { pillarPages } from "./pillar-data"
 import {
   heroContent,
   homeCtaContent,
@@ -26,6 +27,7 @@ export type SectionKey =
   | "hero"
   | "service_pillars"
   | "service_details"
+  | "pillar_pages"
   | "industries"
   | "case_studies"
   | "stats"
@@ -41,6 +43,7 @@ export const SECTION_SEEDS = {
   hero: heroContent,
   service_pillars: servicePillars,
   service_details: serviceDetails,
+  pillar_pages: pillarPages,
   industries,
   case_studies: caseStudies,
   stats,
@@ -57,6 +60,7 @@ export const SECTION_LABELS: Record<SectionKey, string> = {
   hero: "Home Hero",
   service_pillars: "Service Pillars",
   service_details: "Service Detail Pages",
+  pillar_pages: "Pillar Landing Pages",
   industries: "Industries",
   case_studies: "Case Studies",
   stats: "Stats",

@@ -1,11 +1,10 @@
+import { notFound } from "next/navigation";
 import { ServicePage } from "@/components/services/service-page";
-import { getRelatedServices, getService } from "@/lib/services-data";
+import { getServiceDetail, getRelatedServiceDetails } from "@/lib/content";
 
-export default function VideoAudioPage() {
-  return (
-    <ServicePage
-      service={getService("video-audio")}
-      related={getRelatedServices("video-audio")}
-    />
-  );
+export default async function VideoAudioPage() {
+  const service = await getServiceDetail("video-audio");
+  if (!service) notFound();
+  const related = await getRelatedServiceDetails("video-audio");
+  return <ServicePage service={service} related={related} />;
 }
