@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
@@ -149,6 +150,22 @@ export async function POST(request: NextRequest) {
         { error: "Failed to send email" },
         { status: 500 }
       );
+    }
+
+    // Persist the lead so it shows up in the admin portal. Never block the
+    // response on a DB failure — the email has already been delivered.
+    try {
+      await createLead({
+        type: "contact",
+        name: body.name,
+        email: body.email,
+        company: body.company || null,
+        phone: body.phone || null,
+        message: body.message || null,
+        payload: { subject: body.subject },
+      });
+    } catch (dbError) {
+      console.error("[v0] Failed to store contact lead:", dbError);
     }
 
     return NextResponse.json(

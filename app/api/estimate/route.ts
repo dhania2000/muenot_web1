@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
@@ -128,6 +129,26 @@ export async function POST(request: NextRequest) {
         { error: "Failed to send email" },
         { status: 500 },
       );
+    }
+
+    // Persist the estimate lead for the admin portal without blocking on DB errors.
+    try {
+      await createLead({
+        type: "estimate",
+        name: body.name,
+        email: body.email,
+        company: body.company || null,
+        message: null,
+        payload: {
+          dataType: body.dataType,
+          volume: body.volume,
+          complexity: body.complexity,
+          timeline: body.timeline,
+          tier: body.tier,
+        },
+      });
+    } catch (dbError) {
+      console.error("[v0] Failed to store estimate lead:", dbError);
     }
 
     return NextResponse.json({ success: true }, { status: 200 });
