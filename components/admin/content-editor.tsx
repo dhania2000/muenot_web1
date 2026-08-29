@@ -2,7 +2,7 @@
 
 import { useActionState, useMemo, useState } from "react"
 import { useFormStatus } from "react-dom"
-import { Check, AlertCircle, Plus, Trash2 } from "lucide-react"
+import { Check, AlertCircle, Plus, Trash2, ChevronDown } from "lucide-react"
 import { saveContentAction } from "@/app/admin/actions"
 import { SECTION_LABELS, type SectionKey } from "@/lib/content-schema"
 
@@ -140,6 +140,43 @@ function ObjectEditor({
   )
 }
 
+function CollapsibleItem({
+  title,
+  onRemove,
+  children,
+}: {
+  title: string
+  onRemove: () => void
+  children: React.ReactNode
+}) {
+  const [open, setOpen] = useState(false)
+  return (
+    <li className="overflow-hidden rounded-xl border border-border bg-card">
+      <div className="flex items-center gap-2 p-3">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="flex min-w-0 flex-1 items-center gap-2 text-left"
+        >
+          <ChevronDown
+            className={`size-4 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-0" : "-rotate-90"}`}
+          />
+          <span className="truncate text-sm font-semibold text-foreground">{title}</span>
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-destructive hover:text-destructive"
+        >
+          <Trash2 className="size-3.5" /> Remove
+        </button>
+      </div>
+      {open ? <div className="border-t border-border p-3">{children}</div> : null}
+    </li>
+  )
+}
+
 function ArrayEditor({
   keyName,
   value,
@@ -196,21 +233,15 @@ function ArrayEditor({
           ))}
         </ul>
       ) : (
-        <ul className="grid gap-3">
+        <ul className="grid gap-2">
           {value.map((item, i) => (
-            <li key={i} className="rounded-xl border border-border bg-card p-3">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <span className="truncate text-sm font-semibold text-foreground">{itemTitle(item, i)}</span>
-                <button
-                  type="button"
-                  onClick={() => remove(i)}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-destructive hover:text-destructive"
-                >
-                  <Trash2 className="size-3.5" /> Remove
-                </button>
-              </div>
+            <CollapsibleItem
+              key={i}
+              title={itemTitle(item, i)}
+              onRemove={() => remove(i)}
+            >
               <ValueEditor keyName={keyName} value={item} onChange={(nv) => update(i, nv)} />
-            </li>
+            </CollapsibleItem>
           ))}
         </ul>
       )}
