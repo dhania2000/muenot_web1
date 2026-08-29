@@ -5,6 +5,7 @@ import { CountUp } from "@/components/ui/count-up";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { servicePillars, stats } from "@/lib/site-data";
+import { homeSectionsContent, type Heading } from "@/lib/ui-content-data";
 
 type Pillar = (typeof servicePillars)[number];
 type Stat = (typeof stats)[number];
@@ -47,18 +48,20 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
 export function ServicesOverview({
   pillars = servicePillars,
   stats: statsData = stats,
+  content = homeSectionsContent.servicesOverview,
 }: {
   pillars?: Pillar[];
   stats?: Stat[];
+  content?: Heading;
 } = {}) {
   return (
     <section id="services" className="border-b border-border bg-surface/60 pt-20 lg:pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="What we do"
-            title="Specialized services. Unified execution."
-            description="Start with one engagement and expand under the same governance."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
         </Reveal>
       </div>

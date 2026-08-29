@@ -36,7 +36,10 @@ import type { LucideIcon } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { servicePillars } from "@/lib/site-data";
+import { homeSectionsContent, type HomeSectionsContent } from "@/lib/ui-content-data";
 import { cn } from "@/lib/utils";
+
+type ServiceLinesContent = HomeSectionsContent["serviceLines"];
 
 const capabilityIcons: Record<string, LucideIcon> = {
   "Data Annotation": Tag,
@@ -70,8 +73,10 @@ type Pillar = (typeof servicePillars)[number];
 
 export function ServicesTabs({
   pillars = servicePillars,
+  content = homeSectionsContent.serviceLines,
 }: {
   pillars?: Pillar[];
+  content?: ServiceLinesContent;
 } = {}) {
   const [active, setActive] = useState(0);
   const pillar = pillars[active];
@@ -111,9 +116,9 @@ export function ServicesTabs({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="What we do"
-            title="Five service lines, one accountable delivery organisation"
-            description="Pick a service line to see how each pod is staffed, governed, and delivered."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
         </Reveal>
 
@@ -193,7 +198,7 @@ export function ServicesTabs({
                       href={pillar.href}
                       className="group mt-auto inline-flex w-full items-center justify-between rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
                     >
-                      Explore {pillar.eyebrow}
+                      {content.explorePrefix} {pillar.eyebrow}
                       <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-foreground/15">
                         <ArrowRight
                           className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -205,10 +210,10 @@ export function ServicesTabs({
 
                   <div className="flex items-center justify-between gap-4 border-t border-border bg-surface px-6 py-4 sm:px-8">
                     <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Delivery model
+                      {content.deliveryModelLabel}
                     </span>
                     <span className="text-sm font-semibold text-primary">
-                      One accountable team
+                      {content.deliveryModelValue}
                     </span>
                   </div>
                 </div>
@@ -232,7 +237,7 @@ export function ServicesTabs({
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                       </span>
-                      service areas
+                      {content.serviceAreasLabel}
                     </span>
                   </div>
 

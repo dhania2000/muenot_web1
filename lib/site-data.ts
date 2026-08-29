@@ -250,46 +250,69 @@ export const servicePillars: ServicePillar[] = [
   },
 ];
 
-export const industries = [
+export type Industry = {
+  name: string;
+  description: string;
+  image: string;
+  alt: string;
+};
+
+export const industries: Industry[] = [
   {
     name: "Automotive & Mobility",
     description:
       "Perception datasets, sensor fusion labelling, and validation for ADAS programmes.",
+    image: "/images/case-autonomous.png",
+    alt: "Autonomous vehicle perception data being labelled for ADAS programmes",
   },
   {
     name: "Healthcare & Life Sciences",
     description:
       "Clinical documentation, de-identified data handling, and medical content review.",
+    image: "/images/industry-healthcare.png",
+    alt: "Clinicians reviewing patient data on a tablet in a modern hospital",
   },
   {
     name: "Education & EdTech",
     description:
       "Courseware production, faculty enablement, and accessible learning delivery.",
+    image: "/images/industry-education.png",
+    alt: "University students learning with laptops in a modern campus study space",
   },
   {
     name: "Banking & Financial Services",
     description:
       "Document processing, KYC data operations, and compliance-grade reviews.",
+    image: "/images/case-enterprise.png",
+    alt: "Enterprise team reviewing compliance documents in a corporate office",
   },
   {
     name: "Retail & E-commerce",
     description:
       "Catalogue enrichment, product taxonomy, and multilingual storefronts.",
+    image: "/images/service-localization-overview.png",
+    alt: "Multilingual product catalogue and storefront localisation workspace",
   },
   {
     name: "Media & Entertainment",
     description:
       "Subtitling, dubbing, metadata tagging, and content moderation at volume.",
+    image: "/images/service-subtitling.png",
+    alt: "Subtitling and content moderation workflow for media production",
   },
   {
     name: "Technology & SaaS",
     description:
       "Model evaluation, search relevance tuning, and product data operations for scaling platforms.",
+    image: "/images/industry-technology.png",
+    alt: "Software engineering team collaborating on dashboards in a modern tech office",
   },
   {
     name: "Government & Public Sector",
     description:
       "Secure document digitisation, records processing, and policy-compliant data handling.",
+    image: "/images/industry-government.png",
+    alt: "Public sector professionals reviewing data on secure workstations",
   },
 ];
 

@@ -9,60 +9,35 @@ import {
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { IndustriesCarousel } from "@/components/ui/industries-carousel";
-import { industries, engagementSteps } from "@/lib/site-data";
+import { industries, engagementSteps, type Industry } from "@/lib/site-data";
+import { homeSectionsContent, type HomeSectionsContent } from "@/lib/ui-content-data";
 
 const stepIcons = [Search, FlaskConical, Rocket, BarChart3];
 
-const industryImages: Record<string, { image: string; alt: string }> = {
-  "Automotive & Mobility": {
-    image: "/images/case-autonomous.png",
-    alt: "Autonomous vehicle perception data being labelled for ADAS programmes",
-  },
-  "Healthcare & Life Sciences": {
-    image: "/images/industry-healthcare.png",
-    alt: "Clinicians reviewing patient data on a tablet in a modern hospital",
-  },
-  "Education & EdTech": {
-    image: "/images/industry-education.png",
-    alt: "University students learning with laptops in a modern campus study space",
-  },
-  "Banking & Financial Services": {
-    image: "/images/case-enterprise.png",
-    alt: "Enterprise team reviewing compliance documents in a corporate office",
-  },
-  "Retail & E-commerce": {
-    image: "/images/service-localization-overview.png",
-    alt: "Multilingual product catalogue and storefront localisation workspace",
-  },
-  "Media & Entertainment": {
-    image: "/images/service-subtitling.png",
-    alt: "Subtitling and content moderation workflow for media production",
-  },
-  "Technology & SaaS": {
-    image: "/images/industry-technology.png",
-    alt: "Software engineering team collaborating on dashboards in a modern tech office",
-  },
-  "Government & Public Sector": {
-    image: "/images/industry-government.png",
-    alt: "Public sector professionals reviewing data on secure workstations",
-  },
-};
-
-type Industry = (typeof industries)[number];
 type EngagementStep = (typeof engagementSteps)[number];
+
+type IndustriesContent = {
+  industries: HomeSectionsContent["industries"];
+  engagement: HomeSectionsContent["engagement"];
+};
 
 export function IndustriesSection({
   industries: industriesData = industries,
   engagementSteps: engagementStepsData = engagementSteps,
+  content = {
+    industries: homeSectionsContent.industries,
+    engagement: homeSectionsContent.engagement,
+  },
 }: {
   industries?: Industry[];
   engagementSteps?: EngagementStep[];
+  content?: IndustriesContent;
 } = {}) {
   const industryItems = industriesData.map((industry) => ({
     name: industry.name,
     description: industry.description,
-    image: industryImages[industry.name]?.image ?? "/placeholder.svg",
-    alt: industryImages[industry.name]?.alt ?? industry.name,
+    image: industry.image || "/placeholder.svg",
+    alt: industry.alt || industry.name,
   }));
 
   return (
@@ -74,9 +49,9 @@ export function IndustriesSection({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeading
-              eyebrow="Industries"
-              title="Domain context, not generic capacity"
-              description="Delivery leads are assigned by sector, so compliance is understood before day one."
+              eyebrow={content.industries.eyebrow}
+              title={content.industries.title}
+              description={content.industries.description}
             />
           </Reveal>
 
@@ -90,10 +65,10 @@ export function IndustriesSection({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <SectionHeading
-              eyebrow="How we engage"
+              eyebrow={content.engagement.eyebrow}
               tone="light"
-              title="From scoping call to steady-state delivery"
-              description="A staged path that proves quality before you commit to volume."
+              title={content.engagement.title}
+              description={content.engagement.description}
             />
           </Reveal>
 
@@ -128,10 +103,10 @@ export function IndustriesSection({
 
           <div className="mt-12 flex justify-center">
             <Link
-              href="/contact"
+              href={content.engagement.ctaHref}
               className="group inline-flex items-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
             >
-              Start with a scoping call
+              {content.engagement.ctaLabel}
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 aria-hidden="true"

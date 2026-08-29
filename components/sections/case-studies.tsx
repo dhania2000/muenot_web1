@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { CountUp } from "@/components/ui/count-up";
 import { caseStudies } from "@/lib/site-data";
+import { homeSectionsContent, type HomeSectionsContent } from "@/lib/ui-content-data";
 
 const SPEED_PX_PER_FRAME = 0.6;
 
@@ -15,8 +16,10 @@ type CaseStudy = (typeof caseStudies)[number];
 
 export function CaseStudiesSection({
   caseStudies: caseStudiesData = caseStudies,
+  content = homeSectionsContent.caseStudies,
 }: {
   caseStudies?: CaseStudy[];
+  content?: HomeSectionsContent["caseStudies"];
 } = {}) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
@@ -65,15 +68,15 @@ export function CaseStudiesSection({
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               align="left"
-              eyebrow="Client results"
-              title="Programmes we run, and what they produced"
+              eyebrow={content.eyebrow}
+              title={content.title}
               className="max-w-2xl"
             />
             <Link
-              href="/case-studies"
+              href={content.ctaHref}
               className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
             >
-              All case studies
+              {content.ctaLabel}
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 aria-hidden="true"

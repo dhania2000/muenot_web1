@@ -22,6 +22,7 @@ export default async function Home() {
   // back to the hardcoded seed data if the database is unreachable.
   const [
     hero,
+    homeSections,
     pillars,
     stats,
     industries,
@@ -31,6 +32,7 @@ export default async function Home() {
     homeCta,
   ] = await Promise.all([
     getSection("hero"),
+    getSection("home_sections"),
     getSection("service_pillars"),
     getSection("stats"),
     getSection("industries"),
@@ -44,12 +46,16 @@ export default async function Home() {
     <main className="relative">
       <Navbar />
       <HeroSection content={hero} />
-      <ServicesOverview pillars={pillars} stats={stats} />
-      <OurClients logos={clientLogos} />
-      <ServicesTabs pillars={pillars} />
-      <IndustriesSection industries={industries} engagementSteps={engagementSteps} />
-      <CaseStudiesSection caseStudies={caseStudies} />
-      <AboutSection stats={stats} />
+      <ServicesOverview pillars={pillars} stats={stats} content={homeSections.servicesOverview} />
+      <OurClients logos={clientLogos} content={homeSections.clients} />
+      <ServicesTabs pillars={pillars} content={homeSections.serviceLines} />
+      <IndustriesSection
+        industries={industries}
+        engagementSteps={engagementSteps}
+        content={{ industries: homeSections.industries, engagement: homeSections.engagement }}
+      />
+      <CaseStudiesSection caseStudies={caseStudies} content={homeSections.caseStudies} />
+      <AboutSection stats={stats} content={homeSections.whyMuenot} />
       <CTASection content={homeCta} />
       <Footer />
       <ScrollToTop />

@@ -8,66 +8,44 @@ import {
   ClipboardCheck,
   Lock,
   TrendingUp,
+  Award,
+  Heart,
+  Shield,
+  CheckCircle,
+  Lightbulb,
+  Globe,
+  type LucideIcon,
 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { IconBadge } from "@/components/ui/feature-card";
 import { Reveal, Float } from "@/components/ui/reveal";
 import { CountUp } from "@/components/ui/count-up";
 import { stats } from "@/lib/site-data";
+import { homeSectionsContent, type HomeSectionsContent } from "@/lib/ui-content-data";
 
-const differentiators = [
-  {
-    title: "Managed delivery, not staffing",
-    description: "A named manager, defined SLAs, and weekly reporting.",
-    icon: Users,
-  },
-  {
-    title: "Quality is measured, not claimed",
-    description: "Written acceptance criteria and reviewer agreement scoring.",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Security in the floor plan",
-    description: "Restricted access, device controls, ISO-aligned handling.",
-    icon: Lock,
-  },
-  {
-    title: "Scale without renegotiating",
-    description: "Ramp pods up or down against agreed rate cards.",
-    icon: TrendingUp,
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "The pilot told us exactly what accuracy to expect. Twelve months in, our release cadence has not slipped once.",
-    name: "Head of Machine Learning",
-    company: "Mobility technology company",
-    avatar: "/images/testimonial-1.png",
-  },
-  {
-    quote:
-      "They rebuilt our compliance curriculum for 10 markets. Completion rates went up and audit findings went to zero.",
-    name: "Director, Learning & Development",
-    company: "Global enterprise",
-    avatar: "/images/testimonial-2.png",
-  },
-  {
-    quote:
-      "Terminology consistency across 22 languages was the thing we could never solve in-house. Their review layer fixed it.",
-    name: "VP, International",
-    company: "Enterprise software vendor",
-    avatar: "/images/testimonial-3.png",
-  },
-];
+const differentiatorIcons: Record<string, LucideIcon> = {
+  Users,
+  ClipboardCheck,
+  Lock,
+  TrendingUp,
+  ShieldCheck,
+  Award,
+  Heart,
+  Shield,
+  CheckCircle,
+  Lightbulb,
+  Globe,
+};
 
 type Stat = (typeof stats)[number];
+type WhyMuenot = HomeSectionsContent["whyMuenot"];
 
 export function AboutSection({
   stats: statsData = stats,
+  content = homeSectionsContent.whyMuenot,
 }: {
   stats?: Stat[];
+  content?: WhyMuenot;
 } = {}) {
   return (
     <section
@@ -80,8 +58,8 @@ export function AboutSection({
             <Reveal>
               <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-[0_30px_70px_-40px_rgba(11,79,158,0.5)]">
                 <Image
-                  src="/images/about-team-collaboration.png"
-                  alt="Muenot delivery team collaborating around a table in a modern office"
+                  src={content.image || "/placeholder.svg"}
+                  alt={content.imageAlt}
                   fill
                   sizes="(min-width: 1024px) 48vw, 100vw"
                   className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"

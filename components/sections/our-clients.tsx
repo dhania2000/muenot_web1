@@ -3,11 +3,14 @@
 import { useEffect, useRef } from "react";
 import { Building2 } from "lucide-react";
 import { clientLogos } from "@/lib/site-data";
+import { homeSectionsContent } from "@/lib/ui-content-data";
 
 export function OurClients({
   logos = clientLogos,
+  content = homeSectionsContent.clients,
 }: {
   logos?: string[];
+  content?: { text: string };
 } = {}) {
   const track = [...logos, ...logos];
   const trackRef = useRef<HTMLUListElement>(null);
@@ -46,8 +49,7 @@ export function OurClients({
     <section className="border-b border-border bg-card py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-          Trusted by teams in automotive, healthcare, education, finance, retail
-          and media
+          {content.text}
         </p>
 
         <div className="relative mt-9 overflow-hidden">
