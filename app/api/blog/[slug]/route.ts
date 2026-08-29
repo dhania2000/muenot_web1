@@ -1,42 +1,41 @@
-import { NextResponse } from "next/server";
-import { isSanityConfigured } from "@/lib/sanity";
-import { getPostBySlug, getRelatedPosts, truncateExcerpt } from "@/lib/sanity-queries";
+import { NextResponse } from "next/server"
+import { getBlogPostBySlug, getBlogPosts } from "@/lib/blog-db"
+import { toApiPost, truncateExcerpt } from "@/lib/blog-transform"
 
-// Server-side fetch for a single post + related posts (avoids browser CORS).
+export const dynamic = "force-dynamic"
+
+// Server-side fetch for a single post + related posts, served from MySQL.
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const { slug } = await params;
-
-  if (!isSanityConfigured()) {
-    return NextResponse.json({ usingSanity: false, post: null, related: [] });
-  }
+  const { slug } = await params
 
   try {
-    const post = await getPostBySlug(slug);
+    const row = await getBlogPostBySlug(slug)
 
-    if (!post) {
-      return NextResponse.json({ usingSanity: true, post: null, related: [] });
+    if (!row || !row.published) {
+      return NextResponse.json({ usingDb: true, post: null, related: [] })
     }
 
-    const related = await getRelatedPosts(post._id, post.tags || [], 3);
+    const post = toApiPost(row)
 
-    // The detail header shows the excerpt as a subtitle, so keep it short.
-    // The full article still renders from `post.content`.
-    const trimmedPost = { ...post, excerpt: truncateExcerpt(post.excerpt) };
-    const trimmedRelated = related.map((r) => ({
-      ...r,
-      excerpt: truncateExcerpt(r.excerpt),
-    }));
+    // Related = other published posts in the same category (fallback: latest).
+    const all = (await getBlogPosts({ publishedOnly: true }))
+      .filter((r) => r.slug !== slug)
+      .map(toApiPost)
+    const sameCategory = all.filter((p) => p.category === post.category)
+    const related = (sameCategory.length ? sameCategory : all)
+      .slice(0, 3)
+      .map((r) => ({ ...r, excerpt: truncateExcerpt(r.excerpt) }))
 
     return NextResponse.json({
-      usingSanity: true,
-      post: trimmedPost,
-      related: trimmedRelated,
-    });
+      usingDb: true,
+      post: { ...post, excerpt: truncateExcerpt(post.excerpt) },
+      related,
+    })
   } catch (error) {
-    console.error("[v0] /api/blog/[slug] error:", error);
-    return NextResponse.json({ usingSanity: false, post: null, related: [] });
+    console.error("[v0] /api/blog/[slug] error:", error)
+    return NextResponse.json({ usingDb: false, post: null, related: [] })
   }
 }

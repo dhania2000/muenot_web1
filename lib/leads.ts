@@ -28,7 +28,7 @@ export async function createLead(input: {
   if (!isDbConfigured()) return
   await query(
     `INSERT INTO leads (type, name, email, company, phone, message, payload)
-     VALUES (?, ?, ?, ?, ?, ?, CAST(? AS JSON))`,
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [
       input.type,
       input.name,

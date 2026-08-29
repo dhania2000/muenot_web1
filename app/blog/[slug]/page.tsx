@@ -15,55 +15,30 @@ import {
   User,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { formatDate, blockContentToHtml } from "@/lib/sanity-queries";
-import { urlFor, SanityPost } from "@/lib/sanity";
-import {
-  getPostBySlug as getStaticPostBySlug,
-  getRelatedPosts as getStaticRelatedPosts,
-  formatDate as staticFormatDate,
-  BlogPost,
-} from "@/lib/blog-data";
+import { formatDate, type ApiBlogPost } from "@/lib/blog-transform";
 
 export default function BlogPostPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const [post, setPost] = useState<SanityPost | BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<(SanityPost | BlogPost)[]>([]);
+  const [post, setPost] = useState<ApiBlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<ApiBlogPost[]>([]);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [usingSanity, setUsingSanity] = useState(false);
 
   useEffect(() => {
     async function fetchPost() {
       setLoading(true);
 
       try {
-        // Fetch from our server-side API (avoids browser->Sanity CORS).
+        // Fetch from our server-side API (reads from the MySQL database).
         const res = await fetch(`/api/blog/${slug}`);
         const data = await res.json();
-
-        if (data.usingSanity && data.post) {
-          setUsingSanity(true);
-          setPost(data.post);
-          setRelatedPosts(data.related || []);
-        } else {
-          setUsingSanity(false);
-          const staticPost = getStaticPostBySlug(slug);
-
-          if (staticPost) {
-            setPost(staticPost);
-            setRelatedPosts(getStaticRelatedPosts(staticPost, 3));
-          }
-        }
+        setPost(data.post ?? null);
+        setRelatedPosts(data.related || []);
       } catch (error) {
         console.error("[v0] Error loading blog post:", error);
-        setUsingSanity(false);
-        const staticPost = getStaticPostBySlug(slug);
-
-        if (staticPost) {
-          setPost(staticPost);
-          setRelatedPosts(getStaticRelatedPosts(staticPost, 3));
-        }
+        setPost(null);
+        setRelatedPosts([]);
       }
 
       setLoading(false);
@@ -98,19 +73,9 @@ export default function BlogPostPage() {
   };
 
   // Helper functions
-  const getImageUrl = (source: SanityPost["coverImage"] | string): string => {
-    if (usingSanity && source && typeof source !== "string") {
-      return urlFor(source).width(1200).height(600).url();
-    }
-    return source as string;
-  };
-
   const getFormattedDate = (): string => {
     if (!post) return "";
-    if (usingSanity) {
-      return formatDate((post as SanityPost).publishedAt);
-    }
-    return staticFormatDate((post as BlogPost).publishedAt);
+    return formatDate(post.publishedAt);
   };
 
   const getTags = (): string[] => {
@@ -120,20 +85,13 @@ export default function BlogPostPage() {
 
   const getAuthor = (): { name: string; role: string } => {
     if (!post) return { name: "", role: "" };
-    if (usingSanity) {
-      const author = (post as SanityPost).author;
-      return { name: author?.name || "Muenot Team", role: author?.role || "Content Team" };
-    }
-    return (post as BlogPost).author;
+    return post.author;
   };
 
   const getContent = (): string => {
     if (!post) return "";
-    if (usingSanity) {
-      return blockContentToHtml((post as SanityPost).content);
-    }
-    // For static posts, convert simple markdown-like content to HTML
-    return (post as BlogPost).content
+    // Convert simple markdown-like content to HTML
+    return post.content
       .split("\n")
       .map((line) => {
         if (line.startsWith("## ")) {
@@ -153,20 +111,10 @@ export default function BlogPostPage() {
       .join("");
   };
 
-  const getRelatedSlug = (relatedPost: SanityPost | BlogPost): string => {
-    if (usingSanity) {
-      return (relatedPost as SanityPost).slug.current;
-    }
-    return (relatedPost as BlogPost).slug;
-  };
+  const getRelatedSlug = (relatedPost: ApiBlogPost): string => relatedPost.slug;
 
-  const getRelatedImageUrl = (relatedPost: SanityPost | BlogPost): string => {
-    if (usingSanity) {
-      const coverImage = (relatedPost as SanityPost).coverImage;
-      return coverImage ? urlFor(coverImage).width(400).height(250).url() : "/placeholder-blog.jpg";
-    }
-    return (relatedPost as BlogPost).coverImage;
-  };
+  const getRelatedImageUrl = (relatedPost: ApiBlogPost): string =>
+    relatedPost.coverImage || "/placeholder-blog.jpg";
 
   // Loading skeleton
   if (loading) {

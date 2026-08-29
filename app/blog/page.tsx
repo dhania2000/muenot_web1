@@ -15,25 +15,15 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { formatDate } from "@/lib/sanity-queries";
-import { urlFor, SanityPost } from "@/lib/sanity";
-
-// Fallback data when Sanity is not configured
-import {
-  getAllPosts as getStaticPosts,
-  getFeaturedPosts as getStaticFeaturedPosts,
-  formatDate as staticFormatDate,
-  BlogPost,
-} from "@/lib/blog-data";
+import { formatDate, type ApiBlogPost } from "@/lib/blog-transform";
 
 const POSTS_PER_PAGE = 9;
 
 export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [posts, setPosts] = useState<(SanityPost | BlogPost)[]>([]);
-  const [featuredPosts, setFeaturedPosts] = useState<(SanityPost | BlogPost)[]>([]);
+  const [posts, setPosts] = useState<ApiBlogPost[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<ApiBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [usingSanity, setUsingSanity] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -41,25 +31,15 @@ export default function BlogPage() {
       setLoading(true);
 
       try {
-        // Fetch from our server-side API (avoids browser->Sanity CORS).
+        // Fetch from our server-side API (reads from the MySQL database).
         const res = await fetch("/api/blog");
         const data = await res.json();
-
-        if (data.usingSanity && data.posts.length > 0) {
-          setUsingSanity(true);
-          setPosts(data.posts);
-          setFeaturedPosts(data.featured);
-        } else {
-          // Use static data as fallback
-          setUsingSanity(false);
-          setPosts(getStaticPosts());
-          setFeaturedPosts(getStaticFeaturedPosts());
-        }
+        setPosts(data.posts ?? []);
+        setFeaturedPosts(data.featured ?? []);
       } catch (error) {
         console.error("[v0] Error loading blog posts:", error);
-        setUsingSanity(false);
-        setPosts(getStaticPosts());
-        setFeaturedPosts(getStaticFeaturedPosts());
+        setPosts([]);
+        setFeaturedPosts([]);
       }
 
       setLoading(false);
@@ -123,37 +103,11 @@ export default function BlogPage() {
     return pages;
   };
 
-  // Helper to get image URL
-  const getImageUrl = (post: SanityPost | BlogPost): string => {
-    if (usingSanity) {
-      const sanityPost = post as SanityPost;
-      return sanityPost.coverImage
-        ? urlFor(sanityPost.coverImage).width(800).height(450).url()
-        : "/placeholder-blog.jpg";
-    }
-    return (post as BlogPost).coverImage;
-  };
-
-  // Helper to get slug
-  const getSlug = (post: SanityPost | BlogPost): string => {
-    if (usingSanity) {
-      return (post as SanityPost).slug.current;
-    }
-    return (post as BlogPost).slug;
-  };
-
-  // Helper to get date
-  const getFormattedDate = (post: SanityPost | BlogPost): string => {
-    if (usingSanity) {
-      return formatDate((post as SanityPost).publishedAt);
-    }
-    return staticFormatDate((post as BlogPost).publishedAt);
-  };
-
-  // Helper to get read time
-  const getReadTime = (post: SanityPost | BlogPost): number => {
-    return post.readTime || 5;
-  };
+  // Helpers (the API returns a uniform post shape)
+  const getImageUrl = (post: ApiBlogPost): string => post.coverImage || "/placeholder-blog.jpg";
+  const getSlug = (post: ApiBlogPost): string => post.slug;
+  const getFormattedDate = (post: ApiBlogPost): string => formatDate(post.publishedAt);
+  const getReadTime = (post: ApiBlogPost): number => post.readTime || 5;
 
   return (
     <main className="min-h-screen bg-background">
