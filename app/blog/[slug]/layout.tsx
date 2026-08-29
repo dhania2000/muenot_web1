@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { client, isSanityConfigured } from "@/lib/sanity";
-import { getPostBySlug as getStaticPostBySlug } from "@/lib/blog-data";
+import { getBlogPostBySlug } from "@/lib/blog-db";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -9,32 +8,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  
-  let post = null;
-  
-  if (isSanityConfigured()) {
-    try {
-      post = await client.fetch(
-        `*[_type == "post" && slug.current == $slug][0] {
-          title,
-          excerpt,
-          "coverImageUrl": coverImage.asset->url
-        }`,
-        { slug }
-      );
-    } catch (error) {
-      console.error("Error fetching post metadata:", error);
-    }
-  } else {
-    const staticPost = getStaticPostBySlug(slug);
-    if (staticPost) {
-      post = {
-        title: staticPost.title,
-        excerpt: staticPost.excerpt,
-        coverImageUrl: staticPost.coverImage,
-      };
-    }
-  }
+
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -45,14 +20,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.co.in";
   const postUrl = `${siteUrl}/blog/${slug}`;
-  const imageUrl = post.coverImageUrl || "/og-image.png";
+  const imageUrl = post.cover_image || "/og-image.png";
 
   return {
     title: post.title,
-    description: post.excerpt,
+    description: post.excerpt || undefined,
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description: post.excerpt || undefined,
       type: "article",
       url: postUrl,
       images: [
@@ -67,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.excerpt,
+      description: post.excerpt || undefined,
       images: [imageUrl],
     },
     alternates: {

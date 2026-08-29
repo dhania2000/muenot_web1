@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
-import { client, isSanityConfigured } from "@/lib/sanity";
-import { getAllPosts as getStaticPosts } from "@/lib/blog-data";
+import { getBlogPosts } from "@/lib/blog-db";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://muenot.co.in";
@@ -33,36 +32,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic blog posts
+  // Dynamic blog posts from the database
   let blogPosts: MetadataRoute.Sitemap = [];
 
-  if (isSanityConfigured()) {
-    try {
-      const posts = await client.fetch(
-        `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
-          "slug": slug.current,
-          publishedAt
-        }`
-      );
-
-      blogPosts = posts.map((post: { slug: string; publishedAt: string }) => ({
-        url: `${siteUrl}/blog/${post.slug}`,
-        lastModified: new Date(post.publishedAt),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
-      }));
-    } catch (error) {
-      console.error("Error fetching posts for sitemap:", error);
-    }
-  } else {
-    // Fallback to static posts
-    const staticPosts = getStaticPosts();
-    blogPosts = staticPosts.map((post) => ({
+  try {
+    const posts = await getBlogPosts({ publishedOnly: true });
+    blogPosts = posts.map((post) => ({
       url: `${siteUrl}/blog/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
+      lastModified: post.published_at ? new Date(post.published_at) : new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
     }));
+  } catch (error) {
+    console.error("[v0] Error fetching posts for sitemap:", error);
   }
 
   return [...staticPages, ...blogPosts];

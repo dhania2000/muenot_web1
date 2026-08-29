@@ -240,7 +240,7 @@ export default function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {featuredPosts.slice(0, 2).map((post, index) => (
                 <motion.article
-                  key={usingSanity ? (post as SanityPost)._id : (post as BlogPost).id}
+                  key={post.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -317,11 +317,11 @@ export default function BlogPage() {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                   {currentPosts.map((post, index) => (
-                    <motion.article
-                      key={usingSanity ? (post as SanityPost)._id : (post as BlogPost).id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.05 }}
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
                       className="group"
                     >
                       <Link href={`/blog/${getSlug(post)}`}>

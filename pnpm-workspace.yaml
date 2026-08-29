@@ -1,5 +1,4 @@
 minimumReleaseAgeExclude:
   - '@next/*'
   - next
-  - '@sanity/client'
   - resend

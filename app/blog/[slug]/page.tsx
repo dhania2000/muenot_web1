@@ -274,9 +274,7 @@ export default function BlogPostPage() {
   }
 
   const author = getAuthor();
-  const coverImageUrl = usingSanity
-    ? getImageUrl((post as SanityPost).coverImage)
-    : (post as BlogPost).coverImage;
+  const coverImageUrl = post.coverImage || "/placeholder-blog.jpg";
 
   return (
     <main className="min-h-screen bg-background">
@@ -450,7 +448,7 @@ export default function BlogPostPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {relatedPosts.map((relatedPost, index) => (
                 <motion.article
-                  key={usingSanity ? (relatedPost as SanityPost)._id : (relatedPost as BlogPost).id}
+                  key={relatedPost.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
