@@ -66,9 +66,15 @@ const capabilityIcons: Record<string, LucideIcon> = {
   "Accessibility Services": Accessibility,
 };
 
-export function ServicesTabs() {
+type Pillar = (typeof servicePillars)[number];
+
+export function ServicesTabs({
+  pillars = servicePillars,
+}: {
+  pillars?: Pillar[];
+} = {}) {
   const [active, setActive] = useState(0);
-  const pillar = servicePillars[active];
+  const pillar = pillars[active];
 
   // The navbar links to /#ai-data, /#elearning, /#technology, /#localization and
   // /#publishing. Those hashes match the pillar ids, so select the matching tab
@@ -77,14 +83,14 @@ export function ServicesTabs() {
     const id = window.location.hash.replace("#", "");
     if (!id) return;
 
-    const index = servicePillars.findIndex((item) => item.id === id);
+    const index = pillars.findIndex((item) => item.id === id);
     if (index === -1) return;
 
     setActive(index);
     document
       .getElementById("service-lines")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+  }, [pillars]);
 
   useEffect(() => {
     syncWithHash();
@@ -98,7 +104,7 @@ export function ServicesTabs() {
       className="scroll-mt-20 border-b border-border bg-background/65 py-20 lg:py-24"
     >
       {/* Anchor targets for the navbar's service dropdown links */}
-      {servicePillars.map((item) => (
+      {pillars.map((item) => (
         <span key={item.id} id={item.id} aria-hidden="true" className="block" />
       ))}
 
@@ -118,7 +124,7 @@ export function ServicesTabs() {
             aria-label="Service lines"
             className="mt-12 flex flex-wrap justify-center gap-2 sm:gap-3"
           >
-            {servicePillars.map((item, index) => {
+            {pillars.map((item, index) => {
               const selected = index === active;
               return (
                 <button

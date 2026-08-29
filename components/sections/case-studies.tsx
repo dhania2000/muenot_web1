@@ -11,7 +11,13 @@ import { caseStudies } from "@/lib/site-data";
 
 const SPEED_PX_PER_FRAME = 0.6;
 
-export function CaseStudiesSection() {
+type CaseStudy = (typeof caseStudies)[number];
+
+export function CaseStudiesSection({
+  caseStudies: caseStudiesData = caseStudies,
+}: {
+  caseStudies?: CaseStudy[];
+} = {}) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
 
@@ -47,7 +53,7 @@ export function CaseStudiesSection() {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  const track = [...caseStudies, ...caseStudies];
+  const track = [...caseStudiesData, ...caseStudiesData];
 
   return (
     <section
@@ -109,7 +115,7 @@ export function CaseStudiesSection() {
                 <div
                   key={`${study.slug}-${index}`}
                   className="flex w-64 shrink-0 lg:w-72"
-                  aria-hidden={index >= caseStudies.length}
+                  aria-hidden={index >= caseStudiesData.length}
                 >
                   <article className="group flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-[0_22px_48px_-28px_rgba(11,79,158,0.45)]">
                     <div className="relative h-40 overflow-hidden">

@@ -4,8 +4,12 @@ import { useEffect, useRef } from "react";
 import { Building2 } from "lucide-react";
 import { clientLogos } from "@/lib/site-data";
 
-export function OurClients() {
-  const track = [...clientLogos, ...clientLogos];
+export function OurClients({
+  logos = clientLogos,
+}: {
+  logos?: string[];
+} = {}) {
+  const track = [...logos, ...logos];
   const trackRef = useRef<HTMLUListElement>(null);
   const pausedRef = useRef(false);
 
@@ -69,7 +73,7 @@ export function OurClients() {
             {track.map((name, index) => (
               <li
                 key={`${name}-${index}`}
-                aria-hidden={index >= clientLogos.length}
+                aria-hidden={index >= logos.length}
                 className="group flex h-16 items-center gap-2.5 whitespace-nowrap rounded-2xl border border-border bg-surface px-6 transition-colors duration-300 hover:border-primary/30 hover:bg-primary/5"
               >
                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">

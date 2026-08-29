@@ -48,14 +48,23 @@ const industryImages: Record<string, { image: string; alt: string }> = {
   },
 };
 
-const industryItems = industries.map((industry) => ({
-  name: industry.name,
-  description: industry.description,
-  image: industryImages[industry.name]?.image ?? "/placeholder.svg",
-  alt: industryImages[industry.name]?.alt ?? industry.name,
-}));
+type Industry = (typeof industries)[number];
+type EngagementStep = (typeof engagementSteps)[number];
 
-export function IndustriesSection() {
+export function IndustriesSection({
+  industries: industriesData = industries,
+  engagementSteps: engagementStepsData = engagementSteps,
+}: {
+  industries?: Industry[];
+  engagementSteps?: EngagementStep[];
+} = {}) {
+  const industryItems = industriesData.map((industry) => ({
+    name: industry.name,
+    description: industry.description,
+    image: industryImages[industry.name]?.image ?? "/placeholder.svg",
+    alt: industryImages[industry.name]?.alt ?? industry.name,
+  }));
+
   return (
     <>
       <section
@@ -89,7 +98,7 @@ export function IndustriesSection() {
           </Reveal>
 
           <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {engagementSteps.map((step, index) => {
+            {engagementStepsData.map((step, index) => {
               const StepIcon = stepIcons[index % stepIcons.length];
               return (
                 <Reveal

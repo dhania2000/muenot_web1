@@ -62,7 +62,13 @@ const testimonials = [
   },
 ];
 
-export function AboutSection() {
+type Stat = (typeof stats)[number];
+
+export function AboutSection({
+  stats: statsData = stats,
+}: {
+  stats?: Stat[];
+} = {}) {
   return (
     <section
       id="about"
@@ -90,7 +96,7 @@ export function AboutSection() {
                   className="absolute bottom-5 left-5 right-5"
                 >
                   <dl className="grid grid-cols-2 gap-3 rounded-2xl border border-primary-foreground/20 bg-primary-dark/55 p-4 backdrop-blur-md sm:grid-cols-4">
-                    {stats.map((stat) => (
+                    {statsData.map((stat) => (
                       <div key={stat.label} className="flex flex-col gap-0.5">
                         <dd className="font-display text-lg font-bold text-primary-foreground">
                           <CountUp value={stat.value} />

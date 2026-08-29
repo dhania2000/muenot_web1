@@ -7,6 +7,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { servicePillars, stats } from "@/lib/site-data";
 
 type Pillar = (typeof servicePillars)[number];
+type Stat = (typeof stats)[number];
 
 function PillarCard({ pillar }: { pillar: Pillar }) {
   // Same-page hash targets need a native anchor: next/link resolves them with
@@ -43,7 +44,13 @@ function PillarCard({ pillar }: { pillar: Pillar }) {
   );
 }
 
-export function ServicesOverview() {
+export function ServicesOverview({
+  pillars = servicePillars,
+  stats: statsData = stats,
+}: {
+  pillars?: Pillar[];
+  stats?: Stat[];
+} = {}) {
   return (
     <section id="services" className="border-b border-border bg-surface/60 pt-20 lg:pt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -62,10 +69,10 @@ export function ServicesOverview() {
         aria-label="Our service lines"
       >
         <div className="flex w-max animate-marquee-slow">
-          {[...servicePillars, ...servicePillars].map((pillar, index) => (
+          {[...pillars, ...pillars].map((pillar, index) => (
             <div
               key={`${pillar.id}-${index}`}
-              aria-hidden={index >= servicePillars.length}
+              aria-hidden={index >= pillars.length}
               className="w-[240px] shrink-0 sm:w-[300px]"
             >
               <PillarCard pillar={pillar} />
@@ -77,7 +84,7 @@ export function ServicesOverview() {
       {/* Desktop: full-width static strip */}
       <div className="mt-14 hidden lg:block" aria-label="Our service lines">
         <div className="flex">
-          {servicePillars.map((pillar, index) => (
+          {pillars.map((pillar, index) => (
             <Reveal
               key={pillar.id}
               delay={index * 0.07}
@@ -91,7 +98,7 @@ export function ServicesOverview() {
 
       <div className="bg-primary-dark">
         <dl className="mx-auto grid max-w-7xl grid-cols-2 px-4 py-12 sm:px-6 md:grid-cols-4 lg:px-8 lg:py-16">
-          {stats.map((stat, index) => (
+          {statsData.map((stat, index) => (
             <Reveal
               key={stat.label}
               delay={index * 0.08}

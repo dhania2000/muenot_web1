@@ -106,3 +106,10 @@ export async function adminCount(): Promise<number> {
   const row = await queryOne<{ count: number }>("SELECT COUNT(*) as count FROM admin_users")
   return row?.count ?? 0
 }
+
+/** List every admin account, newest first. */
+export async function getAdmins(): Promise<AdminUser[]> {
+  return query<AdminUser>(
+    "SELECT id, email, name, role, created_at FROM admin_users ORDER BY created_at ASC",
+  )
+}

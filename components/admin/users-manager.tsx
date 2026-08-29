@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Plus, Trash2, Check, AlertCircle, Shield, User } from "lucide-react"
-import { createAdminAction, deleteAdminAction } from "@/app/admin/actions"
+import { createUserAction, deleteUserAction } from "@/app/admin/actions"
 import type { AdminUser } from "@/lib/auth"
 
 const inputClass =
@@ -30,7 +30,7 @@ export function UsersManager({
   admins: AdminUser[]
   currentId: number
 }) {
-  const [state, formAction] = useActionState(createAdminAction, null)
+  const [state, formAction] = useActionState(createUserAction, null)
   const [open, setOpen] = useState(false)
 
   return (
@@ -71,9 +71,9 @@ export function UsersManager({
                 <label htmlFor="role" className={labelClass}>
                   Role
                 </label>
-                <select id="role" name="role" defaultValue="admin" className={inputClass}>
-                  <option value="admin">Admin</option>
+                <select id="role" name="role" defaultValue="editor" className={inputClass}>
                   <option value="editor">Editor</option>
+                  <option value="owner">Owner</option>
                 </select>
               </div>
             </div>
@@ -120,7 +120,7 @@ export function UsersManager({
             <li key={a.id} className="flex items-center justify-between gap-4 px-5 py-4">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-surface text-muted-foreground">
-                  {a.role === "admin" ? <Shield className="size-4" /> : <User className="size-4" />}
+                  {a.role === "owner" ? <Shield className="size-4" /> : <User className="size-4" />}
                 </span>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export function UsersManager({
                   {a.role}
                 </span>
                 {a.id !== currentId ? (
-                  <form action={deleteAdminAction} className="inline">
+                  <form action={deleteUserAction} className="inline">
                     <input type="hidden" name="id" value={a.id} />
                     <button
                       type="submit"
