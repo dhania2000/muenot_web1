@@ -29,8 +29,12 @@ export function ChatWidget() {
 
   const isBusy = status === "submitted" || status === "streaming";
 
+  // Hide the assistant across the admin portal.
+  const isAdmin = pathname?.startsWith("/admin") ?? false;
+
   // Auto-open logic: re-armed on each page.
   useEffect(() => {
+    if (isAdmin) return;
     interactedRef.current = false;
     let clickTimer: ReturnType<typeof setTimeout> | undefined;
     let loadTimer: ReturnType<typeof setTimeout> | undefined;
@@ -56,7 +60,7 @@ export function ChatWidget() {
       if (clickTimer) clearTimeout(clickTimer);
       if (loadTimer) clearTimeout(loadTimer);
     };
-  }, [pathname]);
+  }, [pathname, isAdmin]);
 
   // Keep the message list scrolled to the latest message.
   useEffect(() => {
@@ -77,6 +81,9 @@ export function ChatWidget() {
     sendMessage({ text: value });
     setInput("");
   };
+
+  // Do not render the assistant on admin dashboard routes.
+  if (isAdmin) return null;
 
   return (
     <div className="fixed bottom-24 right-6 z-[60] flex flex-col items-end gap-3">
