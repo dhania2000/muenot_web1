@@ -4,7 +4,7 @@ import { useActionState, useMemo, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Check, AlertCircle } from "lucide-react"
 import { saveContentAction } from "@/app/admin/actions"
-import { SECTION_LABELS, type SectionKey } from "@/lib/content"
+import { SECTION_LABELS, type SectionKey } from "@/lib/content-schema"
 
 type SectionData = { key: SectionKey; label: string; json: string }
 

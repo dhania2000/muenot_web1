@@ -1,13 +1,5 @@
 import { query, queryOne, isDbConfigured } from "./db"
-import {
-  servicePillars,
-  industries,
-  caseStudies,
-  stats,
-  engagementSteps,
-  clientLogos,
-} from "./site-data"
-import { serviceDetails } from "./services-data"
+import { SECTION_SEEDS, type SectionKey } from "./content-schema"
 
 /**
  * Flexible JSON content store. Each marketing section of the site is a row in
@@ -16,34 +8,7 @@ import { serviceDetails } from "./services-data"
  * even if the database is unreachable or a row is missing.
  */
 
-export type SectionKey =
-  | "service_pillars"
-  | "service_details"
-  | "industries"
-  | "case_studies"
-  | "stats"
-  | "engagement_steps"
-  | "client_logos"
-
-export const SECTION_SEEDS = {
-  service_pillars: servicePillars,
-  service_details: serviceDetails,
-  industries,
-  case_studies: caseStudies,
-  stats,
-  engagement_steps: engagementSteps,
-  client_logos: clientLogos,
-} as const
-
-export const SECTION_LABELS: Record<SectionKey, string> = {
-  service_pillars: "Service Pillars",
-  service_details: "Service Detail Pages",
-  industries: "Industries",
-  case_studies: "Case Studies",
-  stats: "Stats",
-  engagement_steps: "Engagement Steps",
-  client_logos: "Client Logos",
-}
+export { SECTION_SEEDS, SECTION_LABELS, type SectionKey } from "./content-schema"
 
 export async function getSection<K extends SectionKey>(
   section: K,
