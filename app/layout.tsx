@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { MotionProvider } from "@/components/ui/motion-provider";
 import { AnimatedBackground } from "@/components/ui/animated-background";
 import { ChatWidget } from "@/components/ui/chat-widget";
+import { SiteChromeProvider } from "@/components/layout/site-chrome-provider";
+import { getSection } from "@/lib/content";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -106,11 +108,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [navbar, footer] = await Promise.all([
+    getSection("navbar"),
+    getSection("footer"),
+  ]);
+
   return (
     <html
       lang="en"
@@ -134,7 +141,9 @@ export default function RootLayout({
       </head>
       <body className="font-sans min-h-screen bg-transparent text-foreground">
         <AnimatedBackground />
-        <MotionProvider>{children}</MotionProvider>
+        <SiteChromeProvider value={{ navbar, footer }}>
+          <MotionProvider>{children}</MotionProvider>
+        </SiteChromeProvider>
         <ChatWidget />
       </body>
     </html>

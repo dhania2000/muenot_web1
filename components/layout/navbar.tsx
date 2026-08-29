@@ -8,31 +8,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AppointmentModal } from "@/components/ui/appointment-modal";
-
-const navItems = [
-  {
-    name: "Services",
-    href: "/#services",
-    children: [
-      { name: "AI Data Services", href: "/services/ai-data-services" },
-      { name: "E-Learning Services", href: "/services/e-learning-services" },
-      { name: "Technology", href: "/services/technology" },
-      { name: "Localization", href: "/services/localization-services" },
-      { name: "Publishing", href: "/services/publishing" },
-    ],
-  },
-  { name: "Industries", href: "/#industries" },
-  { name: "About", href: "/about" },
-  {
-    name: "Insights",
-    href: "/#case-studies",
-    children: [
-      { name: "Blogs", href: "/blog" },
-      { name: "Case Studies", href: "/#case-studies" },
-    ],
-  },
-  { name: "Contact", href: "/#cta-section" },
-];
+import { useNavbarContent } from "@/components/layout/site-chrome-provider";
 
 /**
  * Same-page hash targets must be native anchors: next/link resolves them with
@@ -66,6 +42,8 @@ function NavLink({
 }
 
 export function Navbar() {
+  const content = useNavbarContent();
+  const navItems = content.navItems;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -86,24 +64,21 @@ export function Navbar() {
         <div className="hidden lg:block bg-primary text-primary-foreground">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-9 text-xs">
-              <p className="opacity-90">
-                Enterprise data, learning &amp; localization services — delivered
-                across 40+ languages.
-              </p>
+              <p className="opacity-90">{content.topBarText}</p>
               <div className="flex items-center gap-6">
                 <a
-                  href="tel:+916377809826"
+                  href={content.phoneHref}
                   className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
                 >
                   <Phone className="w-3.5 h-3.5" aria-hidden="true" />
-                  +91 637 780 9826
+                  {content.phone}
                 </a>
                 <a
-                  href="mailto:info@muenot.co.in"
+                  href={content.emailHref}
                   className="flex items-center gap-2 opacity-90 hover:opacity-100 transition-opacity"
                 >
                   <Mail className="w-3.5 h-3.5" aria-hidden="true" />
-                  info@muenot.co.in
+                  {content.email}
                 </a>
               </div>
             </div>
@@ -125,7 +100,7 @@ export function Navbar() {
               {/* Logo */}
               <Link href="/" className="flex items-center cursor-pointer">
                 <Image
-                  src="/logo.png"
+                  src={content.logo || "/logo.png"}
                   alt="Muenot"
                   width={222}
                   height={50}
@@ -197,7 +172,7 @@ export function Navbar() {
               {/* CTA Button */}
               <div className="hidden md:flex items-center">
                 <Button onClick={() => setIsModalOpen(true)} className="rounded-md">
-                  Book a Consultation
+                  {content.ctaLabel}
                 </Button>
               </div>
 
@@ -258,7 +233,7 @@ export function Navbar() {
                           setIsModalOpen(true);
                         }}
                       >
-                        Book a Consultation
+                        {content.ctaLabel}
                       </Button>
                     </div>
                   </div>
@@ -273,7 +248,7 @@ export function Navbar() {
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        appointmentUrl="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2H1mDyZZCvmW3Borgz4b3tdC_wtzo8KjAQ_2SHFVMW70qdjK75tPsr8a4mc7OOyNy1KA57B_IF?gv=true"
+        appointmentUrl={content.appointmentUrl}
       />
     </>
   );
