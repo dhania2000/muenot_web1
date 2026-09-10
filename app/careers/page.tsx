@@ -19,9 +19,6 @@ import {
   Briefcase,
 } from "lucide-react";
 
-/** External applicant tracking / careers portal. */
-const CAREERS_PORTAL_URL = "https://erp.muenot.co.in/careers";
-
 const benefits = [
   {
     icon: TrendingUp,
@@ -100,8 +97,8 @@ export default function CareersPage() {
                 </p>
               </div>
             </div>
-            <a
-              href={CAREERS_PORTAL_URL}
+            <Link
+              href="/careers/openings"
               className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
             >
               View open positions
@@ -109,7 +106,7 @@ export default function CareersPage() {
                 className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 aria-hidden="true"
               />
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -184,8 +181,8 @@ export default function CareersPage() {
                 question first? Reach our talent team directly.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={CAREERS_PORTAL_URL}
+                <Link
+                  href="/careers/openings"
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
                 >
                   View open positions
@@ -193,7 +190,7 @@ export default function CareersPage() {
                     className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     aria-hidden="true"
                   />
-                </a>
+                </Link>
                 <a
                   href="mailto:career@muenot.co.in"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-primary-foreground/30 px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
