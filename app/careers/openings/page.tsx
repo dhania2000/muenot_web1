@@ -41,11 +41,7 @@ export default function CareersOpeningsPage() {
             <iframe
               src={CAREERS_PORTAL_URL}
               title="Muenot careers portal — open positions"
-<<<<<<< HEAD
-              className="h-[calc(100vh-8rem)] w-full border-0 bg-background sm:rounded-b-2xl"
-=======
               className="h-[calc(100vh-9rem)] w-full border-0 bg-background sm:rounded-b-2xl lg:h-[calc(100vh-12rem)]"
->>>>>>> 0fbd78e (update website)
               loading="lazy"
             />
           </div>
