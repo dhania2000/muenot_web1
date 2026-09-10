@@ -4,6 +4,7 @@ import { useActionState, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Plus, Trash2, Check, AlertCircle, Pencil } from "lucide-react"
 import { saveSeoAction, deleteSeoAction } from "@/app/admin/actions"
+import { ImageUploadField } from "@/components/admin/image-upload-field"
 import type { SeoRow } from "@/lib/seo-db"
 
 const inputClass =
@@ -25,6 +26,7 @@ function SaveButton() {
 
 function Editor({ row, onDone }: { row: SeoRow | null; onDone: () => void }) {
   const [state, formAction] = useActionState(saveSeoAction, null)
+  const [ogImage, setOgImage] = useState(row?.og_image ?? "")
   return (
     <form action={formAction} className="flex flex-col gap-4">
       {row ? <input type="hidden" name="id" value={row.id} /> : null}
@@ -57,20 +59,14 @@ function Editor({ row, onDone }: { row: SeoRow | null; onDone: () => void }) {
         <textarea id="meta_description" name="meta_description" rows={3} defaultValue={row?.meta_description ?? ""} className={inputClass} />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="keywords" className={labelClass}>
-            Keywords
-          </label>
-          <input id="keywords" name="keywords" placeholder="ai, data, services" defaultValue={row?.keywords ?? ""} className={inputClass} />
-        </div>
-        <div>
-          <label htmlFor="og_image" className={labelClass}>
-            OG image URL
-          </label>
-          <input id="og_image" name="og_image" defaultValue={row?.og_image ?? ""} className={inputClass} />
-        </div>
+      <div>
+        <label htmlFor="keywords" className={labelClass}>
+          Keywords
+        </label>
+        <input id="keywords" name="keywords" placeholder="ai, data, services" defaultValue={row?.keywords ?? ""} className={inputClass} />
       </div>
+
+      <ImageUploadField label="OG image" name="og_image" value={ogImage} onChange={setOgImage} previewClassName="h-40" />
 
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" name="no_index" defaultChecked={Boolean(row?.no_index)} className="size-4 rounded border-border" />

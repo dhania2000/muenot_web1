@@ -11,9 +11,10 @@ export default function CareersOpeningsPage() {
   return (
     <>
       <Navbar />
-      <main id="main-content">
-        {/* Back bar keeps users inside the Muenot site */}
-        <div className="sticky top-16 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <main id="main-content" className="pt-16 lg:pt-27">
+        {/* Back bar keeps users inside the Muenot site. Sticky offset matches the
+            fixed navbar height (64px mobile, 108px on lg where the utility bar shows). */}
+        <div className="sticky top-16 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:top-27">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
             <Link
               href="/careers"
@@ -40,7 +41,11 @@ export default function CareersOpeningsPage() {
             <iframe
               src={CAREERS_PORTAL_URL}
               title="Muenot careers portal — open positions"
+<<<<<<< HEAD
               className="h-[calc(100vh-8rem)] w-full border-0 bg-background sm:rounded-b-2xl"
+=======
+              className="h-[calc(100vh-9rem)] w-full border-0 bg-background sm:rounded-b-2xl lg:h-[calc(100vh-12rem)]"
+>>>>>>> 0fbd78e (update website)
               loading="lazy"
             />
           </div>

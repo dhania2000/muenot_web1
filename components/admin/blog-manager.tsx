@@ -1,9 +1,10 @@
 "use client"
 
-import { useActionState, useRef, useState } from "react"
+import { useActionState, useState } from "react"
 import { useFormStatus } from "react-dom"
-import { Plus, Trash2, Check, AlertCircle, Pencil, ImageIcon, Loader2, X, Upload } from "lucide-react"
+import { Plus, Trash2, Check, AlertCircle, Pencil } from "lucide-react"
 import { saveBlogAction, deleteBlogAction } from "@/app/admin/actions"
+import { ImageUploadField } from "@/components/admin/image-upload-field"
 import type { BlogPost } from "@/lib/blog-db"
 
 const inputClass =
@@ -32,96 +33,8 @@ function slugify(s: string) {
 
 function CoverImageField({ initialUrl }: { initialUrl: string }) {
   const [url, setUrl] = useState(initialUrl)
-  const [uploading, setUploading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  async function handleFile(file: File) {
-    setError(null)
-    setUploading(true)
-    try {
-      const body = new FormData()
-      body.append("file", file)
-      const res = await fetch("/api/admin/upload", { method: "POST", body })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Upload failed")
-      setUrl(data.url)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed")
-    } finally {
-      setUploading(false)
-    }
-  }
-
-  return (
-    <div>
-      <span className={labelClass}>Cover image</span>
-      {/* The server action still reads cover_image; we submit the uploaded URL. */}
-      <input type="hidden" name="cover_image" value={url} />
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files?.[0]
-          if (file) handleFile(file)
-          e.target.value = ""
-        }}
-      />
-
-      {url ? (
-        <div className="relative overflow-hidden rounded-lg border border-border">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={url || "/placeholder.svg"} alt="Cover preview" className="h-44 w-full object-cover" />
-          <div className="absolute right-2 top-2 flex gap-2">
-            <button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              disabled={uploading}
-              className="inline-flex items-center gap-1.5 rounded-md bg-card/90 px-2.5 py-1.5 text-xs font-medium text-foreground shadow-sm backdrop-blur transition-colors hover:bg-card disabled:opacity-50"
-            >
-              <Upload className="size-3.5" /> Replace
-            </button>
-            <button
-              type="button"
-              onClick={() => setUrl("")}
-              className="inline-flex items-center justify-center rounded-md bg-card/90 p-1.5 text-foreground shadow-sm backdrop-blur transition-colors hover:bg-destructive hover:text-destructive-foreground"
-              aria-label="Remove cover image"
-            >
-              <X className="size-3.5" />
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          disabled={uploading}
-          className="flex w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-background px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground disabled:opacity-60"
-        >
-          {uploading ? (
-            <>
-              <Loader2 className="size-6 animate-spin" />
-              Uploading...
-            </>
-          ) : (
-            <>
-              <ImageIcon className="size-6" />
-              <span className="font-medium">Click to upload cover image</span>
-              <span className="text-xs">PNG, JPG, WEBP or GIF up to 8MB</span>
-            </>
-          )}
-        </button>
-      )}
-
-      {error ? (
-        <p className="mt-1.5 inline-flex items-center gap-1.5 text-sm text-destructive">
-          <AlertCircle className="size-4" /> {error}
-        </p>
-      ) : null}
-    </div>
-  )
+  // The server action reads cover_image; the hidden input submits the uploaded URL.
+  return <ImageUploadField label="Cover image" name="cover_image" value={url} onChange={setUrl} />
 }
 
 function Editor({ post, onDone }: { post: BlogPost | null; onDone: () => void }) {

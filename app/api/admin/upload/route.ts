@@ -1,6 +1,6 @@
-import { put } from "@vercel/blob"
 import { type NextRequest, NextResponse } from "next/server"
 import { getCurrentUser } from "@/lib/auth"
+import { ensureMediaTable, insertMedia } from "@/lib/media-db"
 
 const MAX_BYTES = 8 * 1024 * 1024 // 8MB
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"]
@@ -26,14 +26,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Image must be 8MB or smaller" }, { status: 400 })
     }
 
-    const blob = await put(`blog/${Date.now()}-${file.name}`, file, {
-      access: "public",
-      addRandomSuffix: true,
+    // Store the image bytes directly in the SQL database.
+    const bytes = Buffer.from(await file.arrayBuffer())
+    await ensureMediaTable()
+    const id = await insertMedia({
+      filename: file.name || "upload",
+      mimeType: file.type,
+      byteSize: bytes.byteLength,
+      data: bytes,
     })
 
-    return NextResponse.json({ url: blob.url })
+    return NextResponse.json({ url: `/api/media/${id}` })
   } catch (error) {
-    console.error("[v0] Blog image upload error:", error)
+    console.error("[v0] Admin image upload error:", error)
     return NextResponse.json({ error: "Upload failed" }, { status: 500 })
   }
 }

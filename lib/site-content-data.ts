@@ -268,6 +268,123 @@ export const footerContent: FooterContent = {
   ],
 }
 
+export type CareersContent = {
+  hero: {
+    eyebrow: string
+    title: string
+    description: string
+    image: string
+    imageAlt: string
+    highlights: string[]
+  }
+  portal: {
+    title: string
+    description: string
+    buttonLabel: string
+    buttonHref: string
+  }
+  whyEyebrow: string
+  whyTitle: string
+  whyDescription: string
+  benefits: { icon: string; title: string; description: string }[]
+  teamsEyebrow: string
+  teamsTitle: string
+  teamsDescription: string
+  teams: string[]
+  closing: {
+    title: string
+    description: string
+    primaryLabel: string
+    primaryHref: string
+    email: string
+    learnMoreLabel: string
+    learnMoreHref: string
+  }
+}
+
+export const careersContent: CareersContent = {
+  hero: {
+    eyebrow: "Careers",
+    title: "Build your career with Muenot",
+    description:
+      "We hire specialists who care about doing the work well. Join managed delivery pods behind enterprise AI data, learning, localization, technology and publishing programmes.",
+    image: "/images/careers-team.png",
+    imageAlt: "Muenot team collaborating in a bright modern office",
+    highlights: ["300+ specialists", "10+ countries served", "6+ years growing"],
+  },
+  portal: {
+    title: "See every open role on our careers portal",
+    description:
+      "Current openings, job descriptions and applications are all managed on our dedicated portal at erp.muenot.co.in.",
+    buttonLabel: "View open positions",
+    buttonHref: "/careers/openings",
+  },
+  whyEyebrow: "Why Muenot",
+  whyTitle: "A place to do meaningful work",
+  whyDescription:
+    "We combine the stability of an established delivery partner with the pace of a growing company — and we invest in the people who make it run.",
+  benefits: [
+    {
+      icon: "TrendingUp",
+      title: "Real growth paths",
+      description:
+        "Clear progression across delivery, quality and leadership tracks — with named managers accountable for your development.",
+    },
+    {
+      icon: "GraduationCap",
+      title: "Learn on the job",
+      description:
+        "Structured onboarding and continuous upskilling on production tooling, quality processes and new service lines.",
+    },
+    {
+      icon: "Users",
+      title: "Work in strong pods",
+      description:
+        "Join managed teams with documented governance, where ownership of outcomes is valued over ticking off tasks.",
+    },
+    {
+      icon: "Globe",
+      title: "Global exposure",
+      description:
+        "Contribute to programmes for clients across 10+ countries, spanning AI data, learning, localization and publishing.",
+    },
+    {
+      icon: "HeartHandshake",
+      title: "People-first culture",
+      description:
+        "Transparent communication, honest timelines and a customer-first mindset that starts with how we treat each other.",
+    },
+    {
+      icon: "ShieldCheck",
+      title: "Stable & secure",
+      description:
+        "ISO-aligned, NDA-backed secure floors and 6+ years of steady delivery mean a workplace you can build a career on.",
+    },
+  ],
+  teamsEyebrow: "Teams we hire for",
+  teamsTitle: "Find where you fit",
+  teamsDescription:
+    "We recruit across every service line and the operations that support them. Roles open regularly as programmes scale.",
+  teams: [
+    "AI Data Services",
+    "E-Learning & Content",
+    "Localization & Language",
+    "Technology & Engineering",
+    "Publishing & Editorial",
+    "Quality & Operations",
+  ],
+  closing: {
+    title: "Ready to apply?",
+    description:
+      "Browse current openings and submit your application on our careers portal. Have a question first? Reach our talent team directly.",
+    primaryLabel: "View open positions",
+    primaryHref: "/careers/openings",
+    email: "career@muenot.co.in",
+    learnMoreLabel: "Learn more about Muenot",
+    learnMoreHref: "/about",
+  },
+}
+
 export type AboutContent = {
   hero: {
     eyebrow: string

@@ -9,7 +9,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading, Eyebrow } from "@/components/ui/section-heading";
 import { StatBand } from "@/components/ui/stat-band";
 import { Reveal } from "@/components/ui/reveal";
-import { caseStudies } from "@/lib/site-data";
+import { getSection } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Case Studies | Muenot Delivery Programmes",
@@ -17,46 +17,42 @@ export const metadata: Metadata = {
     "How Muenot delivers AI data, e-learning, localization, technology and publishing programmes for enterprise teams — with measured outcomes and documented governance.",
 };
 
-const outcomeStats = [
-  { value: "6", label: "Programmes profiled" },
-  { value: "99%+", label: "Typical QC pass rate" },
-  { value: "40+", label: "Languages delivered" },
-  { value: "Zero", label: "Reportable incidents" },
-];
+export default async function CaseStudiesPage() {
+  // Both the page chrome (hero, stats, intro, quote, closing) and the list of
+  // case studies are DB-backed so the whole page is editable from the admin.
+  const [page, caseStudies] = await Promise.all([
+    getSection("case_studies_page"),
+    getSection("case_studies"),
+  ]);
 
-export default function CaseStudiesPage() {
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-background">
         <PageHero
-          eyebrow="Case studies"
-          title="Programmes measured by what they actually delivered"
-          description="Each engagement below ran under agreed acceptance criteria, with a named delivery manager and reporting the client's team could audit."
+          eyebrow={page.hero.eyebrow}
+          title={page.hero.title}
+          description={page.hero.description}
           breadcrumbs={[{ label: "Home", href: "/" }, { label: "Case Studies" }]}
-          image="/images/case-study-analytics.png"
-          imageAlt="Delivery analyst reviewing programme quality metrics on a dashboard"
-          primaryCta={{ label: "Discuss your programme", href: "/contact" }}
-          secondaryCta={{ label: "Explore services", href: "/#services" }}
-          highlights={[
-            "Documented pilots",
-            "Audited quality gates",
-            "SLA-backed delivery",
-          ]}
+          image={page.hero.image}
+          imageAlt={page.hero.imageAlt}
+          primaryCta={{ label: page.hero.primaryLabel, href: page.hero.primaryHref }}
+          secondaryCta={{ label: page.hero.secondaryLabel, href: page.hero.secondaryHref }}
+          highlights={page.hero.highlights}
         />
 
         <section className="border-b border-border bg-navy-deep py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <StatBand stats={outcomeStats} tone="dark" />
+            <StatBand stats={page.outcomeStats} tone="dark" />
           </div>
         </section>
 
         <section className="border-b border-border bg-background py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
-              eyebrow="Selected work"
-              title="Six programmes, six different quality bars"
-              description="Sector, volume, and handling controls change from engagement to engagement — the operating model does not."
+              eyebrow={page.intro.eyebrow}
+              title={page.intro.title}
+              description={page.intro.description}
             />
           </div>
         </section>
@@ -138,7 +134,7 @@ export default function CaseStudiesPage() {
                       href="/contact"
                       className="group mt-2 inline-flex w-fit items-center gap-2 text-sm font-semibold text-primary"
                     >
-                      Discuss a similar programme
+                      {page.discussLinkLabel}
                       <ArrowRight
                         className="h-4 w-4 transition-transform group-hover:translate-x-1"
                         aria-hidden="true"
@@ -158,12 +154,10 @@ export default function CaseStudiesPage() {
                 <Quote className="h-6 w-6" aria-hidden="true" />
               </span>
               <blockquote className="font-display text-xl font-semibold leading-relaxed text-balance text-foreground sm:text-2xl">
-                &ldquo;The pilot told us exactly what the steady-state numbers
-                would be. Twelve months in, the reporting still matches what was
-                agreed.&rdquo;
+                {`\u201C${page.quote.text}\u201D`}
               </blockquote>
               <p className="text-sm text-muted-foreground">
-                Head of Data Operations, enterprise technology client
+                {page.quote.attribution}
               </p>
             </Reveal>
           </div>
@@ -174,26 +168,26 @@ export default function CaseStudiesPage() {
             <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
               <SectionHeading
                 tone="light"
-                eyebrow="Start with a pilot"
-                title="Bring us the programme you can't staff internally"
-                description="We scope it, run a measured pilot, and show you the numbers before you commit to scale."
+                eyebrow={page.closing.eyebrow}
+                title={page.closing.title}
+                description={page.closing.description}
               />
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/contact"
+                  href={page.closing.primaryHref}
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
                 >
-                  Talk to our team
+                  {page.closing.primaryLabel}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
                   />
                 </Link>
                 <Link
-                  href="/about"
+                  href={page.closing.secondaryHref}
                   className="inline-flex items-center justify-center rounded-full border border-primary-foreground/30 px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
                 >
-                  How we operate
+                  {page.closing.secondaryLabel}
                 </Link>
               </div>
             </div>

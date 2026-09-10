@@ -1,5 +1,6 @@
 import { pool } from "./db"
 import { seedContent } from "./content"
+import { MEDIA_TABLE_DDL } from "./media-db"
 
 const TABLES = [
   `CREATE TABLE IF NOT EXISTS admin_users (
@@ -68,6 +69,8 @@ const TABLES = [
     no_index TINYINT(1) NOT NULL DEFAULT 0,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`,
+
+  MEDIA_TABLE_DDL,
 ]
 
 /** Create all tables (idempotent) and seed marketing content. */

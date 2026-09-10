@@ -4,6 +4,7 @@ import { useActionState, useMemo, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Check, AlertCircle, Plus, Trash2, ChevronDown } from "lucide-react"
 import { saveContentAction } from "@/app/admin/actions"
+import { ImageUploadField } from "@/components/admin/image-upload-field"
 import { SECTION_LABELS, type SectionKey } from "@/lib/content-schema"
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json }
@@ -12,6 +13,18 @@ type SectionData = { key: SectionKey; label: string; json: string }
 const labelClass = "mb-1.5 block text-xs font-medium uppercase tracking-wide text-muted-foreground"
 const inputClass =
   "w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring/40"
+
+/**
+ * String fields that hold an image path/URL get an upload button instead of a
+ * text input. Matches keys like `image`, `coverImage`, `heroImage`, `logo`,
+ * `avatar`, `ogImage`, and the bare `src` used inside image objects — but not
+ * `imageAlt`, which is descriptive text.
+ */
+function isImageKey(key: string): boolean {
+  if (/alt$/i.test(key)) return false
+  if (/^src$/i.test(key)) return true
+  return /image|avatar|logo|photo|banner|cover|thumbnail|picture/i.test(key)
+}
 
 /** "imageAlt" -> "Image alt", "meta_title" -> "Meta title" */
 function humanize(key: string): string {
@@ -113,6 +126,16 @@ function ValueEditor({
           className={inputClass}
         />
       </label>
+    )
+  }
+  if (isImageKey(keyName)) {
+    return (
+      <ImageUploadField
+        label={humanize(keyName)}
+        value={String(value ?? "")}
+        onChange={(url) => onChange(url)}
+        previewClassName="h-40"
+      />
     )
   }
   return <StringField keyName={keyName} value={String(value ?? "")} onChange={onChange} />
