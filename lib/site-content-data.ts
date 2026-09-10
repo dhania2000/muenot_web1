@@ -176,6 +176,7 @@ export const navbarContent: NavbarContent = {
         { name: "Case Studies", href: "/#case-studies" },
       ],
     },
+    { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/#cta-section" },
   ],
 }
@@ -213,6 +214,7 @@ export const footerContent: FooterContent = {
   ],
   companyLinks: [
     { name: "About Us", href: "/about" },
+    { name: "Careers", href: "/careers" },
     { name: "Contact Us", href: "/contact" },
     { name: "Our Services", href: "/#services" },
     { name: "Our Clients", href: "/#our-clients" },

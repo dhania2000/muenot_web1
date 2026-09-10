@@ -118,7 +118,7 @@ export function AboutSection({
             </Reveal>
 
             <ul className="grid gap-4 sm:grid-cols-2">
-              {differentiators.map((item, index) => (
+              {content.differentiators.map((item, index) => (
                 <Reveal
                   as="li"
                   key={item.title}
@@ -126,7 +126,7 @@ export function AboutSection({
                   y={16}
                   className="group flex h-full flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-24px_rgba(11,79,158,0.45)]"
                 >
-                  <IconBadge icon={item.icon} size="sm" />
+                  <IconBadge icon={differentiatorIcons[item.icon] ?? Users} size="sm" />
                   <h3 className="font-display text-sm font-semibold leading-snug text-foreground">
                     {item.title}
                   </h3>
@@ -154,11 +154,14 @@ export function AboutSection({
 
         <div className="mt-20 flex flex-col gap-10">
           <Reveal>
-            <SectionHeading eyebrow="Testimonials" title="What clients say" />
+            <SectionHeading
+              eyebrow={content.testimonialsEyebrow}
+              title={content.testimonialsTitle}
+            />
           </Reveal>
 
           <div className="grid gap-6 lg:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
+            {content.testimonials.map((testimonial, index) => (
               <Reveal
                 key={testimonial.name}
                 delay={index * 0.09}
