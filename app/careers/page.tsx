@@ -172,9 +172,9 @@ export default function CareersPage() {
         </section>
 
         {/* Closing CTA */}
-        <section className="bg-primary-dark py-20 lg:py-24">
-          <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center gap-6">
+        <section className="bg-background py-20 lg:py-24">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center gap-6 rounded-3xl bg-primary-dark px-6 py-16 text-center shadow-[0_30px_60px_-30px_rgba(11,79,158,0.55)] sm:px-12">
               <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-foreground/15 text-primary-foreground">
                 <Briefcase className="h-6 w-6" aria-hidden="true" />
               </span>
