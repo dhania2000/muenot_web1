@@ -102,8 +102,6 @@ export default function CareersPage() {
             </div>
             <a
               href={CAREERS_PORTAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
             >
               View open positions
@@ -188,8 +186,6 @@ export default function CareersPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
                   href={CAREERS_PORTAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-foreground/90"
                 >
                   View open positions
