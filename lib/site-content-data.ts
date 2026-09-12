@@ -265,6 +265,7 @@ export const footerContent: FooterContent = {
   legalLinks: [
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Terms & Conditions", href: "/terms-and-conditions" },
+    { name: "User Data Deletion", href: "/user-data-deletion" },
   ],
 }
 
